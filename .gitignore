@@ -1,0 +1,14 @@
+*~
+*#
+*.elc
+*.ropeproject*
+*.pyc
+*.emacs.desktop
+*.emacs.desktop.lock
+notes.org
+.todo.org
+.auto-save-list-tramp
+.recentf
+.journey.org
+*.history
+themes/
