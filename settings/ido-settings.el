@@ -1,13 +1,4 @@
 ;; -*- Emacs-Lisp -*-
-;; Last modified: <2013-01-07 20:28:59 Monday by richard>
-
-;; Copyright (C) 2012 Richard Wong
-
-;; Author: Richard Wong
-;; Email: chao787@gmail.com
-
-;; Version: 0.1
-;; PUBLIC LICENSE: GPLv3
 (ido-mode t)
 
 (setq ido-enable-flex-matching t) ;; enable fuzzy matching

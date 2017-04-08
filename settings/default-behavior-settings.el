@@ -1,24 +1,12 @@
 ;; -*- Emacs-Lisp -*-
-;; Last modified: <2017-01-20 14:59:44 Friday by richard>
-
-;; Copyright (C) 2012-2013 Richard Wong
-
-;; Author: Richard Wong
-;; Email: chao787@gmail.com
-
-;; Version: 0.5
-;; PUBLIC LICENSE: GPLv3
-
 ;; Emacs default behavoir settings
 
 ;; Personal Info
 
-(setq change-log-default-name   "ChangeLog"
-      user-full-name            "Richard Wong"
+(setq user-full-name            "Richard Wong"
       user-nick-name            "@richard"
       major-mode                'text-mode
       enable-local-variables    :safe
-      log-mailing-address       "log@cccc.com"
       ;; My Gmail address, Welcome letter
       user-mail-address         "chao787@gmail.com")
 
@@ -141,11 +129,6 @@
 
 ;; More generic highlight settings.
 (require 'generic-x)
-;; time-stamp settings. Change modified style
-(add-hook 'write-file-hooks 'time-stamp)
-(setq time-stamp-start "Last modified:[ \t]+\\\\?[\"<]+"
-      time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S %:a by %u"
-      time-stamp-end "\\\\?[\">]")
 
 ;; set basic cua-mode.
 (setq cua-remap-control-z nil

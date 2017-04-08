@@ -1,17 +1,7 @@
 ;; -*- Emacs-Lisp -*-
-;; Last modified: <2016-10-08 10:52:26 Saturday by richard>
-
-;; Copyright (C) 2012 Richard Wong
-
-;; Author: Richard Wong
-;; Email: chao787@gmail.com
-
-;; Version: 0.3
-;; PUBLIC LICENSE: GPLv3
 ;; The auto-insert-settings do *NOT* need use-package style writting
 
-(setq auto-insert-query nil
-      auto-insert-directory template-path-r)
+(setq auto-insert-query nil)
 
 (defun insert-snippet (snippet)
   "Insert snippet SNIPPET."

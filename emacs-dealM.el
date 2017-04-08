@@ -1,14 +1,4 @@
 ;; -*- Emacs-Lisp -*-
-;; Last modified: <2016-12-27 14:18:36 Tuesday by merrick>
-
-;; Copyright (C) 2012-2015 Richard Wong
-
-;; Author: Richard Wong
-;; Email: chao787@gmail.com
-
-;; Version: 0.2
-;; PUBLIC LICENSE: FreeBSD
-
 ;; configure path depend on system.
 
 (defconst emacs-root-path
@@ -19,8 +9,6 @@
   (concat emacs-root-path "themes/") "Reference path of emacs theme")
 (defconst settings-path-r
   (concat emacs-root-path "settings/") "Personel prefer setting of lisp package")
-(defconst template-path-r
-  (concat emacs-root-path "templates/") "Path for template")
 
 (defcustom default-theme-r 'monokai
   "Default theme for dealM"
@@ -76,9 +64,6 @@
 (require 'lisp-settings)
 (require 'org-settings)
 (require 'go-settings)
-
-;; desktop settings
-;; (require 'desktop-settings)
 
 
 ;; registers.
