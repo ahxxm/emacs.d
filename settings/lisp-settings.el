@@ -1,24 +1,10 @@
 ;; -*- Emacs-Lisp -*-
-;; Last modified: <2017-02-13 11:04:52 Monday by richard>
-
-;; Copyright (C) 2013 Richard Wong
-
-;; Author: Richard Wong
-;; Email: chao787@gmail.com
-
-;; Version: 0.1
-;; PUBLIC LICENSE: GPLv3
-
 ;; Settings for clojure
 ;; -----------------------------------[Settings for clojure]
 (add-to-list 'load-path (concat plugins-path-r "clojure-mode"))
 (add-to-list 'load-path (concat plugins-path-r "cider"))
 (add-to-list 'load-path (concat plugins-path-r "spinner.el"))
 (add-to-list 'load-path (concat plugins-path-r "ac-cider"))
-
-(use-package
-  paredit
-  :commands (paredit-mode))
 
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-modes 'nrepl-mode))
@@ -78,7 +64,6 @@
   :config
   (add-hook 'clojure-mode-hook
             (lambda ()
-              (paredit-mode +1)
               (cider-mode +1)))
   :mode
   ("\\.clj[sx]?\\'" . clojure-mode)
@@ -103,8 +88,7 @@
 
 (dolist (hook '(emacs-lisp-mode-hook
                 lisp-mode-hook
-                lisp-interaction-mode-hook))
-  (add-hook hook (lambda () (paredit-mode +1))))
+                lisp-interaction-mode-hook)))
 
 ;; Settings for scala
 ;; -------------------------------------[Settings for scala]
@@ -118,12 +102,6 @@
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
-
-(eval-after-load "eldoc"
-  '(eldoc-add-command
-    'paredit-backward-delete
-    'paredit-close-round))
-
 
 (provide 'lisp-settings)
 ;; lisp-settings ends here.
