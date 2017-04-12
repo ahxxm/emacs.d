@@ -20,8 +20,6 @@ Insert operators with surrounding spaces smartly.
 
 ;; global modes
 ;; ------------------------------------------------------------------
-(electric-pair-mode)
-
 
 ;; hl-line+ settings.
 ;; ------------------------------------------------------------------
