@@ -1,27 +1,15 @@
 ;; -*- Emacs-Lisp -*-
-;; Last modified: <2017-02-13 17:05:38 Monday by ahxxm>
-
-;; Copyright (C) 2012 Richard Wong
-
-;; Author: Richard Wong
-;; Email: chao787@gmail.com
-
-;; Version: 0.1
-;; PUBLIC LICENSE: GPLv3
 ;; This file is a extension for edit-settings.
 
 ;; autoloads
 ;; ------------------------------------------------------------------
 (autoload 'highlight-indentation-mode "highlight-indentation" "")
-(autoload 'cuda-mode "cuda-mode" "")
 (autoload 'lua-mode "lua-mode" "")
 (autoload 'yaml-mode "yaml-mode" "")
 (autoload 'electric-spacing-mode "electric-spacing" "\
 Insert operators with surrounding spaces smartly.
 
 \(fn &optional ARG)" t nil)
-
-(add-to-list 'auto-mode-alist '("\\.cuh?\\'" . cuda-mode))
 
 (eval-after-load "highlight-indentation"
   '(progn

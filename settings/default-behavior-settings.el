@@ -183,7 +183,6 @@
                 ("\\.[Tt][Cc][Cc]$" . c++-mode)
                 ("\\.coffee$" . coffee-mode)
                 ("\\.[Yy][Aa]?[Mm][Ll]$" . yaml-mode)
-                ("\\.[Cc][Uu][Hh]?$" . cuda-mode)
                 ("\\.sass$" . sass-mode)
                 ("\\.scss$" . scss-mode)
                 ("\\.less\\'" . less-css-mode)
