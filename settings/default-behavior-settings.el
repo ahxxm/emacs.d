@@ -167,8 +167,6 @@
 
 (autoload 'cython-mode "cython-mode" "" t)
 
-(add-to-list 'load-path (concat plugins-path-r "rust-mode/"))
-(autoload 'rust-mode "rust-mode" "" t)
 (autoload 'json-mode "json-mode" "" t)
 (autoload 'php-mode "php-mode" "" t)
 (autoload 'cmake-mode "cmake-mode" "" t)
@@ -221,7 +219,6 @@
                 ("\\.l[l]?$" . flex-mode)
                 ("\\.lua$" . lua-mode)
                 ("\\.org$" . org-mode)
-                ("\\.rs\\'" . rust-mode)
                 ("\\.\\(todo\\|do\\|plan\\)$". org-mode)
                 ("\\.scons$" . python-mode)
                 ("\\.pyx$" . cython-mode)

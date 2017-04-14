@@ -380,54 +380,6 @@ Major mode for editing JavaScript code.
   (electric-spacing-mode))
 
 
-
-(defun rust-short-cut()
-  "js2 mode short-cut key settings."
-  (defun cargo-run()
-    (interactive)
-    (compile (format "cargo run"))
-    )
-  (defun cargo-test()
-    (interactive)
-    ;; TODO make it support C-u to test all project
-    (compile (format "cargo test"))
-    )
-  (defun cargo-valgrind()
-    (interactive)
-    ;; TODO make it support C-u to test all project
-
-    (projectile-with-default-dir (projectile-project-root)
-      (shell-command (concat "valgrind target/debug/"
-                             (projectile-project-name))))
-    )
-
-  (defun rust-electric-pair-inhibit-predicate-wrap-r(char)
-    "Wraps the default `electric-pair-inhibit-predicate' to prevent
-  inserting a \"matching\" > after a < that would be treated as a
-  less than sign rather than as an opening angle bracket."
-    (cond ((= ?> char)
-           (message "wat >" char)
-           t)
-          ((= ?< char)
-           t)
-          ((= ?{ char)
-           t)
-          (t (funcall (default-value 'electric-pair-inhibit-predicate) char)))
-    )
-  (setq-local electric-pair-inhibit-predicate
-              'rust-electric-pair-inhibit-predicate-wrap-r)
-
-  (message "loaded")
-
-  (local-set-key (kbd "C-c r") 'cargo-run)
-  (local-set-key (kbd "C-c t") 'cargo-test)
-  (local-set-key (kbd "C-c v") 'cargo-valgrind)
-  (setq dash-at-point-docset "rust")
-  (start-program-short-cut)
-  ;; compatible with flyspell.
-  (electric-spacing-mode))
-
-
 ;; Short cut Hooks here.
 ;; ==================================================================
 (add-hook 'emacs-lisp-mode-hook 'elisp-short-cut)
@@ -443,11 +395,6 @@ Major mode for editing JavaScript code.
 (add-hook 'js2-mode-hook        'js2-short-cut)
 (add-hook 'jade-mode-hook       'jade-short-cut)
 (add-hook 'java-mode-hook       'java-short-cut)
-
-(add-hook 'rust-mode-hook       'rust-short-cut)
-(when (string= system-type "windows-nt")
-  (autoload 'powershell "powershell" "DOCSTRING" t)
-  )
 
 (provide 'dev-settings)
 ;; dev-settings ends here.
