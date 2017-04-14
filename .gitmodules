@@ -1,0 +1,42 @@
+[submodule "plugins/rainbow-mode"]
+	path = plugins/rainbow-mode
+	url = https://github.com/emacsmirror/rainbow-mode.git
+[submodule "plugins/magit"]
+	path = plugins/magit
+	url = https://github.com/magit/magit.git
+[submodule "plugins/use-package"]
+	path = plugins/use-package
+	url = https://github.com/jwiegley/use-package.git
+[submodule "plugins/smart-mode-line"]
+	path = plugins/smart-mode-line
+	url = https://github.com/Malabarba/smart-mode-line.git
+[submodule "plugins/rich-minority"]
+	path = plugins/rich-minority
+	url = https://github.com/Malabarba/rich-minority.git
+[submodule "plugins/go-mode"]
+	path = plugins/go-mode
+	url = https://github.com/dominikh/go-mode.el.git
+[submodule "plugins/scscope.el"]
+	path = plugins/scscope.el
+	url = https://github.com/dkogan/xcscope.el
+[submodule "plugins/xcscope.el"]
+	path = plugins/xcscope.el
+	url = https://github.com/dkogan/xcscope.el
+[submodule "plugins/flycheck"]
+	path = plugins/flycheck
+	url = https://github.com/flycheck/flycheck.git
+[submodule "plugins/ac-cider"]
+	path = plugins/ac-cider
+	url = https://github.com/clojure-emacs/ac-cider.git
+[submodule "plugins/auto-complete"]
+	path = plugins/auto-complete
+	url = https://github.com/auto-complete/auto-complete.git
+[submodule "plugins/dash"]
+	path = plugins/dash
+	url = https://github.com/magnars/dash.el.git
+[submodule "plugins/popup"]
+	path = plugins/popup
+	url = https://github.com/auto-complete/popup-el.git
+[submodule "plugins/with-editor"]
+	path = plugins/with-editor
+	url = https://github.com/magit/with-editor.git
