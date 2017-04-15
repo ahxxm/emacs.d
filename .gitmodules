@@ -40,3 +40,18 @@
 [submodule "plugins/with-editor"]
 	path = plugins/with-editor
 	url = https://github.com/magit/with-editor.git
+[submodule "plugins/cider"]
+	path = plugins/cider
+	url = https://github.com/clojure-emacs/cider.git
+[submodule "plugins/git-modes"]
+	path = plugins/git-modes
+	url = https://github.com/magit/git-modes.git
+[submodule "plugins/ggtags"]
+	path = plugins/ggtags
+	url = https://github.com/leoliu/ggtags.git
+[submodule "plugins/ac-nrepl"]
+	path = plugins/ac-nrepl
+	url = https://github.com/clojure-emacs/ac-nrepl.git
+[submodule "plugins/clojure-mode"]
+	path = plugins/clojure-mode
+	url = https://github.com/technomancy/clojure-mode.git
