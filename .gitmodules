@@ -67,3 +67,6 @@
 [submodule "plugins/spinner.el"]
 	path = plugins/spinner.el
 	url = https://github.com/Malabarba/spinner.el.git
+[submodule "plugins/seq.el"]
+	path = plugins/seq.el
+	url = https://github.com/NicolasPetton/seq.el.git
