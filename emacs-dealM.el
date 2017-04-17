@@ -33,6 +33,7 @@
 ;; ------------------------------------------------------------------
 (require 'use-package)
 (require 'flycheck-settings)
+(require 'irony-settings)
 (require 'command-frequence)
 (require 'auto-complete-setting)
 (require 'auto-insert-settings)
