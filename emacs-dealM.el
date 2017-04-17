@@ -33,7 +33,6 @@
 ;; ------------------------------------------------------------------
 (require 'use-package)
 (require 'flycheck-settings)
-(require 'yasnippet-settings)
 (require 'unicode-settings)
 (require 'command-frequence)
 (require 'auto-complete-setting)
