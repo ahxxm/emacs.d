@@ -144,33 +144,12 @@
 
 (setq buffer-file-coding-system 'utf-8)
 
-(use-package log4j-mode
-  :defer t
-  :commands
-  (log4j-mode)
-  :init
-  (setq log4j-keyword-fatal "^\\[C.*\\]\\|\\<\\(FATAL\\|CRITICAL\\)\\>"
-        log4j-keyword-error "^\\[E.*\\]\\|\\<\\(ERROR\\|SEVERE\\|\\[E.*\\]\\)\\>"
-        log4j-keyword-warn  "^\\[W.*\\]\\|\\<\\(WARN\\(?:ING\\)?\\|\\[W.*\\]\\)\\>"
-        log4j-keyword-debug "^\\[D.*\\]\\|\\<\\(DEBUG\\|FINE\\(?:R\\|ST\\)?\\|STATUS\\)\\>"
-        log4j-keyword-info  "^\\[I.*\\]\\|\\<\\(CONFIG\\|INFO\\)\\>")
-  :config
-  (autoload 'itail-mode "itail" "" t)
-  (add-hook 'log4j-mode-hook #'(lambda () (itail-mode)))
-  :mode ("\\.[Ll][Oo][Gg]$" . log4j-mode))
-
-(autoload 'xahk-mode "xahk-mode" "" t)
-
-(autoload 'coffee-mode "coffee-mode" "" t)
-
 (autoload 'dockerfile-mode "dockerfile-mode" "" t)
 
 (autoload 'cython-mode "cython-mode" "" t)
 
 (autoload 'json-mode "json-mode" "" t)
-(autoload 'php-mode "php-mode" "" t)
 (autoload 'cmake-mode "cmake-mode" "" t)
-(autoload 'typescript-mode "typescript" "typescript mode for tss" t)
 (autoload 'adoc-mode "adoc-mode" "" t)
 
 ;; modes definition.
@@ -179,7 +158,6 @@
                 ("\\.[Cc][Pp][Pp]$" . c++-mode)
                 ("\\.[Hh][Xx][Xx]$" . c++-mode)
                 ("\\.[Tt][Cc][Cc]$" . c++-mode)
-                ("\\.coffee$" . coffee-mode)
                 ("\\.[Yy][Aa]?[Mm][Ll]$" . yaml-mode)
                 ("\\.sass$" . sass-mode)
                 ("\\.scss$" . scss-mode)
@@ -198,7 +176,6 @@
                 ("CMakeLists\\.txt\\'" . cmake-mode)
                 ("\\.cmake\\'" . cmake-mode)
                 ("\\.uncompressed$" . hexl-mode)
-                ("\\.js$" . js2-mode)
                 ("\\.ts$" . typescript-mode)
                 ("\\.json$" . json-mode)
                 ("\\.y[s]?$" . snippet-mode)
@@ -206,8 +183,6 @@
                 ("\\.ke$" . kepago-mode)
                 ("\\.asciidoc$" . adoc-mode)
                 ("\\.txt$" . adoc-mode)
-                ("\\.[Aa][Hh][Kk]$" . xahk-mode)
-                ("\\.[Pp][Hh][Pp]$" . php-mode)
                 ("\\.textile$" . textile-mode)
                 ("\\.kfn$" . kfn-mode)
                 ("Podfile\\'" . ruby-mode)
@@ -217,7 +192,6 @@
                 ("\\.cg$" . cg-mode)
                 ("\\.yy$" . bison-mode)
                 ("\\.l[l]?$" . flex-mode)
-                ("\\.lua$" . lua-mode)
                 ("\\.org$" . org-mode)
                 ("\\.\\(todo\\|do\\|plan\\)$". org-mode)
                 ("\\.scons$" . python-mode)

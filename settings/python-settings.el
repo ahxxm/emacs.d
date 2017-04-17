@@ -76,27 +76,6 @@ $ autopep8 --in-place --aggressive --aggressive <filename>"
   :mode ("\\.py\\'" . python-mode)      ; mode name is diff from package
   :interpreter ("python" . python-mode))
 
-(use-package nose
-  ;; the :commands :bind keyword create autoloads for those commands and defers loading of the module until they are used.
-  :bind (:map python-mode
-              ("C-c t a" . nosetests-all)
-              ("C-c t m" . nosetests-module) ;; C-c m conflicts w/ pylint
-              ("C-c t ." . nosetests-one)
-              ("C-c t t" . nosetests-one)
-              ("C-c p a" . nosetests-pdb-all)
-              ("C-c p m" . nosetests-pdb-module)
-              ("C-c p ." . nosetests-pdb-one)))
-
-(use-package quickrun
-  :defer t
-  :config                               ; after load package
-  (quickrun-add-command "python"
-                        '((:command . "ss && python3")
-                          (:description . "Run Python 3 script"))
-                        :default "python"
-                        :mode 'python-mode
-                        :override t))
-
 (provide 'python-settings)
 ;; python-settings ends here.
 ;;;

@@ -4,7 +4,6 @@
 ;; autoloads
 ;; ------------------------------------------------------------------
 (autoload 'highlight-indentation-mode "highlight-indentation" "")
-(autoload 'lua-mode "lua-mode" "")
 (autoload 'yaml-mode "yaml-mode" "")
 (autoload 'electric-spacing-mode "electric-spacing" "\
 Insert operators with surrounding spaces smartly.
@@ -219,11 +218,7 @@ With a prefix argument, highlight for that many seconds.
       1 font-lock-warning-face t)))
 
   ;; use it only in specific mode.
-  (ac-config-default)
-
-  (autoload 'dash-at-point "dash-at-point"
-    "Search the word at point with Dash." t nil)
-  (local-set-key (kbd "C-c d") 'dash-at-point))
+  (ac-config-default))
 
 ;; lisp short cut Settings.
 ;; ==================================================================
@@ -239,24 +234,6 @@ With a prefix argument, highlight for that many seconds.
   (local-set-key (kbd "C-c M-w") 'copy-function-whole)
   (local-set-key (kbd "C-c C-q") 'indent-function)
   (local-set-key (kbd "C-c C")   'comment-function))
-
-;; typescript short cut Settings.
-;; ==================================================================
-(defun typescript-short-cut()
-  "Type Script mode short-cut key settings."
-  (start-program-short-cut)
-  (require 'tss)
-
-  ;; Key binding
-  (setq tss-popup-help-key "C-:")
-  (setq tss-jump-to-definition-key "C-c g")
-  (setq tss-implement-definition-key "C-c i")
-
-  ;; Make config suit for you. About the config item, eval the following sexp.
-  ;; (customize-group "tss")
-
-  ;; Do setting recommemded configuration
-  (tss-config-default))
 
 ;; json short cut Settings.
 ;; ==================================================================
@@ -282,13 +259,6 @@ With a prefix argument, highlight for that many seconds.
   (local-set-key (kbd "C-c C")   'comment-function))
 
 
-;; java short cut settings.
-;; ==================================================================
-(defun java-short-cut ()
-  (require 'jdee)
-  (add-to-list 'load-path (concat plugins-path-r "jdee/"))
-  (setq c-basic-offset 4))
-
 ;; c-common-mode short cut settings.
 ;; ==================================================================
 (defun c-common-short-cut()
@@ -304,12 +274,6 @@ With a prefix argument, highlight for that many seconds.
   (local-set-key (kbd "C-M-h") 'mark-function)
   (local-set-key (kbd "C-c C") 'comment-function))
 
-
-;; object c short cut settings.
-;; ==================================================================
-(defun objc-short-cut()
-  "object C short-cut key settings."
-  (highlight-indentation-mode nil))
 
 ;; python mode short cut settings.
 ;; ==================================================================
@@ -363,38 +327,17 @@ With a prefix argument, highlight for that many seconds.
   )
 
 
-;; js2-mode settings
-;; ==================================================================
-(autoload 'js2-mode "js2-mode" "\
-Major mode for editing JavaScript code.
-
-\(fn)" t nil)
-(setq js2-mirror-mode nil)
-
-(defun js2-short-cut()
-
-  "js2 mode short-cut key settings."
-  (start-program-short-cut)
-  (setq js2-basic-offset 2)             ; continuation line indent to 4
-  ;; compatible with flyspell.
-  (electric-spacing-mode))
-
-
 ;; Short cut Hooks here.
 ;; ==================================================================
 (add-hook 'emacs-lisp-mode-hook 'elisp-short-cut)
 (add-hook 'clojure-mode-hook    'clojure-short-cut)
-(add-hook 'typescript-mode-hook 'typescript-short-cut)
 (add-hook 'json-mode-hook       'json-short-cut)
 (add-hook 'c-mode-common-hook   'c-common-short-cut)
-(add-hook 'objc-mode-hook       'objc-short-cut)
 (add-hook 'python-mode-hook     'python-short-cut)
 (add-hook 'awk-mode-hook        'awk-short-cut);; After emacs 21 work here.
 (add-hook 'sh-mode-hook         'shell-short-cut)
 (add-hook 'LaTex-mode-hook      'tex-short-cut)
-(add-hook 'js2-mode-hook        'js2-short-cut)
 (add-hook 'jade-mode-hook       'jade-short-cut)
-(add-hook 'java-mode-hook       'java-short-cut)
 
 (provide 'dev-settings)
 ;; dev-settings ends here.

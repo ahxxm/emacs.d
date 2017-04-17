@@ -24,6 +24,7 @@
     (kbd "C-x g e") emacs-root-path)
   (def-position-command goto-tmp
     (kbd "C-x g t") "~/.tmp/")
+  ;; FIXME: this?
   (advice-add #'kill-line :before-until
               #'kill-line--before-until-cua-and-region-handled)
   :bind (("C-x q" . switch-major-mode)
@@ -49,6 +50,7 @@
          ("M-k" . kill-paragraph)
          ("M-C" . copy-whole-paragraph)
          ("C-M-w" . smart-insert-line)
+         ("C-k" . smart-kill)
          ("C-a" . smart-move-beginning-of-line)
          ("C-\\" . delete-indentation)
          ("M-U" . del-to-begin)
@@ -118,10 +120,6 @@ in another Emacs session.
          ("M-w" . isearchp-kill-ring-save)))
 
 
-(use-package browse-kill-ring
-  :bind
-  ("M-C-y" . browse-kill-ring))
-
 ;; pager: Fix windows lines bugs in scroll-up and down.
 (use-package pager
   :defer t
@@ -148,11 +146,6 @@ in another Emacs session.
   :defer t
   :bind (("C-x a" . align-current)
          ("C-x M-a" . align-regexp)))
-
-;; hungry delete
-;; ------------------------------------------------------------------
-(use-package hungry-delete
-  :commands (turn-on-hungry-delete-mode))
 
 
 

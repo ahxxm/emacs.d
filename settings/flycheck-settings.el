@@ -29,8 +29,7 @@
                         ))))
   (dolist (hook '(python-mode-hook
                   clojure-mode-hook
-                  c++-mode-hook
-                  go-mode-hook))
+                  c++-mode-hook))
     (add-hook hook #'flycheck-mode))
   )
 

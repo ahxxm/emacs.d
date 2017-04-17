@@ -48,13 +48,7 @@
   (add-hook 'cider-mode-hook 'ac-flyspell-workaround)
   (add-hook 'cider-mode-hook 'ac-cider-setup)
   (add-hook 'cider-mode-hook 'eldoc-mode)
-  (add-hook 'cider-repl-mode-hook 'subword-mode)
-  (add-hook 'cider-repl-mode-hook
-            (lambda ()
-              (setq dash-at-point-docset "clojure")
-              (autoload 'dash-at-point "dash-at-point"
-                "Search the word at point with Dash." t nil)
-              (define-key cider-repl-mode-map (kbd "C-c d") 'dash-at-point))))
+  (add-hook 'cider-repl-mode-hook 'subword-mode))
 
 (use-package
   clojure-mode
@@ -89,12 +83,6 @@
 (dolist (hook '(emacs-lisp-mode-hook
                 lisp-mode-hook
                 lisp-interaction-mode-hook)))
-
-;; Settings for scala
-;; -------------------------------------[Settings for scala]
-(add-to-list 'load-path (concat plugins-path-r "scala-mode2"))
-;; (require 'scala-mode2)
-
 
 ;; Settings for elisp
 ;; -------------------------------------[Settings for elisp]

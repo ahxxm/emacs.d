@@ -33,10 +33,8 @@
 ;; ------------------------------------------------------------------
 (require 'use-package)
 (require 'flycheck-settings)
-(require 'unicode-settings)
 (require 'command-frequence)
 (require 'auto-complete-setting)
-(require 'compile-settings)
 (require 'auto-insert-settings)
 
 
@@ -58,11 +56,8 @@
 ;; Programming settings
 ;; ------------------------------------------------------------------
 (require 'dev-settings)
-(require 'webdev-settings)
 (require 'python-settings)
 (require 'lisp-settings)
-(require 'org-settings)
-(require 'go-settings)
 
 
 ;; registers.

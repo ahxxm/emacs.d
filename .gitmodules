@@ -13,12 +13,6 @@
 [submodule "plugins/rich-minority"]
 	path = plugins/rich-minority
 	url = https://github.com/Malabarba/rich-minority.git
-[submodule "plugins/go-mode"]
-	path = plugins/go-mode
-	url = https://github.com/dominikh/go-mode.el.git
-[submodule "plugins/scscope.el"]
-	path = plugins/scscope.el
-	url = https://github.com/dkogan/xcscope.el
 [submodule "plugins/xcscope.el"]
 	path = plugins/xcscope.el
 	url = https://github.com/dkogan/xcscope.el
@@ -55,3 +49,21 @@
 [submodule "plugins/clojure-mode"]
 	path = plugins/clojure-mode
 	url = https://github.com/technomancy/clojure-mode.git
+[submodule "plugins/jade-mode"]
+	path = plugins/jade-mode
+	url = https://github.com/brianc/jade-mode.git
+[submodule "plugins/rainbow-delimiters"]
+	path = plugins/rainbow-delimiters
+	url = https://github.com/Fanael/rainbow-delimiters.git
+[submodule "plugins/smartparens"]
+	path = plugins/smartparens
+	url = https://github.com/Fuco1/smartparens.git
+[submodule "plugins/emacs-jedi"]
+	path = plugins/emacs-jedi
+	url = https://github.com/tkf/emacs-jedi.git
+[submodule "plugins/emacs-python-environment"]
+	path = plugins/emacs-python-environment
+	url = https://github.com/tkf/emacs-python-environment.git
+[submodule "plugins/spinner.el"]
+	path = plugins/spinner.el
+	url = https://github.com/Malabarba/spinner.el.git

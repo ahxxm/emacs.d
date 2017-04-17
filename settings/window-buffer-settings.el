@@ -51,13 +51,6 @@
   :defer t
   :bind (("C-x k" . kill-this-buffer)))
 
-(use-package buffer-move
-  :defer t
-  :bind (("C-x w u" . buf-move-up)
-         ("C-x w d" . buf-move-down)
-         ("C-x w l" . buf-move-left)
-         ("C-x w r" . buf-move-right)))
-
 (use-package window
   :config
   (defvar temp-window-configuration nil "store temp window configuration.")
