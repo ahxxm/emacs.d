@@ -179,7 +179,6 @@
                 ("\\.ts$" . typescript-mode)
                 ("\\.json$" . json-mode)
                 ("\\.y[s]?$" . snippet-mode)
-                ("headx$" . snippet-mode)
                 ("\\.ke$" . kepago-mode)
                 ("\\.asciidoc$" . adoc-mode)
                 ("\\.txt$" . adoc-mode)

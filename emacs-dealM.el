@@ -36,7 +36,6 @@
 (require 'irony-settings)
 (require 'command-frequence)
 (require 'auto-complete-setting)
-(require 'auto-insert-settings)
 
 
 ;; Theme, color and fonts, encoding settings.
