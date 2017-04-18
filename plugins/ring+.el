@@ -3,16 +3,17 @@
 ;; Filename: ring+.el
 ;; Description: Extensions to `ring.el'.
 ;; Author: Drew Adams
-;; Maintainer: Drew Adams
-;; Copyright (C) 1996-2012, Drew Adams, all rights reserved.
+;; Maintainer: Drew Adams (concat "drew.adams" "@" "oracle" ".com")
+;; Copyright (C) 1996-2017, Drew Adams, all rights reserved.
 ;; Created: Thu Apr 11 16:46:04 1996
-;; Version: 21.0
-;; Last-Updated: Sun Jan  1 14:05:12 2012 (-0800)
+;; Version: 0
+;; Last-Updated: Tue Mar  7 09:44:02 2017 (-0800)
 ;;           By: dradams
-;;     Update #: 212
-;; URL: http://www.emacswiki.org/cgi-bin/wiki/ring+.el
+;;     Update #: 231
+;; URL: https://www.emacswiki.org/emacs/download/ring%2b.el
+;; Doc URL: http://emacswiki.org/RingPlus
 ;; Keywords: extensions, lisp, emacs-lisp
-;; Compatibility: GNU Emacs: 20.x, 21.x, 22.x, 23.x
+;; Compatibility: GNU Emacs: 20.x, 21.x, 22.x
 ;;
 ;; Features that might be required by this library:
 ;;
@@ -23,6 +24,9 @@
 ;;; Commentary:
 ;;
 ;;    Extensions to `ring.el'.
+;;
+;;  The code in this library is part of GNU Emacs 23 and later, so
+;;  this library is useful only for releases prior to Emacs 23.
 ;;
 ;;  Main new functions here:
 ;;
@@ -73,17 +77,13 @@
 
 ;;;;;;;;;;;;;;;;;
 
-
 (defun ring-member (ring item)
-  "Return index of ITEM if on RING, else nil.  Comparison via `equal'.
-The index is 0-based."
-  (let ((ind 0)
-        (len (1- (ring-length ring)))
-        (memberp nil))
-    (while (and (<= ind len)
-                (not (setq memberp (equal item (ring-ref ring ind)))))
-      (setq ind (1+ ind)))
-    (and memberp ind)))
+  "Return index of ITEM if on RING, else nil.
+Comparison is done via `equal'.  The index is 0-based."
+  (catch 'found
+    (dotimes (ind (ring-length ring) nil)
+      (when (equal item (ring-ref ring ind))
+        (throw 'found ind)))))
 
 (defun ring-next (ring item)
   "Return the next item in the RING, after ITEM.

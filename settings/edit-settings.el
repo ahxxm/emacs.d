@@ -50,7 +50,7 @@
          ("M-k" . kill-paragraph)
          ("M-C" . copy-whole-paragraph)
          ("C-M-w" . smart-insert-line)
-         ("C-k" . smart-kill)
+         ("C-k" . program-smart-kill)
          ("C-a" . smart-move-beginning-of-line)
          ("C-\\" . delete-indentation)
          ("M-U" . del-to-begin)
