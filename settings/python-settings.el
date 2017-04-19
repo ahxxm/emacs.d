@@ -22,13 +22,6 @@
         jedi:server-command (list "python3" (concat plugins-path-r "emacs-jedi/jediepcserver.py")))
   :commands (jedi:complete jedi:auto-complete-mode jedi:setup jedi:ac-setup))
 
-(defcustom python-autopep8-path (executable-find "autopep8")
-  "autopep8 executable path."
-  :group 'python
-  :type 'string)
-
-
-
 
 (use-package python
   :init                                 ; before load package
@@ -38,22 +31,11 @@
         python-default-indent-offset 4
         python-indent-offset 4
         py-indent-offset python-indent-offset)
-  (defun python-autopep8 ()
-    "Automatically formats Python code to conform to the PEP 8 style guide.
-$ autopep8 --in-place --aggressive --aggressive <filename>"
-    (interactive)
-    (when (eq major-mode 'python-mode)
-      (shell-command
-       (format "%s --in-place --aggressive --max-line-length 100 %s" python-autopep8-path
-               (shell-quote-argument (buffer-file-name))))
-      (revert-buffer t t t)))
-
   :bind (:map python-mode-map          ; bind keys in specific map
               ("C-x M-j" . run-python)
               ("C-x M-w" . py-copy-clause)
               ("C-x C-p" . py-up-clause)
-              ("C-x C-n" . py-down-clause)
-              ("C-x TAB" . python-autopep8))
+              ("C-x C-n" . py-down-clause))
   :config                               ; after load package
   ;; set environment conform my python3 venv rules
   ;; alias ss='source ../.env/"${PWD##*/}"/bin/activate'
