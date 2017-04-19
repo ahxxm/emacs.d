@@ -15,6 +15,7 @@
   :type 'symbol
   :group 'dealM)
 
+;; FIXME:
 (defcustom default-source-font-r "Courier-14"
   "Default font for dealM"
   :type 'string
@@ -63,8 +64,6 @@
 ;; registers.
 ;; ------------------------------------------------------------------
 (set-register ?e '(file . "~/.emacs"))               ;; C-x r j e: register jump to the .emacs(home).
-(set-register ?w '(file . "~/.words.org"))           ;; C-x r j w: register jump to words.
-(set-register ?t '(file . "/tmp/test.py"))           ;; C-x r j t: goto test python file.
 
 (provide 'emacs-dealM)
 ;; emacs-dealM ends here.
