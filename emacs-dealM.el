@@ -15,7 +15,8 @@
   :type 'symbol
   :group 'dealM)
 
-;; FIXME:
+;; Font settings works for window mode
+;; emacs -nw will inherit terminal's
 (defcustom default-source-font-r "Courier-14"
   "Default font for dealM"
   :type 'string
