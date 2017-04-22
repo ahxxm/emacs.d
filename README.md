@@ -36,3 +36,5 @@ in virtualenv.
 `irony-mode`(for completion) requires `libclang`, installation method varies among different systems.
 
 irony server also requires cmake to compile.
+
+`libclang.so` upgrade might require irony-server to be re-compiled, depends on your compile args.
