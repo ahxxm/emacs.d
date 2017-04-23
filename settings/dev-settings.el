@@ -211,7 +211,6 @@ With a prefix argument, highlight for that many seconds.
   (highlight-parentheses-mode t)
   (highlight-indentation-mode t)
 
-  ;; add FIXME word color
   (font-lock-add-keywords
    nil
    '(("\\<\\(FIX\\(ME\\)?\\|TODO\\|HACK\\|REFACTOR\\|NOCOMMIT\\|WARN\\(ING\\)?\\)"
