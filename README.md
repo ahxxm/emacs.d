@@ -26,7 +26,7 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 To make most of python-mode, run:
 
 ```
-pip install epc jedi pep8 pyflakes ipdb
+pip install epc jedi pep8 flake8 ipdb
 ```
 
 in virtualenv.

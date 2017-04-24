@@ -26,11 +26,6 @@
 (use-package auto-complete-config
   :commands (ac-config-default))
 
-;; Disabling Yasnippet completion
-;; TODO:
-;; https://github.com/gabrielelanaro/emacs-for-python/blob/master/epy-completion.el
-;; reintegrate snippet into ac-compelte with epy-snips-from-table
-
 (provide 'auto-complete-setting)
 ;; auto-complete-setting ends here.
 ;;;
