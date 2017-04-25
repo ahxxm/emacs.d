@@ -38,3 +38,13 @@ in virtualenv.
 irony server also requires cmake to compile.
 
 `libclang.so` upgrade might require irony-server to be re-compiled, depends on your compile args.
+
+### Clojure-mode
+
+`C-c M-x` for cider-repl.
+
+[Add](https://github.com/clojure-emacs/cider-nrepl) following to `~/.lein/profiles.clj`:
+
+```
+:plugins [[cider/cider-nrepl "0.14.0"]]
+```
