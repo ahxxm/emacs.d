@@ -19,17 +19,28 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 
 `emacs-dealM.el` is an entrypoint for modifying.
 
+## Shortcuts
+
+- `C-]`: jump to matching paren
+- `F1`: find file by name
+- `F2`: full-text grep
+- `C-x v z`: magit-status
+- `C-c C-c`: comment current line
+
 ## Modes
 
 ### Python-mode
 
-To make most of python-mode, run:
+To make most of python-mode, run following in virtualenv:
 
 ```
 pip install epc jedi pep8 flake8 ipdb
 ```
 
-in virtualenv.
+Mode specific shortcuts:
+
+- `C-c g`: goto definition
+- `C-c d`: show doc
 
 ### C++-mode
 
