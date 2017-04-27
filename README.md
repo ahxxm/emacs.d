@@ -21,11 +21,21 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 
 ## Shortcuts
 
+### Edit
+
 - `C-]`: jump to matching paren
 - `F1`: find file by name
 - `F2`: full-text grep
 - `C-x v z`: magit-status
 - `C-c C-c`: comment current line
+- `C-x u`: revert buffer, the same as `k` in magit status
+
+### Buffer
+
+- `C-x 1`: delete-other-windows
+- `C-x 2`: split-window-vertically
+- `C-x 3`: split-window-horizontally
+- `C-x o`: switch to another-window
 
 ## Modes
 
