@@ -12,6 +12,9 @@
 (use-package edit-functions
   ;; :commands (def-position-command)
   :defer t
+  :init
+  ;;; ensure C-z unbinded
+  (global-unset-key "\C-z")
   :config
   ;; other global keys.
   (when (string= system-type "windows-nt")
@@ -60,8 +63,13 @@
          ("C-x M-w" . copy-sexp)
          ("C-x TAB" . smart-indent)
          ("C-h" . c-electric-backspace-kill)
-         ("M-Y" . redo)
          ("M-q" . fill-paragraph-justify)
+
+
+
+         ("C-z" . undo)
+         ("M-Y" . redo)
+
          ;; Wheel settings
          ("<C-mouse-4>" . text-scale-increase)
          ("<C-mouse-5>" . text-scale-decrease)))
@@ -69,8 +77,7 @@
 (use-package simple
   :if window-system
   :defer t
-  :bind (("C-z" . undo)
-         ("M-n" . next-error)
+  :bind (("M-n" . next-error)
          ("M-p" . previous-error)))
 
 
