@@ -38,7 +38,6 @@
         cider-repl-history-file (concat emacs-root-path "cider-repl.history")
         cider-stacktrace-fill-column 80)
   :bind (:map cider-mode-map            ; bind keys in specific map
-              ("C-c C-f" . yas-find-snippets)
               ("C-c M-c" . copy-file-name) ; originally cider-connect
               ("C-c g"   . cider-find-var))
   :config
