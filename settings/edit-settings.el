@@ -65,8 +65,6 @@
          ("C-h" . c-electric-backspace-kill)
          ("M-q" . fill-paragraph-justify)
 
-
-
          ("C-z" . undo)
          ("M-Y" . redo)
 

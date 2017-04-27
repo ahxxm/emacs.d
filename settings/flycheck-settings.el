@@ -10,6 +10,8 @@
   :init
   (setq flycheck-mode-line-prefix "F")
 
+  ;; C++ mode settings
+  ;; FIXME: projectile auto expand include path?
   (when (memq system-type '(darwin gnu gnu/linux gnu/kfreebsd))
         (add-hook 'c++-mode-hook
               #'(lambda ()
@@ -22,6 +24,7 @@
             (lambda ()
               (setq flycheck-clang-language-standard "c++14")))
 
+  ;; Generic flycheck-mode settings
   (dolist (hook '(python-mode-hook
                   clojure-mode-hook
                   c-mode-hook

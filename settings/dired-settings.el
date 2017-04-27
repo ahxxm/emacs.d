@@ -48,6 +48,7 @@
   (openwith-mode)
   :init
   (openwith-mode t)
+  ;; FIXME: better openwith
   (push '("\\.pdf\\'" "evince" (file)) openwith-associations)
   (push '("\\.epub\\'" "calibre" (file)) openwith-associations)
   (push '("\\.rar\\'" "peazip" (file)) openwith-associations))

@@ -108,6 +108,7 @@ With a prefix argument, highlight for that many seconds.
    projectile-project-vcs
    projectile-project-root
    projectile-project-name)
+  ;; FIXME: f1 slow in this repo
   :bind (("<f1>" . smart-find-file)
          ("<f2>" . smart-grep))
   :config   ; execute code after a package is loaded
@@ -254,7 +255,7 @@ With a prefix argument, highlight for that many seconds.
 (defun clojure-short-cut()
   "Clojure mode short-cut key settings."
   (start-program-short-cut)
-
+  ;; FIXME: not working either marked or not
   (local-set-key (kbd "C-c C")   'comment-function))
 
 
@@ -268,8 +269,14 @@ With a prefix argument, highlight for that many seconds.
   (electric-spacing-mode)
   (setq c-basic-offset 2)
   (paren-toggle-open-paren-context 1)
+
+  ;; FIXME: these 2 failed,
+  ;; command-execute: Wrong type argument: commandp,
   (local-set-key (kbd "C-c C-k") 'kill-function)
   (local-set-key (kbd "C-c M-w") 'copy-function-whole)
+
+  ;; mark then comment works
+  ;; FIXME: smarter comment-function, auto mark
   (local-set-key (kbd "C-M-h") 'mark-function)
   (local-set-key (kbd "C-c C") 'comment-function))
 
