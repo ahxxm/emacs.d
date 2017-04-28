@@ -37,6 +37,10 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 - `C-x 3`: split-window-horizontally
 - `C-x o`: switch to another-window
 
+### Other
+
+- `F4`: projectile-invalidate-cache, in case project file changes
+
 ## Modes
 
 ### Python-mode

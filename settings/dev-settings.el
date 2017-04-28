@@ -108,9 +108,10 @@ With a prefix argument, highlight for that many seconds.
    projectile-project-vcs
    projectile-project-root
    projectile-project-name)
-  ;; FIXME: f1 slow in this repo
   :bind (("<f1>" . smart-find-file)
-         ("<f2>" . smart-grep))
+         ("<f2>" . smart-grep)
+         ("<f4>" . projectile-invalidate-cache))
+
   :config   ; execute code after a package is loaded
   (defun smart-find-file ()
     (interactive)
@@ -141,7 +142,13 @@ With a prefix argument, highlight for that many seconds.
       (call-interactively 'projectile-grep)))
   (use-package dired
     :bind (:map dired-mode-map
-                ("<f1>" . smart-find-file))))
+                ("<f1>" . smart-find-file)))
+
+  ;; enable mode globally, brings caching param and enable
+  ;; cache was written to:
+  ;; (expand-file-name "projectile.cache" user-emacs-directory)
+  (projectile-mode)
+  (setq projectile-enable-caching t))
 
 
 (use-package projectile
