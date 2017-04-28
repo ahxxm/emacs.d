@@ -206,7 +206,6 @@
 
 (when (string= system-type "darwin")
 ;;; ENV path correction for (Mac os x)
-  ;; FIXME:
   (dolist (ensure-path '("/usr/bin"
                          "/bin"
                          "/usr/sbin"
