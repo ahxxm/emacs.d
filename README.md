@@ -29,6 +29,7 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 - `C-x v z`: magit-status
 - `C-c C-c`: comment current line
 - `C-x u`: revert buffer, the same as `k` in magit status
+- `C-z`: undo
 
 ### Buffer
 
