@@ -244,6 +244,7 @@ With a prefix argument, highlight for that many seconds.
   ;; FIXME: start emacs in this repo, open this file
   ;; C-c C, then error:
   ;; Wrong type argument: commandp, comment-function
+  ;; magit-status can let this go..
   (local-set-key (kbd "C-c C")   'comment-function))
 
 ;; json short cut Settings.
