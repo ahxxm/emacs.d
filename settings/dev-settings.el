@@ -240,6 +240,10 @@ With a prefix argument, highlight for that many seconds.
   (local-set-key (kbd "C-c B")   'eval-buffer)
   (local-set-key (kbd "C-c M-w") 'copy-function-whole)
   (local-set-key (kbd "C-c C-q") 'indent-function)
+
+  ;; FIXME: start emacs in this repo, open this file
+  ;; C-c C, then error:
+  ;; Wrong type argument: commandp, comment-function
   (local-set-key (kbd "C-c C")   'comment-function))
 
 ;; json short cut Settings.
