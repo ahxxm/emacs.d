@@ -48,10 +48,11 @@
   (openwith-mode)
   :init
   (openwith-mode t)
-  ;; FIXME: better openwith
-  (push '("\\.pdf\\'" "evince" (file)) openwith-associations)
-  (push '("\\.epub\\'" "calibre" (file)) openwith-associations)
-  (push '("\\.rar\\'" "peazip" (file)) openwith-associations))
+  ;; FIXME: gdb-open
+
+  ;; open with system's "open", pdf&epub uses Preview.app
+  (push '("\\.pdf\\'" "open" (file)) openwith-associations)
+  (push '("\\.epub\\'" "open" (file)) openwith-associations))
 
 (provide 'dired-settings)
 ;; dired-settings ends here.
