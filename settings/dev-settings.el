@@ -239,16 +239,8 @@ With a prefix argument, highlight for that many seconds.
   (local-set-key (kbd "C-c C-d") 'eval-defun)
   (local-set-key (kbd "C-c B")   'eval-buffer)
   (local-set-key (kbd "C-c M-w") 'copy-function-whole)
-  (local-set-key (kbd "C-c C-q") 'indent-function)
+  (local-set-key (kbd "C-c C-q") 'indent-function))
 
-  ;; FIXME: start emacs in this repo, open this file
-  ;; C-c C, then error:
-  ;; Wrong type argument: commandp, comment-function
-  ;; Workaround:
-  ;; - C-k "import"s comment-function
-  ;; - select a function then C-c C
-  ;; Can't be reproduced consistently
-  (local-set-key (kbd "C-c C")   'comment-function))
 
 ;; json short cut Settings.
 ;; ==================================================================
@@ -269,9 +261,7 @@ With a prefix argument, highlight for that many seconds.
 ;; ==================================================================
 (defun clojure-short-cut()
   "Clojure mode short-cut key settings."
-  (start-program-short-cut)
-  ;; FIXME: not working either marked or not
-  (local-set-key (kbd "C-c C")   'comment-function))
+  (start-program-short-cut))
 
 
 ;; c-common-mode short cut settings.
@@ -288,12 +278,7 @@ With a prefix argument, highlight for that many seconds.
   ;; FIXME: these 2 failed,
   ;; command-execute: Wrong type argument: commandp,
   (local-set-key (kbd "C-c C-k") 'kill-function)
-  (local-set-key (kbd "C-c M-w") 'copy-function-whole)
-
-  ;; mark then comment works
-  ;; FIXME: smarter comment-function, auto mark
-  (local-set-key (kbd "C-M-h") 'mark-function)
-  (local-set-key (kbd "C-c C") 'comment-function))
+  (local-set-key (kbd "C-c M-w") 'copy-function-whole))
 
 
 ;; python mode short cut settings.

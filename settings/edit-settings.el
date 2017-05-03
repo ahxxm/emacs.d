@@ -65,6 +65,7 @@
          ("C-x TAB" . smart-indent)
          ("C-h" . c-electric-backspace-kill)
          ("M-q" . fill-paragraph-justify)
+         ("C-c C" . comment-function)
 
          ("C-z" . undo)
          ("M-Y" . redo)
