@@ -1,3 +1,4 @@
+;; -*- Emacs-Lisp -*-
 (add-to-list 'load-path (concat plugins-path-r "irony-mode/"))
 
 ;; irony requires:

@@ -35,10 +35,6 @@
 ;; disable scroll bar
 (customize-set-variable 'scroll-bar-mode nil)
 
-;;; Unbind the stupid minimize that I always hit.
-(global-unset-key "\C-z")
-
-
 (use-package files
   :init
   ;; Diable backup
@@ -145,9 +141,7 @@
 (setq buffer-file-coding-system 'utf-8)
 
 (autoload 'dockerfile-mode "dockerfile-mode" "" t)
-
 (autoload 'cython-mode "cython-mode" "" t)
-
 (autoload 'json-mode "json-mode" "" t)
 (autoload 'cmake-mode "cmake-mode" "" t)
 (autoload 'adoc-mode "adoc-mode" "" t)
@@ -216,7 +210,6 @@
                          "/bin"
                          "/usr/sbin"
                          "/sbin"
-                         "/Developer/NVIDIA/CUDA-5.5/bin"
                          "/usr/local/share/python"
                          "/usr/local/bin"))
     (unless (member ensure-path exec-path)

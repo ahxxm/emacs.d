@@ -109,7 +109,9 @@ With a prefix argument, highlight for that many seconds.
    projectile-project-root
    projectile-project-name)
   :bind (("<f1>" . smart-find-file)
-         ("<f2>" . smart-grep))
+         ("<f2>" . smart-grep)
+         ("<f4>" . projectile-invalidate-cache))
+
   :config   ; execute code after a package is loaded
   (defun smart-find-file ()
     (interactive)
@@ -140,7 +142,13 @@ With a prefix argument, highlight for that many seconds.
       (call-interactively 'projectile-grep)))
   (use-package dired
     :bind (:map dired-mode-map
-                ("<f1>" . smart-find-file))))
+                ("<f1>" . smart-find-file)))
+
+  ;; enable mode globally, brings caching param and enable
+  ;; cache was written to:
+  ;; (expand-file-name "projectile.cache" user-emacs-directory)
+  (projectile-mode)
+  (setq projectile-enable-caching t))
 
 
 (use-package projectile
@@ -231,8 +239,8 @@ With a prefix argument, highlight for that many seconds.
   (local-set-key (kbd "C-c C-d") 'eval-defun)
   (local-set-key (kbd "C-c B")   'eval-buffer)
   (local-set-key (kbd "C-c M-w") 'copy-function-whole)
-  (local-set-key (kbd "C-c C-q") 'indent-function)
-  (local-set-key (kbd "C-c C")   'comment-function))
+  (local-set-key (kbd "C-c C-q") 'indent-function))
+
 
 ;; json short cut Settings.
 ;; ==================================================================
@@ -253,9 +261,7 @@ With a prefix argument, highlight for that many seconds.
 ;; ==================================================================
 (defun clojure-short-cut()
   "Clojure mode short-cut key settings."
-  (start-program-short-cut)
-
-  (local-set-key (kbd "C-c C")   'comment-function))
+  (start-program-short-cut))
 
 
 ;; c-common-mode short cut settings.
@@ -267,11 +273,7 @@ With a prefix argument, highlight for that many seconds.
   (start-program-short-cut)
   (electric-spacing-mode)
   (setq c-basic-offset 2)
-  (paren-toggle-open-paren-context 1)
-  (local-set-key (kbd "C-c C-k") 'kill-function)
-  (local-set-key (kbd "C-c M-w") 'copy-function-whole)
-  (local-set-key (kbd "C-M-h") 'mark-function)
-  (local-set-key (kbd "C-c C") 'comment-function))
+  (paren-toggle-open-paren-context 1))
 
 
 ;; python mode short cut settings.
