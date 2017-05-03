@@ -27,7 +27,8 @@
     (kbd "C-x g e") emacs-root-path)
   (def-position-command goto-tmp
     (kbd "C-x g t") "~/.tmp/")
-  ;; FIXME: this?
+  ;; Advice combinators:
+  ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Advice-combinators.html
   (advice-add #'kill-line :before-until
               #'kill-line--before-until-cua-and-region-handled)
   :bind (("C-x q" . switch-major-mode)
