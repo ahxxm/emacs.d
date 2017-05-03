@@ -273,12 +273,7 @@ With a prefix argument, highlight for that many seconds.
   (start-program-short-cut)
   (electric-spacing-mode)
   (setq c-basic-offset 2)
-  (paren-toggle-open-paren-context 1)
-
-  ;; FIXME: these 2 failed,
-  ;; command-execute: Wrong type argument: commandp,
-  (local-set-key (kbd "C-c C-k") 'kill-function)
-  (local-set-key (kbd "C-c M-w") 'copy-function-whole))
+  (paren-toggle-open-paren-context 1))
 
 
 ;; python mode short cut settings.
