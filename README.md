@@ -67,7 +67,7 @@ irony server also requires cmake to compile.
 
 ### Clojure-mode
 
-`C-c M-x` for cider-repl.
+`C-c M-j` for cider-repl.
 
 [Add](https://github.com/clojure-emacs/cider-nrepl) following to `~/.lein/profiles.clj`:
 
