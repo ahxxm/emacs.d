@@ -19,6 +19,15 @@
   (add-hook 'c-mode-hook 'irony-mode)
   :config
 
+  (use-package company
+    :defer t
+    :commands (company-mode)
+    :init
+    (add-hook 'c++-mode-hook 'company-mode)
+    (add-hook 'c-mode-hook 'company-mode)
+    :config
+    )
+
   (with-eval-after-load 'company
     (add-to-list 'company-backends 'company-irony))
   (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
