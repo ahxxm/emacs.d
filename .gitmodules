@@ -73,3 +73,9 @@
 [submodule "plugins/irony-mode"]
 	path = plugins/irony-mode
 	url = https://github.com/Sarcasm/irony-mode.git
+[submodule "plugins/company-mode"]
+	path = plugins/company-mode
+	url = https://github.com/company-mode/company-mode
+[submodule "plugins/company-irony"]
+	path = plugins/company-irony
+	url = https://github.com/Sarcasm/company-irony

@@ -59,7 +59,7 @@ Mode specific shortcuts:
 
 ### C++-mode
 
-`irony-mode`(for completion) requires `libclang`, installation method varies among different systems.
+`irony-mode`(for completion) requires `libclang`, installation method [varies](https://github.com/Sarcasm/irony-mode/issues/167) among different systems.
 
 irony server also requires cmake to compile.
 
