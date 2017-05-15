@@ -2,6 +2,17 @@
 ;;; code:
 (add-to-list 'load-path (concat plugins-path-r "flycheck/"))
 (add-to-list 'load-path (concat plugins-path-r "seq.el"))
+(add-to-list 'load-path (concat plugins-path-r "disaster/"))
+
+
+;; Disassemble current file naively
+;; FIXME: ensure loading only on c/c++,
+;; C-c binds to document lookup in python mode
+(use-package disaster
+  :defer t
+  :bind (("C-c d" . disaster))
+  )
+
 
 (use-package
   flycheck
