@@ -6,26 +6,25 @@
 
 
 ;; Disassemble current file naively
-;; FIXME: ensure loading only on c/c++,
-;; C-c binds to document lookup in python mode
 (use-package disaster
+  :mode "\\.\\(cpp\\|c\\)$"
   :defer t
   :bind (("C-c d" . disaster))
   )
 
 
-(use-package
-  flycheck
+(use-package flycheck
   :defer t
   :commands (flycheck-mode)
   :init
   (setq flycheck-mode-line-prefix "F")
 
+
   ;; C++ mode settings
   ;; use https://github.com/LefterisJP/malinka for multiple
   ;; projects
   (when (memq system-type '(darwin gnu gnu/linux gnu/kfreebsd))
-        (add-hook 'c++-mode-hook
+    (add-hook 'c++-mode-hook
               #'(lambda ()
                   (setq flycheck-clang-include-path
                         (list "/usr/local/include")
