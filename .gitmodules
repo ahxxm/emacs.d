@@ -79,3 +79,6 @@
 [submodule "plugins/company-irony"]
 	path = plugins/company-irony
 	url = https://github.com/Sarcasm/company-irony
+[submodule "plugins/disaster"]
+	path = plugins/disaster
+	url = https://github.com/jart/disaster
