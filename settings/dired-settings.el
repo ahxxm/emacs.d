@@ -42,18 +42,6 @@
               ("M-b" . backward-word)))
 
 
-(use-package openwith
-  :if (eq system-type 'darwin)
-  :commands
-  (openwith-mode)
-  :init
-  (openwith-mode t)
-  ;; FIXME: gdb-open
-
-  ;; open with system's "open", pdf&epub uses Preview.app
-  (push '("\\.pdf\\'" "open" (file)) openwith-associations)
-  (push '("\\.epub\\'" "open" (file)) openwith-associations))
-
 (provide 'dired-settings)
 ;; dired-settings ends here.
 ;;;
