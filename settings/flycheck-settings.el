@@ -7,7 +7,8 @@
 
 ;; Disassemble current file naively
 (use-package disaster
-  :mode "\\.\\(cpp\\|c\\)$"
+  ;; FIXME: will run disaster on opening .c/.cpp files ..
+  ;; :mode "\\.\\(cpp\\|c\\)$"
   :defer t
   :bind (("C-c d" . disaster))
   )
