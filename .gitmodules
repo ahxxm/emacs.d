@@ -82,3 +82,6 @@
 [submodule "plugins/disaster"]
 	path = plugins/disaster
 	url = https://github.com/jart/disaster
+[submodule "plugins/go-mode"]
+	path = plugins/go-mode
+	url = https://github.com/dominikh/go-mode.el
