@@ -146,6 +146,9 @@
 (autoload 'cmake-mode "cmake-mode" "" t)
 (autoload 'adoc-mode "adoc-mode" "" t)
 
+(add-to-list 'load-path (concat plugins-path-r "go-mode"))
+(autoload 'go-mode "go-mode" "" t)
+
 ;; modes definition.
 (setq auto-mode-alist
       (append '(("\\.[Cc][Xx][Xx]$" . c++-mode)
@@ -168,6 +171,7 @@
                 ("Doxyfile.tmpl$" . makefile-mode)
                 ("Doxyfile$" . makefile-mode)
                 ("CMakeLists\\.txt\\'" . cmake-mode)
+                ("\\.go\\'" . go-mode)
                 ("\\.cmake\\'" . cmake-mode)
                 ("\\.uncompressed$" . hexl-mode)
                 ("\\.ts$" . typescript-mode)
