@@ -59,6 +59,7 @@
 (require 'dev-settings)
 (require 'python-settings)
 (require 'lisp-settings)
+(require 'go-settings)
 
 
 ;; registers.

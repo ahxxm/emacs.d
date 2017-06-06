@@ -74,3 +74,7 @@ irony server also requires cmake to compile.
 ```
 :plugins [[cider/cider-nrepl "0.14.0"]]
 ```
+
+### Go-mode
+
+Install `gocode` by `go get -u -v github.com/nsf/gocode`
