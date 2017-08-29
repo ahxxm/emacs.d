@@ -91,3 +91,6 @@
 [submodule "plugins/scala-mode"]
 	path = plugins/scala-mode
 	url = https://github.com/ensime/emacs-scala-mode
+[submodule "plugins/emacs-sbt-mode"]
+	path = plugins/emacs-sbt-mode
+	url = https://github.com/ensime/emacs-sbt-mode

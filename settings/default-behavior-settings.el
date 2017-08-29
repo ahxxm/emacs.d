@@ -147,9 +147,7 @@
 (autoload 'adoc-mode "adoc-mode" "" t)
 
 (add-to-list 'load-path (concat plugins-path-r "go-mode"))
-(add-to-list 'load-path (concat plugins-path-r "scala-mode"))
 (autoload 'go-mode "go-mode" "" t)
-(autoload 'scala-mode "scala-mode" "" t)
 
 
 ;; modes definition.
@@ -161,7 +159,6 @@
                 ("\\.[Yy][Aa]?[Mm][Ll]$" . yaml-mode)
                 ("\\.sass$" . sass-mode)
                 ("\\.scss$" . scss-mode)
-                ("\\.scala$" . scala-mode)
                 ("\\.less\\'" . less-css-mode)
                 ("\\.h$" . c++-mode)
                 ("\\.i$" . c++-mode)    ; SWIG
