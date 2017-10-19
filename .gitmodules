@@ -94,3 +94,6 @@
 [submodule "plugins/emacs-sbt-mode"]
 	path = plugins/emacs-sbt-mode
 	url = https://github.com/ensime/emacs-sbt-mode
+[submodule "plugins/rust-mode"]
+	path = plugins/rust-mode
+	url = https://github.com/rust-lang/rust-mode

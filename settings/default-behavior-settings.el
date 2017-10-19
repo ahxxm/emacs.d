@@ -148,7 +148,8 @@
 
 (add-to-list 'load-path (concat plugins-path-r "go-mode"))
 (autoload 'go-mode "go-mode" "" t)
-
+(add-to-list 'load-path (concat plugins-path-r "rust-mode"))
+(autoload 'rust-mode "rust-mode" "" t)
 
 ;; modes definition.
 (setq auto-mode-alist
@@ -173,6 +174,7 @@
                 ("Doxyfile$" . makefile-mode)
                 ("CMakeLists\\.txt\\'" . cmake-mode)
                 ("\\.go\\'" . go-mode)
+                ("\\.rs\\'" . go-mode)
                 ("\\.cmake\\'" . cmake-mode)
                 ("\\.uncompressed$" . hexl-mode)
                 ("\\.ts$" . typescript-mode)
