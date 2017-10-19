@@ -60,6 +60,7 @@
               (cider-mode +1)))
   :mode
   ("\\.clj[sx]?\\'" . clojure-mode)
+  ("\\.boot\\'"     . clojure-mode)
   ("\\.edn\\'"      . clojure-mode))
 
 (eval-after-load "ob"

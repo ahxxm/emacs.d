@@ -56,7 +56,7 @@
   ;;     (setenv "PATH" (mapconcat 'identity exec-path ":"))))
   (add-hook 'python-mode-hook 'jedi:setup)
   :mode ("\\.py\\'" . python-mode)      ; mode name is diff from package
-  :interpreter ("python" . python-mode))
+  :interpreter ("python3" . python-mode))
 
 (provide 'python-settings)
 ;; python-settings ends here.
