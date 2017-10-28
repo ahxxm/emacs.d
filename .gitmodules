@@ -97,3 +97,6 @@
 [submodule "plugins/rust-mode"]
 	path = plugins/rust-mode
 	url = https://github.com/rust-lang/rust-mode
+[submodule "plugins/lua-mode"]
+	path = plugins/lua-mode
+	url = https://github.com/immerrr/lua-mode

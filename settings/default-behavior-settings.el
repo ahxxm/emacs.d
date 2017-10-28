@@ -146,6 +146,8 @@
 (autoload 'cmake-mode "cmake-mode" "" t)
 (autoload 'adoc-mode "adoc-mode" "" t)
 
+(add-to-list 'load-path (concat plugins-path-r "lua-mode"))
+(autoload 'lua-mode "lua-mode" "" t)
 (add-to-list 'load-path (concat plugins-path-r "go-mode"))
 (autoload 'go-mode "go-mode" "" t)
 (add-to-list 'load-path (concat plugins-path-r "rust-mode"))
@@ -173,6 +175,7 @@
                 ("Doxyfile.tmpl$" . makefile-mode)
                 ("Doxyfile$" . makefile-mode)
                 ("CMakeLists\\.txt\\'" . cmake-mode)
+                ("\\.lua\\'" . lua-mode)
                 ("\\.go\\'" . go-mode)
                 ("\\.rs\\'" . go-mode)
                 ("\\.cmake\\'" . cmake-mode)
