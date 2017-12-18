@@ -177,7 +177,7 @@
                 ("CMakeLists\\.txt\\'" . cmake-mode)
                 ("\\.lua\\'" . lua-mode)
                 ("\\.go\\'" . go-mode)
-                ("\\.rs\\'" . go-mode)
+                ("\\.rs\\'" . rust-mode)
                 ("\\.cmake\\'" . cmake-mode)
                 ("\\.uncompressed$" . hexl-mode)
                 ("\\.ts$" . typescript-mode)
