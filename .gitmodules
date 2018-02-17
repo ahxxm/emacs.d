@@ -100,3 +100,6 @@
 [submodule "plugins/lua-mode"]
 	path = plugins/lua-mode
 	url = https://github.com/immerrr/lua-mode
+[submodule "plugins/emacs-smali"]
+	path = plugins/emacs-smali
+	url = https://github.com/strazzere/Emacs-Smali/

@@ -152,6 +152,8 @@
 (autoload 'go-mode "go-mode" "" t)
 (add-to-list 'load-path (concat plugins-path-r "rust-mode"))
 (autoload 'rust-mode "rust-mode" "" t)
+(add-to-list 'load-path (concat plugins-path-r "emacs-smali"))
+(autoload 'smali-mode "smali-mode" "" t)
 
 ;; modes definition.
 (setq auto-mode-alist
@@ -178,6 +180,7 @@
                 ("\\.lua\\'" . lua-mode)
                 ("\\.go\\'" . go-mode)
                 ("\\.rs\\'" . rust-mode)
+                ("\\.smali\\'" . smali-mode)
                 ("\\.cmake\\'" . cmake-mode)
                 ("\\.uncompressed$" . hexl-mode)
                 ("\\.ts$" . typescript-mode)
