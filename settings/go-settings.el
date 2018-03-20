@@ -16,17 +16,26 @@
   :defer t
   :commands (gofmt gofmt-before-save)
   :mode "\\.go\\'"
-  :init
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  (add-hook 'go-mode-hook 'auto-complete-mode)
+  :bind (:map go-mode-map
+              ("C-c g" . godef-jump))
   :config
-  (auto-complete-mode))
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  (add-hook 'go-mode-hook 'company-mode))
 
 (use-package go-eldoc
+  :after go-mode
   :defer t
   :commands (go-eldoc-setup)
   :init
   (add-hook 'go-mode-hook 'go-eldoc-setup))
+
+(use-package company-go
+  :after go-mode
+  :config
+  (add-hook 'go-mode-hook
+            (lambda ()
+              (set (make-local-variable 'company-backends) '(company-go)))))
+
 
 (provide 'go-settings)
 ;; go-settings ends here.
