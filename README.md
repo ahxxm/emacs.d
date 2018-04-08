@@ -78,3 +78,8 @@ irony server also requires cmake to compile.
 ### Go-mode
 
 Install `gocode` by `go get -u -v github.com/nsf/gocode`
+
+## TODO
+
+- [ ] versatile c/c++ mode: flycheck, jump to definition, completion on tab
+- [ ] clojurescript-mode
