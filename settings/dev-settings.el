@@ -69,14 +69,6 @@ With a prefix argument, highlight for that many seconds.
 (autoload 'highlight-symbol-at-point "highlight-symbol" "" t)
 (defalias 'highlight-symbol 'highlight-symbol-at-point)
 
-
-;; show-wspace settings.
-;; ------------------------------------------------------------------
-(autoload 'toggle-highlight-tabs "show-wspace" "" t)
-(autoload 'toggle-highlight-hard-spaces "show-wspace" "" t)
-(autoload 'toggle-highlight-other-chars "show-wspace" "" t)
-(autoload 'toggle-highlight-trailing-whitespace "show-wspace" "" t)
-
 
 ;; git (magit) settings here
 ;; ------------------------------------------------------------------
@@ -208,10 +200,6 @@ With a prefix argument, highlight for that many seconds.
   ;; highlight settings by mode.
   (hl-line-mode t)
   (auto-highlight-symbol-mode)
-  ;; (toggle-highlight-trailing-whitespace)
-  ;; (toggle-highlight-tabs)
-  ;; (toggle-highlight-hard-spaces)
-  ;; (toggle-highlight-other-chars)
   (highlight-parentheses-mode t)
   (highlight-indentation-mode t)
 
