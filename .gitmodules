@@ -49,9 +49,6 @@
 [submodule "plugins/clojure-mode"]
 	path = plugins/clojure-mode
 	url = https://github.com/technomancy/clojure-mode.git
-[submodule "plugins/jade-mode"]
-	path = plugins/jade-mode
-	url = https://github.com/brianc/jade-mode.git
 [submodule "plugins/rainbow-delimiters"]
 	path = plugins/rainbow-delimiters
 	url = https://github.com/Fanael/rainbow-delimiters.git
