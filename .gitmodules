@@ -82,3 +82,9 @@
 [submodule "plugins/go-eldoc"]
 	path = plugins/go-eldoc
 	url = https://github.com/syohex/emacs-go-eldoc
+[submodule "plugins/lsp-mode"]
+	path = plugins/lsp-mode
+	url = https://github.com/emacs-lsp/lsp-mode
+[submodule "plugins/lsp-ui"]
+	path = plugins/lsp-ui
+	url = https://github.com/emacs-lsp/lsp-ui

@@ -120,7 +120,7 @@
 (setq tab-width 4
       tab-stop-list nil)
 
-(loop for x downfrom 40 to 1 do
+(cl-loop for x downfrom 40 to 1 do
       (setq tab-stop-list (cons (* x tab-width) tab-stop-list)))
 
 ;; More generic highlight settings.
