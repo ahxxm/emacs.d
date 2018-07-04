@@ -252,8 +252,6 @@ With a prefix argument, highlight for that many seconds.
 ;; ==================================================================
 (defun c-common-short-cut()
   "c common mode short-cut key settings."
-  (add-to-list 'load-path (concat plugins-path-r "xcscope.el/"))
-  (require 'xcscope)
   (start-program-short-cut)
   (electric-spacing-mode)
   (setq c-basic-offset 2)

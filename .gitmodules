@@ -13,9 +13,6 @@
 [submodule "plugins/rich-minority"]
 	path = plugins/rich-minority
 	url = https://github.com/Malabarba/rich-minority.git
-[submodule "plugins/xcscope.el"]
-	path = plugins/xcscope.el
-	url = https://github.com/dkogan/xcscope.el
 [submodule "plugins/flycheck"]
 	path = plugins/flycheck
 	url = https://github.com/flycheck/flycheck.git
