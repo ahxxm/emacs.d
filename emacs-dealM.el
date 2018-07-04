@@ -60,7 +60,6 @@
 (require 'python-settings)
 (require 'lisp-settings)
 (require 'go-settings)
-(require 'scala-settings)
 
 
 ;; registers.

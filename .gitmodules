@@ -88,12 +88,6 @@
 [submodule "plugins/go-eldoc"]
 	path = plugins/go-eldoc
 	url = https://github.com/syohex/emacs-go-eldoc
-[submodule "plugins/scala-mode"]
-	path = plugins/scala-mode
-	url = https://github.com/ensime/emacs-scala-mode
-[submodule "plugins/emacs-sbt-mode"]
-	path = plugins/emacs-sbt-mode
-	url = https://github.com/ensime/emacs-sbt-mode
 [submodule "plugins/rust-mode"]
 	path = plugins/rust-mode
 	url = https://github.com/rust-lang/rust-mode
