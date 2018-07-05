@@ -120,7 +120,7 @@
 (setq tab-width 4
       tab-stop-list nil)
 
-(loop for x downfrom 40 to 1 do
+(cl-loop for x downfrom 40 to 1 do
       (setq tab-stop-list (cons (* x tab-width) tab-stop-list)))
 
 ;; More generic highlight settings.
@@ -146,14 +146,8 @@
 (autoload 'cmake-mode "cmake-mode" "" t)
 (autoload 'adoc-mode "adoc-mode" "" t)
 
-(add-to-list 'load-path (concat plugins-path-r "lua-mode"))
-(autoload 'lua-mode "lua-mode" "" t)
 (add-to-list 'load-path (concat plugins-path-r "go-mode"))
 (autoload 'go-mode "go-mode" "" t)
-(add-to-list 'load-path (concat plugins-path-r "rust-mode"))
-(autoload 'rust-mode "rust-mode" "" t)
-(add-to-list 'load-path (concat plugins-path-r "emacs-smali"))
-(autoload 'smali-mode "smali-mode" "" t)
 
 ;; modes definition.
 (setq auto-mode-alist
@@ -177,10 +171,7 @@
                 ("Doxyfile.tmpl$" . makefile-mode)
                 ("Doxyfile$" . makefile-mode)
                 ("CMakeLists\\.txt\\'" . cmake-mode)
-                ("\\.lua\\'" . lua-mode)
                 ("\\.go\\'" . go-mode)
-                ("\\.rs\\'" . rust-mode)
-                ("\\.smali\\'" . smali-mode)
                 ("\\.cmake\\'" . cmake-mode)
                 ("\\.uncompressed$" . hexl-mode)
                 ("\\.ts$" . typescript-mode)

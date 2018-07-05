@@ -17,9 +17,6 @@ Insert operators with surrounding spaces smartly.
      ))
 
 
-;; global modes
-;; ------------------------------------------------------------------
-
 ;; hl-line+ settings.
 ;; ------------------------------------------------------------------
 
@@ -72,14 +69,6 @@ With a prefix argument, highlight for that many seconds.
 (autoload 'highlight-symbol-at-point "highlight-symbol" "" t)
 (defalias 'highlight-symbol 'highlight-symbol-at-point)
 
-
-;; show-wspace settings.
-;; ------------------------------------------------------------------
-(autoload 'toggle-highlight-tabs "show-wspace" "" t)
-(autoload 'toggle-highlight-hard-spaces "show-wspace" "" t)
-(autoload 'toggle-highlight-other-chars "show-wspace" "" t)
-(autoload 'toggle-highlight-trailing-whitespace "show-wspace" "" t)
-
 
 ;; git (magit) settings here
 ;; ------------------------------------------------------------------
@@ -94,7 +83,6 @@ With a prefix argument, highlight for that many seconds.
   :after (dired)
   :bind (:map dired-mode-map
               ("c" . magit-status)))
-
 
 
 
@@ -128,7 +116,7 @@ With a prefix argument, highlight for that many seconds.
     (with-current-buffer (generate-new-buffer "*Magit Grep*")
       (setq default-directory (projectile-project-root))
       (insert magit-git-executable " "
-              (mapconcat 'identity magit-git-standard-options " ")
+              ;; FIXME: (mapconcat 'identity magit-git-standard-options " ")
               " grep -n "
               (shell-quote-argument pattern) "\n\n")
       (magit-git-insert "grep" "--line-number" "--color" pattern)
@@ -212,10 +200,6 @@ With a prefix argument, highlight for that many seconds.
   ;; highlight settings by mode.
   (hl-line-mode t)
   (auto-highlight-symbol-mode)
-  ;; (toggle-highlight-trailing-whitespace)
-  ;; (toggle-highlight-tabs)
-  ;; (toggle-highlight-hard-spaces)
-  ;; (toggle-highlight-other-chars)
   (highlight-parentheses-mode t)
   (highlight-indentation-mode t)
 
@@ -268,8 +252,6 @@ With a prefix argument, highlight for that many seconds.
 ;; ==================================================================
 (defun c-common-short-cut()
   "c common mode short-cut key settings."
-  (add-to-list 'load-path (concat plugins-path-r "xcscope.el/"))
-  (require 'xcscope)
   (start-program-short-cut)
   (electric-spacing-mode)
   (setq c-basic-offset 2)
@@ -286,47 +268,6 @@ With a prefix argument, highlight for that many seconds.
   (local-set-key (kbd "M-/") 'jedi:complete)
   (local-set-key (kbd "C-c d") 'jedi:show-doc))
 
-;; awk mode short cut settings.
-;; ==================================================================
-(defun awk-short-cut()
-  "awk mode short-cut key settings."
-  (electric-spacing-mode)
-  (start-program-short-cut))
-
-;; shell mode short cut settings.
-;; ==================================================================
-(defun shell-short-cut()
-  "shell mode short-cut key settings."
-  (start-program-short-cut)
-  (local-set-key (kbd "<")       'self-insert-command)
-  (local-set-key (kbd "C-c M-c") 'sh-case)
-  (local-set-key (kbd "C-c g")   'bashdb))
-
-;; tex mode short cut settings.
-;; ==================================================================
-(defun tex-short-cut()
-  "shell mode short-cut key settings."
-  (start-program-short-cut)
-  ;; compatible with flyspell.
-
-  (paren-toggle-matching-quoted-paren 1)
-  (paren-toggle-matching-paired-delimiter 1)
-  (ac-flyspell-workaround))
-
-;; Jade-Mode settings
-;; ==================================================================
-(add-to-list 'load-path (concat plugins-path-r "jade-mode/"))
-
-(autoload 'sws-mode "sws-mode" "" t)
-(autoload 'jade-mode "jade-mode" "" t)
-
-(add-to-list 'auto-mode-alist '("\\.styl$" . sws-mode))
-(add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode))
-
-(defun jade-short-cut()
-  (start-program-short-cut)
-  )
-
 
 ;; Short cut Hooks here.
 ;; ==================================================================
@@ -335,10 +276,6 @@ With a prefix argument, highlight for that many seconds.
 (add-hook 'json-mode-hook       'json-short-cut)
 (add-hook 'c-mode-common-hook   'c-common-short-cut)
 (add-hook 'python-mode-hook     'python-short-cut)
-(add-hook 'awk-mode-hook        'awk-short-cut);; After emacs 21 work here.
-(add-hook 'sh-mode-hook         'shell-short-cut)
-(add-hook 'LaTex-mode-hook      'tex-short-cut)
-(add-hook 'jade-mode-hook       'jade-short-cut)
 
 (provide 'dev-settings)
 ;; dev-settings ends here.

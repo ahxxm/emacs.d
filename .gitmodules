@@ -13,9 +13,6 @@
 [submodule "plugins/rich-minority"]
 	path = plugins/rich-minority
 	url = https://github.com/Malabarba/rich-minority.git
-[submodule "plugins/xcscope.el"]
-	path = plugins/xcscope.el
-	url = https://github.com/dkogan/xcscope.el
 [submodule "plugins/flycheck"]
 	path = plugins/flycheck
 	url = https://github.com/flycheck/flycheck.git
@@ -49,9 +46,6 @@
 [submodule "plugins/clojure-mode"]
 	path = plugins/clojure-mode
 	url = https://github.com/technomancy/clojure-mode.git
-[submodule "plugins/jade-mode"]
-	path = plugins/jade-mode
-	url = https://github.com/brianc/jade-mode.git
 [submodule "plugins/rainbow-delimiters"]
 	path = plugins/rainbow-delimiters
 	url = https://github.com/Fanael/rainbow-delimiters.git
@@ -88,18 +82,9 @@
 [submodule "plugins/go-eldoc"]
 	path = plugins/go-eldoc
 	url = https://github.com/syohex/emacs-go-eldoc
-[submodule "plugins/scala-mode"]
-	path = plugins/scala-mode
-	url = https://github.com/ensime/emacs-scala-mode
-[submodule "plugins/emacs-sbt-mode"]
-	path = plugins/emacs-sbt-mode
-	url = https://github.com/ensime/emacs-sbt-mode
-[submodule "plugins/rust-mode"]
-	path = plugins/rust-mode
-	url = https://github.com/rust-lang/rust-mode
-[submodule "plugins/lua-mode"]
-	path = plugins/lua-mode
-	url = https://github.com/immerrr/lua-mode
-[submodule "plugins/emacs-smali"]
-	path = plugins/emacs-smali
-	url = https://github.com/strazzere/Emacs-Smali/
+[submodule "plugins/lsp-mode"]
+	path = plugins/lsp-mode
+	url = https://github.com/emacs-lsp/lsp-mode
+[submodule "plugins/lsp-ui"]
+	path = plugins/lsp-ui
+	url = https://github.com/emacs-lsp/lsp-ui
