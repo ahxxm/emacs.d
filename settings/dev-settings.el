@@ -116,7 +116,7 @@ With a prefix argument, highlight for that many seconds.
     (with-current-buffer (generate-new-buffer "*Magit Grep*")
       (setq default-directory (projectile-project-root))
       (insert magit-git-executable " "
-              (mapconcat 'identity magit-git-standard-options " ")
+              ;; FIXME: (mapconcat 'identity magit-git-standard-options " ")
               " grep -n "
               (shell-quote-argument pattern) "\n\n")
       (magit-git-insert "grep" "--line-number" "--color" pattern)
