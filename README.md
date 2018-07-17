@@ -77,7 +77,10 @@ irony server also requires cmake to compile.
 
 ### Go-mode
 
-Install `gocode` by `go get -u -v github.com/mdempsky/gocode`
+Install :
+
+- gocode: `go get -u -v github.com/mdempsky/gocode`
+- godef: `go get -u -v github.com/rogpeppe/godef`
 
 ## TODO
 
