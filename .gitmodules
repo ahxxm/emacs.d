@@ -88,3 +88,6 @@
 [submodule "plugins/lsp-ui"]
 	path = plugins/lsp-ui
 	url = https://github.com/emacs-lsp/lsp-ui
+[submodule "plugins/sesman"]
+	path = plugins/sesman
+	url = https://github.com/vspinu/sesman
