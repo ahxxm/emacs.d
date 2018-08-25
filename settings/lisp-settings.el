@@ -4,7 +4,6 @@
 (add-to-list 'load-path (concat plugins-path-r "sesman")) ;; required by cider
 (add-to-list 'load-path (concat plugins-path-r "clojure-mode"))
 (add-to-list 'load-path (concat plugins-path-r "cider"))
-(add-to-list 'load-path (concat plugins-path-r "spinner.el"))
 (add-to-list 'load-path (concat plugins-path-r "ac-cider"))
 
 (eval-after-load "auto-complete"
