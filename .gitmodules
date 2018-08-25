@@ -58,9 +58,6 @@
 [submodule "plugins/emacs-python-environment"]
 	path = plugins/emacs-python-environment
 	url = https://github.com/tkf/emacs-python-environment.git
-[submodule "plugins/spinner.el"]
-	path = plugins/spinner.el
-	url = https://github.com/Malabarba/spinner.el.git
 [submodule "plugins/irony-mode"]
 	path = plugins/irony-mode
 	url = https://github.com/Sarcasm/irony-mode.git
