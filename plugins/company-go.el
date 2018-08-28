@@ -72,7 +72,8 @@ symbol is preceded by a \".\", ignoring `company-minimum-prefix-length'."
   (let ((code-buffer (current-buffer))
         (gocode-args (append company-go-gocode-args
                              (list "-f=csv-with-package"
-                                   "-source"
+                                   ;; TODO: wait for stable gocode
+                                   ;; "-source"
                                    "autocomplete"
                                    (or (buffer-file-name) "")
                                    (concat "c" (int-to-string (- (point) 1)))))))
