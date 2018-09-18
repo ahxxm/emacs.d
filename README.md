@@ -82,6 +82,8 @@ Install :
 - gocode: `go get -u -v github.com/mdempsky/gocode`
 - godef: `go get -u -v github.com/rogpeppe/godef`
 
+Remove nsf/gocode and kill process first if anything wrong.
+
 ## TODO
 
 - [ ] versatile c/c++ mode: flycheck, jump to definition, completion on tab
