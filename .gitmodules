@@ -85,3 +85,6 @@
 [submodule "plugins/sesman"]
 	path = plugins/sesman
 	url = https://github.com/vspinu/sesman
+[submodule "plugins/lua-mode"]
+	path = plugins/lua-mode
+	url = https://github.com/immerrr/lua-mode

@@ -148,6 +148,8 @@
 
 (add-to-list 'load-path (concat plugins-path-r "go-mode"))
 (autoload 'go-mode "go-mode" "" t)
+(add-to-list 'load-path (concat plugins-path-r "lua-mode"))
+(autoload 'lua-mode "lua-mode" "" t)
 
 ;; modes definition.
 (setq auto-mode-alist
@@ -186,6 +188,7 @@
                 ("\\.podspec\\'" . ruby-mode)
                 ("\\.rb$" . ruby-mode)
                 ("\\.cml$" . xml-mode)
+                ("\\.lua$" . lua-mode)
                 ("\\.cg$" . cg-mode)
                 ("\\.yy$" . bison-mode)
                 ("\\.l[l]?$" . flex-mode)
