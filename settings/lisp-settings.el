@@ -16,13 +16,13 @@
 
 (use-package
   cider-macroexpansion
-  :commands (cider-macroexpansion-mode))
+  :defer t
+  :commands (cider-macroexpansion-mode cider-macroexpand-1 cider-macroexpand-all))
 
 (use-package
-  cider-macroexpansion
+  cider-find
   :defer t
-  :commands (cider-macroexpand-1 cider-macroexpand-all))
-
+  :commands (cider-find-var))
 
 (use-package
   cider
@@ -59,9 +59,9 @@
             (lambda ()
               (cider-mode +1)))
   :mode
-  ("\\.clj[sx]?\\'" . clojure-mode)
-  ("\\.boot\\'"     . clojure-mode)
-  ("\\.edn\\'"      . clojure-mode))
+  ("\\.clj[csx]?\\'" . clojure-mode)
+  ("\\.boot\\'"      . clojure-mode)
+  ("\\.edn\\'"       . clojure-mode))
 
 (eval-after-load "ob"
   ;; clojure integration for emacs
