@@ -77,12 +77,24 @@ irony server also requires cmake to compile.
 
 ### Go-mode
 
-Install :
+Install:
 
 - gocode: `go get -u -v github.com/mdempsky/gocode`
 - godef: `go get -u -v github.com/rogpeppe/godef`
 
 Remove nsf/gocode and kill process first if anything wrong.
+
+### Magit
+
+To update:
+
+```bash
+cd plugins/magit
+git pull && make clean && make
+cd ../plugins/transient
+git pull && make clean && make
+cd ../../
+```
 
 ## TODO
 
