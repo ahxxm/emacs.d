@@ -32,10 +32,9 @@
 (use-package company-go
   :after go-mode
   :config
-  (add-hook 'go-mode-hook
-            (lambda ()
-              (set (make-local-variable 'company-backends) '(company-go)))))
-
+  (add-hook 'go-mode-hook (lambda ()
+                          (set (make-local-variable 'company-backends) '(company-go))
+                          (company-mode))))
 
 (provide 'go-settings)
 ;; go-settings ends here.
