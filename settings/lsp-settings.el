@@ -13,8 +13,8 @@
 
 (use-package lsp-mode
   :diminish lsp-mode
-  ;; TODO: lsp-find-references
-  :bind (:map lsp-mode-map ("C-c g" . lsp-find-definition))
+  :bind (("C-c g" . lsp-find-definition)
+         ("<f3>"  . lsp-find-references))
   :hook (prog-mode . lsp)
   :config
   (require 'lsp-clients)
