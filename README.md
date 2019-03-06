@@ -100,4 +100,3 @@ cd ../../
 
 - [ ] versatile c/c++ mode: flycheck, jump to definition, completion on tab
 - [ ] clojurescript-mode
-- [ ] java-mode: jdee, eclim, lsp, meghanada?

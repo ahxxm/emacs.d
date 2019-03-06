@@ -91,3 +91,15 @@
 [submodule "plugins/transient"]
 	path = plugins/transient
 	url = https://github.com/magit/transient
+[submodule "plugins/lsp-java"]
+	path = plugins/lsp-java
+	url = https://github.com/emacs-lsp/lsp-java
+[submodule "plugins/company-lsp"]
+	path = plugins/company-lsp
+	url = https://github.com/tigersoldier/company-lsp
+[submodule "plugins/dap-mode"]
+	path = plugins/dap-mode
+	url = https://github.com/yyoncho/dap-mode/
+[submodule "plugins/emacs-request"]
+	path = plugins/emacs-request
+	url = https://github.com/tkf/emacs-request
