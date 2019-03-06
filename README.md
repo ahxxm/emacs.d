@@ -72,7 +72,7 @@ irony server also requires cmake to compile.
 [Add](https://github.com/clojure-emacs/cider-nrepl) following to `~/.lein/profiles.clj`:
 
 ```
-{:user {:middleware [cider-nrepl.plugin/middleware] :plugins [[cider/cider-nrepl "0.19.0"]]}}
+{:user {:middleware [cider-nrepl.plugin/middleware] :plugins [[cider/cider-nrepl "0.21.1" :exclusions [org.clojure/tools.namespace]]]}}
 ```
 
 ### Go-mode
