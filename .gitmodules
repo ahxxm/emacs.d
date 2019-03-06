@@ -88,3 +88,6 @@
 [submodule "plugins/lua-mode"]
 	path = plugins/lua-mode
 	url = https://github.com/immerrr/lua-mode
+[submodule "plugins/transient"]
+	path = plugins/transient
+	url = https://github.com/magit/transient
