@@ -60,11 +60,25 @@
                        (require 'lsp-java)
                        (lsp))))
 
+
+(use-package company
+  :diminish company-mode
+  :init
+  (setq company-minimum-prefix-length 2
+        company-selection-wrap-around t
+        company-tooltip-align-annotations t)
+  :config
+  (add-hook 'after-init-hook 'global-company-mode))
+
 (require 'lsp-clients)
 (use-package company-lsp
   :commands company-lsp
-  :config
-  (add-to-list 'company-backends 'company-lsp)
+  :after company lsp-mode
+  :bind (("<tab>"   . 'company-complete-selection))
+  ;;:config
+  ;;(add-to-list 'company-backends 'company-lsp)
+  :init
+  (push 'company-lsp company-backends)
   :custom
   (company-lsp-async t)
   (company-lsp-enable-snippet t))
