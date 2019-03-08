@@ -9,8 +9,6 @@
 (add-to-list 'load-path (concat plugins-path-r "emacs-request"))
 
 
-;; FIXME: void function company-mode
-
 (use-package lsp-mode
   :diminish lsp-mode
   :bind (("C-c g" . lsp-find-definition)
