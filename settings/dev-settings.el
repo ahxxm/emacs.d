@@ -259,25 +259,12 @@ With a prefix argument, highlight for that many seconds.
   (setq c-basic-offset 2)
   (paren-toggle-open-paren-context 1))
 
-
-;; python mode short cut settings.
-;; ==================================================================
-(defun python-short-cut()
-  "python mode short-cut key settings."
-  (electric-spacing-mode)
-  (start-program-short-cut)
-  (local-set-key (kbd "C-c g") 'jedi:goto-definition)
-  (local-set-key (kbd "M-/") 'jedi:complete)
-  (local-set-key (kbd "C-c d") 'jedi:show-doc))
-
-
 ;; Short cut Hooks here.
 ;; ==================================================================
 (add-hook 'emacs-lisp-mode-hook 'elisp-short-cut)
 (add-hook 'clojure-mode-hook    'clojure-short-cut)
 (add-hook 'json-mode-hook       'json-short-cut)
 (add-hook 'c-mode-common-hook   'c-common-short-cut)
-(add-hook 'python-mode-hook     'python-short-cut)
 
 (provide 'dev-settings)
 ;; dev-settings ends here.

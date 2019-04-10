@@ -52,12 +52,6 @@
 [submodule "plugins/smartparens"]
 	path = plugins/smartparens
 	url = https://github.com/Fuco1/smartparens.git
-[submodule "plugins/emacs-jedi"]
-	path = plugins/emacs-jedi
-	url = https://github.com/tkf/emacs-jedi.git
-[submodule "plugins/emacs-python-environment"]
-	path = plugins/emacs-python-environment
-	url = https://github.com/tkf/emacs-python-environment.git
 [submodule "plugins/irony-mode"]
 	path = plugins/irony-mode
 	url = https://github.com/Sarcasm/irony-mode.git

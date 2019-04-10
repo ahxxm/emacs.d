@@ -44,27 +44,6 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 
 ## Modes
 
-### Python-mode
-
-To make most of python-mode, run following in virtualenv:
-
-```
-pip install epc jedi pep8 flake8 ipdb
-```
-
-Mode specific shortcuts:
-
-- `C-c g`: goto definition
-- `C-c d`: show doc
-
-### C++-mode
-
-`irony-mode`(for completion) requires `libclang`, installation method [varies](https://github.com/Sarcasm/irony-mode/issues/167) among different systems.
-
-irony server also requires cmake to compile.
-
-`libclang.so` upgrade might require irony-server to be re-compiled, depends on your compile args.
-
 ### Clojure-mode
 
 `C-c M-j` for cider-repl.
@@ -95,6 +74,33 @@ npm i -g typescript-language-server; npm i -g typescript
 ### Java Mode
 
 LSP Java works out of box.
+
+### Python-mode
+
+Install language server in virtualenv: `pip install 'python-language-server[all]'`
+
+Mode shortcut:
+
+- `f3`: lsp-find-references
+- `C-c g`: goto definition
+- `tab`: show completion list(slow)
+
+Shell shortcuts:
+
+```bash
+alias ss='source ../.env/"${PWD##*/}"/bin/activate'
+alias pss='python3 -m venv ../.env/"${PWD##*/}"'
+alias pss2='virtualenv ../.env/"${PWD##*/}"'
+alias rmss='rm -rf ../.env/"${PWD##*/}"'
+```
+
+### C++-mode
+
+`irony-mode`(for completion) requires `libclang`, installation method [varies](https://github.com/Sarcasm/irony-mode/issues/167) among different systems.
+
+irony server also requires cmake to compile.
+
+`libclang.so` upgrade might require irony-server to be re-compiled, depends on your compile args.
 
 ### Magit
 

@@ -57,7 +57,6 @@
 ;; Programming settings
 ;; ------------------------------------------------------------------
 (require 'dev-settings)
-(require 'python-settings)
 (require 'lisp-settings)
 (require 'go-settings)
 (require 'lsp-settings)
