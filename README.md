@@ -84,6 +84,18 @@ Install:
 
 Remove nsf/gocode and kill process first if anything wrong.
 
+### TypeScript Mode
+
+Install [language server](https://github.com/emacs-lsp/lsp-mode):
+
+```
+npm i -g typescript-language-server; npm i -g typescript
+```
+
+### Java Mode
+
+LSP Java works out of box.
+
 ### Magit
 
 To update:

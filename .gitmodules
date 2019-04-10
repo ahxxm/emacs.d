@@ -103,3 +103,6 @@
 [submodule "plugins/emacs-request"]
 	path = plugins/emacs-request
 	url = https://github.com/tkf/emacs-request
+[submodule "plugins/typescript-mode"]
+	path = plugins/typescript-mode
+	url = https://github.com/emacs-typescript/typescript.el

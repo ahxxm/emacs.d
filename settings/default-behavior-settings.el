@@ -150,6 +150,8 @@
 (autoload 'go-mode "go-mode" "" t)
 (add-to-list 'load-path (concat plugins-path-r "lua-mode"))
 (autoload 'lua-mode "lua-mode" "" t)
+(add-to-list 'load-path (concat plugins-path-r "typescript-mode"))
+(autoload 'typescript-mode "typescript-mode" "" t)
 
 ;; modes definition.
 (setq auto-mode-alist
