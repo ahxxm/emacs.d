@@ -118,3 +118,4 @@ cd ../../
 
 - [ ] versatile c/c++ mode: flycheck, jump to definition, completion on tab
 - [ ] clojurescript-mode
+- [ ] restrict lsp from auto activate in every mode
