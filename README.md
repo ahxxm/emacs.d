@@ -38,6 +38,13 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 - `C-x 3`: split-window-horizontally
 - `C-x o`: switch to another-window
 
+### Language Server
+
+- `C-c m`: shows overview of current buffer
+- `C-c g`: goto definition
+- `F3`: find references
+- `C-c s`: sideline mode(reference stack?), many information..
+
 ### Other
 
 - `F4`: projectile-invalidate-cache, in case project file changes
@@ -73,12 +80,6 @@ LSP Java works out of box: install server once, wait maven import after open pro
 ### Python-mode
 
 Install language server in virtualenv: `pip install 'python-language-server[all]'`
-
-Mode shortcut:
-
-- `f3`: lsp-find-references
-- `C-c g`: goto definition
-- `tab`: show completion list(slow)
 
 Shell shortcuts:
 
