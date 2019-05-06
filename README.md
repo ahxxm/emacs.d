@@ -38,6 +38,13 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 - `C-x 3`: split-window-horizontally
 - `C-x o`: switch to another-window
 
+### Language Server
+
+- `C-c m`: shows overview of current buffer
+- `C-c g`: goto definition
+- `F3`: find references
+- `C-c s`: sideline mode(reference stack?), many information..
+
 ### Other
 
 - `F4`: projectile-invalidate-cache, in case project file changes
@@ -56,12 +63,7 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 
 ### Go-mode
 
-Install:
-
-- gocode: `go get -u -v github.com/mdempsky/gocode`
-- godef: `go get -u -v github.com/rogpeppe/godef`
-
-Remove nsf/gocode and kill process first if anything wrong.
+Install LSP go-langserver: `github.com/sourcegraph/go-langserver`
 
 ### TypeScript Mode
 
@@ -73,17 +75,11 @@ npm i -g typescript-language-server; npm i -g typescript
 
 ### Java Mode
 
-LSP Java works out of box.
+LSP Java works out of box: install server once, wait maven import after open project(check lsp-log buffer for progress).
 
 ### Python-mode
 
 Install language server in virtualenv: `pip install 'python-language-server[all]'`
-
-Mode shortcut:
-
-- `f3`: lsp-find-references
-- `C-c g`: goto definition
-- `tab`: show completion list(slow)
 
 Shell shortcuts:
 
@@ -96,11 +92,7 @@ alias rmss='rm -rf ../.env/"${PWD##*/}"'
 
 ### C++-mode
 
-`irony-mode`(for completion) requires `libclang`, installation method [varies](https://github.com/Sarcasm/irony-mode/issues/167) among different systems.
-
-irony server also requires cmake to compile.
-
-`libclang.so` upgrade might require irony-server to be re-compiled, depends on your compile args.
+Install ccls, generate `compile_commands.json` in [project root](https://github.com/MaskRay/ccls/wiki/Project-Setup).
 
 ### Magit
 
@@ -116,6 +108,4 @@ cd ../../
 
 ## TODO
 
-- [ ] versatile c/c++ mode: flycheck, jump to definition, completion on tab
 - [ ] clojurescript-mode
-- [ ] restrict lsp from auto activate in every mode

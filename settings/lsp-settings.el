@@ -4,19 +4,44 @@
 (add-to-list 'load-path (concat plugins-path-r "lsp-ui"))
 (add-to-list 'load-path (concat plugins-path-r "lsp-mode"))
 (add-to-list 'load-path (concat plugins-path-r "lsp-java"))
-(add-to-list 'load-path (concat plugins-path-r "company-mode/"))
+(add-to-list 'load-path (concat plugins-path-r "emacs-ccls"))
+(add-to-list 'load-path (concat plugins-path-r "company-mode"))
 (add-to-list 'load-path (concat plugins-path-r "company-lsp"))
 (add-to-list 'load-path (concat plugins-path-r "emacs-request"))
 
 
 (use-package lsp-mode
   :diminish lsp-mode
-  :bind (("C-c g" . lsp-find-definition)
-         ("<f3>"  . lsp-find-references))
-  :hook (prog-mode . lsp)
+  :hook ((java-mode go-mode python-mode typescript-mode c++-mode) . lsp)
   :config
   (require 'lsp-clients)
+  (use-package lsp-ui
+    :custom-face
+    (lsp-ui-doc-background ((t `(:background nil))))
+    :bind
+    (:map lsp-mode-map
+          ;; shows current file's overview, like generated godoc
+          ("C-c m" . lsp-ui-imenu)
+          ;; sideline peeks many information...
+          ("C-c g" . lsp-find-definition)
+          ("<f3>"  . lsp-find-references)
+          ("C-c i" . lsp-ui-peek-find-implementation)
+          ("C-c s" . lsp-ui-sideline-mode))
+    :hook (lsp-mode . lsp-ui-mode)
+    :init
+    (setq
+     lsp-enable-snippet nil ;; yasnippet not used here
+     lsp-ui-doc-enable nil
+     lsp-ui-doc-include-signature nil
+     lsp-ui-doc-header nil
+     lsp-ui-doc-position 'at-point
+     lsp-ui-doc-use-webkit t
+     lsp-ui-doc-border (face-foreground 'default)
+     lsp-ui-sideline-enable nil
+     lsp-ui-sideline-ignore-duplicate t))
+
   :init
+  (setq lsp-document-sync-method 'incremental)
   (setq lsp-auto-guess-root t)       ; Detect project root
   (setq lsp-prefer-flymake nil)      ; Use lsp-ui and flycheck
   )
@@ -30,27 +55,6 @@
   :config
   (dap-mode t))
 
-(use-package lsp-ui
-  :custom-face
-  (lsp-ui-doc-background ((t `(:background nil))))
-  :bind (:map lsp-ui-mode-map
-              ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-              ([remap xref-find-references] . lsp-ui-peek-find-references)
-              ("C-c u" . lsp-ui-imenu))
-  :init
-  (setq lsp-ui-doc-enable t
-        lsp-ui-doc-include-signature t
-        lsp-ui-doc-position 'at-point
-        lsp-ui-doc-use-webkit t
-        lsp-ui-doc-border (face-foreground 'default)
-
-        lsp-ui-sideline-enable nil
-        lsp-ui-sideline-ignore-duplicate t)
-  :config
-  ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
-  ;; https://github.com/emacs-lsp/lsp-ui/issues/243
-  (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
-    (setq mode-line-format nil)))
 
 (use-package lsp-java
   :after lsp
@@ -58,6 +62,9 @@
                        (require 'lsp-java)
                        (lsp))))
 
+(use-package ccls
+  :hook ((c-mode c++-mode objc-mode) .
+         (lambda () (require 'ccls) (lsp))))
 
 (use-package company
   :diminish company-mode
@@ -68,13 +75,11 @@
   :config
   (add-hook 'after-init-hook 'global-company-mode))
 
-(require 'lsp-clients)
+
 (use-package company-lsp
   :commands company-lsp
   :after company lsp-mode
   :bind (("<tab>"   . 'company-complete-selection))
-  ;;:config
-  ;;(add-to-list 'company-backends 'company-lsp)
   :init
   (push 'company-lsp company-backends)
   :custom
