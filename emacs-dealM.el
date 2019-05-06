@@ -35,7 +35,6 @@
 ;; ------------------------------------------------------------------
 (require 'use-package)
 (require 'flycheck-settings)
-(require 'irony-settings)
 (require 'auto-complete-setting)
 
 
