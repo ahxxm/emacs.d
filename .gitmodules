@@ -67,9 +67,6 @@
 [submodule "plugins/go-mode"]
 	path = plugins/go-mode
 	url = https://github.com/dominikh/go-mode.el
-[submodule "plugins/go-eldoc"]
-	path = plugins/go-eldoc
-	url = https://github.com/syohex/emacs-go-eldoc
 [submodule "plugins/lsp-mode"]
 	path = plugins/lsp-mode
 	url = https://github.com/emacs-lsp/lsp-mode
