@@ -16,8 +16,6 @@
   :config
   (require 'lsp-clients)
   (use-package lsp-ui
-    :custom-face
-    (lsp-ui-doc-background ((t `(:background nil))))
     :bind
     (:map lsp-mode-map
           ;; shows current file's overview, like generated godoc
@@ -32,12 +30,7 @@
     (setq
      lsp-enable-snippet nil ;; yasnippet not used here
      lsp-ui-doc-enable nil
-     lsp-ui-doc-include-signature nil
-     lsp-ui-doc-header nil
-     lsp-ui-doc-position 'at-point
-     lsp-ui-doc-use-webkit t
-     lsp-ui-doc-border (face-foreground 'default)
-     lsp-ui-sideline-enable nil
+     lsp-ui-sideline-enable t
      lsp-ui-sideline-ignore-duplicate t))
 
   :init
