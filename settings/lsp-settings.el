@@ -1,5 +1,6 @@
 ;; -*- Emacs-Lisp -*-
 
+(add-to-list 'load-path (concat plugins-path-r "flycheck"))
 (add-to-list 'load-path (concat plugins-path-r "dap-mode"))
 (add-to-list 'load-path (concat plugins-path-r "lsp-ui"))
 (add-to-list 'load-path (concat plugins-path-r "lsp-mode"))
@@ -15,6 +16,8 @@
   :hook ((java-mode go-mode python-mode typescript-mode c++-mode) . lsp)
   :config
   (require 'lsp-clients)
+  (require 'pkg-info)
+  (require 'lsp-ui-flycheck)
   (use-package lsp-ui
     :bind
     (:map lsp-mode-map
@@ -25,18 +28,23 @@
           ("<f3>"  . lsp-find-references)
           ("C-c i" . lsp-ui-peek-find-implementation)
           ("C-c s" . lsp-ui-sideline-mode))
-    :hook (lsp-mode . lsp-ui-mode)
     :init
     (setq
      lsp-enable-snippet nil ;; yasnippet not used here
      lsp-ui-doc-enable nil
      lsp-ui-sideline-enable t
-     lsp-ui-sideline-ignore-duplicate t))
+     lsp-ui-sideline-ignore-duplicate t
+
+     ; Use lsp-ui and flycheck
+     lsp-prefer-flymake :none
+     lsp-ui-flycheck-enable t)
+    (add-to-list 'flycheck-checkers 'lsp-ui))
 
   :init
-  (setq lsp-document-sync-method 'incremental)
-  (setq lsp-auto-guess-root t)       ; Detect project root
-  (setq lsp-prefer-flymake nil)      ; Use lsp-ui and flycheck
+  (setq lsp-document-sync-method 'incremental
+        ; Detect project root
+        lsp-auto-guess-root t)
+
   )
 
 (use-package dap-mode
@@ -50,7 +58,28 @@
 
 
 (use-package lsp-java
+  ;; ref: https://blog.jmibanez.com/2019/03/31/emacs-as-java-ide-revisited.html
   :after lsp
+  :config
+  (setq lombok-jar-path
+      (expand-file-name
+        "~/.m2/repository/org/projectlombok/lombok/1.18.0/lombok-1.18.0.jar"))
+  (setq lsp-java-vmargs
+        (list "-noverify"
+              "-Xmx2G"
+              "-XX:+UseG1GC"
+              "-XX:+UseStringDeduplication"
+              (concat "-javaagent:" lombok-jar-path)
+              (concat "-Xbootclasspath/a:" lombok-jar-path))
+        lsp-file-watch-ignored
+        '(".idea" ".ensime_cache" ".eunit" "node_modules"
+          ".git" ".hg" ".fslckout" "_FOSSIL_"
+          ".bzr" "_darcs" ".tox" ".svn" ".stack-work"
+          "build")
+
+        lsp-java-import-order '["" "java" "javax" "#"]
+        ;; Don't organize imports on save
+        lsp-java-save-action-organize-imports nil)
   :hook (java-mode . (lambda ()
                        (require 'lsp-java)
                        (lsp))))
