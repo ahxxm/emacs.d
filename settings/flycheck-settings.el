@@ -2,17 +2,6 @@
 ;;; code:
 (add-to-list 'load-path (concat plugins-path-r "flycheck/"))
 (add-to-list 'load-path (concat plugins-path-r "seq.el"))
-(add-to-list 'load-path (concat plugins-path-r "disaster/"))
-
-
-;; Disassemble current file naively
-(use-package disaster
-  ;; FIXME: will run disaster on opening .c/.cpp files ..
-  ;; :mode "\\.\\(cpp\\|c\\)$"
-  :defer t
-  :bind (("C-c d" . disaster))
-  )
-
 
 (use-package flycheck
   :defer t
@@ -38,7 +27,7 @@
 
   ;; Generic flycheck-mode settings
   (dolist (hook '(python-mode-hook
-                  clojure-mode-hook
+                  go-mode-hook
                   c-mode-hook
                   c++-mode-hook))
     (add-hook hook #'flycheck-mode))
