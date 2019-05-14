@@ -63,7 +63,7 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 
 ### Go-mode
 
-Install LSP go-langserver: `github.com/sourcegraph/go-langserver`
+Install [language server](https://github.com/golang/go/wiki/gopls): `go get -u -v golang.org/x/tools/cmd/gopls`
 
 ### TypeScript Mode
 
