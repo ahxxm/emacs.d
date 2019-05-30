@@ -12,6 +12,7 @@
 
 
 (use-package lsp-mode
+  :defer t
   :diminish lsp-mode
   :hook ((java-mode go-mode python-mode typescript-mode c++-mode) . lsp)
   :config
@@ -85,10 +86,12 @@
                        (lsp))))
 
 (use-package ccls
+  :defer t
   :hook ((c-mode c++-mode objc-mode) .
          (lambda () (require 'ccls) (lsp))))
 
 (use-package company
+  :defer t
   :diminish company-mode
   :init
   (setq company-minimum-prefix-length 2

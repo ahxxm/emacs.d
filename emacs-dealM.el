@@ -1,6 +1,9 @@
 ;; -*- Emacs-Lisp -*-
 ;; configure path depend on system.
 
+;; SPEEDY startup
+(setq gc-cons-threshold 80000000)
+
 (defconst emacs-root-path
   (file-name-directory (or load-file-name buffer-file-name)) "Emacs root settings path (in linux)")
 (defconst plugins-path-r
@@ -29,6 +32,11 @@
 (add-to-list 'load-path plugins-path-r)
 (add-to-list 'load-path (concat plugins-path-r "dash/"))
 (add-to-list 'load-path (concat plugins-path-r "use-package/"))
+
+;; BENCHMARK
+;;(add-to-list 'load-path (concat plugins-path-r "benchmark-init-el/"))
+;;(require 'benchmark-init-loaddefs)
+;;(benchmark-init/activate)
 
 
 ;; tools

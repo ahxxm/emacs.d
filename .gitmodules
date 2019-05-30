@@ -94,3 +94,6 @@
 [submodule "plugins/emacs-ccls"]
 	path = plugins/emacs-ccls
 	url = https://github.com/MaskRay/emacs-ccls
+[submodule "plugins/benchmark-init-el"]
+	path = plugins/benchmark-init-el
+	url = https://github.com/dholm/benchmark-init-el
