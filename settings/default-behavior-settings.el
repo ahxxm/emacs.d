@@ -118,6 +118,7 @@
 ;; TAB 宽度设置为4
 (setq-default indent-tabs-mode nil)
 (setq tab-width 4
+      js-indent-level 2
       tab-stop-list nil)
 
 (cl-loop for x downfrom 40 to 1 do
