@@ -79,6 +79,15 @@ npm i -g typescript-language-server; npm i -g typescript
 
 LSP Java works out of box: install server once, wait maven import after open project(check lsp-log buffer for progress).
 
+If for some reason it does not work as expected, try:
+
+```bash
+cd ~/.emacs.d
+rm -rf eclipse.jdt.ls/ workspace/
+```
+
+and reopen project.
+
 ### Python-mode
 
 Install language server in virtualenv: `pip install 'python-language-server[all]'`

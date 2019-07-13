@@ -68,7 +68,7 @@
   :config
   (setq lombok-jar-path
       (expand-file-name
-        "~/.m2/repository/org/projectlombok/lombok/1.18.0/lombok-1.18.0.jar"))
+        "~/.m2/repository/org/projectlombok/lombok/1.18.8/lombok-1.18.8.jar"))
   (setq lsp-java-vmargs
         (list "-noverify"
               "-Xmx2G"
