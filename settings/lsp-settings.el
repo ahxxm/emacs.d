@@ -37,8 +37,8 @@
      lsp-ui-sideline-ignore-duplicate t
 
      ;; NOTE: golang's lsp requires full sync
-     ;; or tokenizer will report wrong line count
-     lsp-document-sync-method 'full
+     ;; or tokenizer (might) will report wrong line count
+     ;; lsp-document-sync-method 'full
 
      ; Use lsp-ui and flycheck
      lsp-prefer-flymake :none
