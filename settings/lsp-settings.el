@@ -86,7 +86,7 @@
         ;; Don't organize imports on save
         lsp-java-save-action-organize-imports nil)
   :hook (java-mode . (lambda ()
-                       (setq tab-width 4)
+                       (setq-local tab-width 4)
                        (require 'lsp-java)
                        (lsp))))
 
