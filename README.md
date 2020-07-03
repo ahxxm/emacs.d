@@ -63,9 +63,7 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 
 ### Go-mode
 
-Install [language server](https://github.com/golang/go/wiki/gopls): `go get -u -v golang.org/x/tools/cmd/gopls`
-
-Optional: enhanced version(supports lsp-find-references for example) check [here](https://github.com/saibing/tools)
+Install [language server](https://github.com/golang/tools/blob/master/gopls/doc/user.md): `GO111MODULE=on go get golang.org/x/tools/gopls@latest`
 
 ### TypeScript Mode
 
