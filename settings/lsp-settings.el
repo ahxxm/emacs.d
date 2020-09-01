@@ -1,10 +1,10 @@
 ;; -*- Emacs-Lisp -*-
 
 (add-to-list 'load-path (concat plugins-path-r "flycheck"))
-(add-to-list 'load-path (concat plugins-path-r "dap-mode"))
 (add-to-list 'load-path (concat plugins-path-r "lsp-ui"))
 (add-to-list 'load-path (concat plugins-path-r "lsp-mode"))
 (add-to-list 'load-path (concat plugins-path-r "lsp-java"))
+(add-to-list 'load-path (concat plugins-path-r "hydra"))
 (add-to-list 'load-path (concat plugins-path-r "emacs-ccls"))
 (add-to-list 'load-path (concat plugins-path-r "company-mode"))
 (add-to-list 'load-path (concat plugins-path-r "company-lsp"))
@@ -16,7 +16,6 @@
   :diminish lsp-mode
   :hook ((java-mode go-mode python-mode typescript-mode c++-mode) . lsp)
   :config
-  (require 'lsp-clients)
   (require 'pkg-info)
   (require 'lsp-ui-flycheck)
   (use-package lsp-ui
@@ -30,15 +29,10 @@
           ("C-c i" . lsp-ui-peek-find-implementation)
           ("C-c s" . lsp-ui-sideline-mode))
     :init
-    (setq
-     lsp-enable-snippet nil ;; yasnippet not used here
-     lsp-ui-doc-enable nil
-     lsp-ui-sideline-enable t
-     lsp-ui-sideline-ignore-duplicate t
-
-     ;; NOTE: golang's lsp requires full sync
-     ;; or tokenizer (might) will report wrong line count
-     ;; lsp-document-sync-method 'full
+    (setq lsp-enable-snippet nil ;; yasnippet not used here
+          lsp-ui-doc-enable nil
+          lsp-ui-sideline-enable t
+          lsp-ui-sideline-ignore-duplicate t
 
      ; Use lsp-ui and flycheck
      lsp-prefer-flymake :none
@@ -46,20 +40,10 @@
     (add-to-list 'flycheck-checkers 'lsp-ui))
 
   :init
-  (setq lsp-document-sync-method 'incremental
+  (setq lsp-modeline-code-actions-enable nil ;; FIXME: 7.0.1 lsp
+        lsp-modeline-diagnostics-enable nil  ;; FIXME: 7.0.1 lsp
         ; Detect project root
-        lsp-auto-guess-root t)
-
-  )
-
-(use-package dap-mode
-  :after lsp-mode
-  :init
-  (require 'cl)
-  (require 'cl-lib)
-  ;; TODO: (dap-ui-mode t) in config
-  :config
-  (dap-mode t))
+        lsp-auto-guess-root t))
 
 
 (use-package lsp-java
@@ -74,8 +58,9 @@
               "-Xmx2G"
               "-XX:+UseG1GC"
               "-XX:+UseStringDeduplication"
-              (concat "-javaagent:" lombok-jar-path)
-              (concat "-Xbootclasspath/a:" lombok-jar-path))
+              ;;(concat "-javaagent:" lombok-jar-path)
+              ;;(concat "-Xbootclasspath/a:" lombok-jar-path)
+              )
         lsp-file-watch-ignored
         '(".idea" ".ensime_cache" ".eunit" "node_modules"
           ".git" ".hg" ".fslckout" "_FOSSIL_"

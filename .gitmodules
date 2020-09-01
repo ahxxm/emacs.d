@@ -82,9 +82,6 @@
 [submodule "plugins/company-lsp"]
 	path = plugins/company-lsp
 	url = https://github.com/tigersoldier/company-lsp
-[submodule "plugins/dap-mode"]
-	path = plugins/dap-mode
-	url = https://github.com/yyoncho/dap-mode/
 [submodule "plugins/emacs-request"]
 	path = plugins/emacs-request
 	url = https://github.com/tkf/emacs-request
@@ -97,3 +94,6 @@
 [submodule "plugins/benchmark-init-el"]
 	path = plugins/benchmark-init-el
 	url = https://github.com/dholm/benchmark-init-el
+[submodule "plugins/hydra"]
+	path = plugins/hydra
+	url = https://github.com/abo-abo/hydra

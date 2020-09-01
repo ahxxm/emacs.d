@@ -75,6 +75,8 @@ npm i -g typescript-language-server; npm i -g typescript
 
 ### Java Mode
 
+**JRE >=11** is required.
+
 LSP Java works out of box: install server once, wait maven import after open project(check lsp-log buffer for progress).
 
 If for some reason it does not work as expected, try:
