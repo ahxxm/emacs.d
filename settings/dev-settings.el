@@ -254,6 +254,10 @@ With a prefix argument, highlight for that many seconds.
 ;; ==================================================================
 (defun c-common-short-cut()
   "c common mode short-cut key settings."
+  ;; make lsp completion-at-point work
+  (local-unset-key (kbd "TAB"))
+  ;; TODO: indent-for-tab-command and c-indent-line-or-region shortcuts
+
   (start-program-short-cut)
   (electric-spacing-mode)
   (setq c-basic-offset 2)

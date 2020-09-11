@@ -7,7 +7,6 @@
 (add-to-list 'load-path (concat plugins-path-r "hydra"))
 (add-to-list 'load-path (concat plugins-path-r "emacs-ccls"))
 (add-to-list 'load-path (concat plugins-path-r "company-mode"))
-(add-to-list 'load-path (concat plugins-path-r "company-lsp"))
 (add-to-list 'load-path (concat plugins-path-r "emacs-request"))
 
 
@@ -18,6 +17,7 @@
   :config
   (require 'pkg-info)
   (require 'lsp-ui-flycheck)
+  (use-package lsp-completion) ;; IMPORTANT, to "lsp-configure-hook"
   (use-package lsp-ui
     :bind
     (:map lsp-mode-map
@@ -27,6 +27,7 @@
           ("C-c g" . lsp-find-definition)
           ("<f3>"  . lsp-find-references)
           ("<f5>"  . lsp-java-organize-imports)  ;; automatically import class
+          ("<tab>" . completion-at-point)
           ("C-c i" . lsp-ui-peek-find-implementation)
           ("C-c s" . lsp-ui-sideline-mode))
     :init
@@ -44,7 +45,11 @@
   (setq lsp-modeline-code-actions-enable nil ;; FIXME: 7.0.1 lsp
         lsp-modeline-diagnostics-enable nil  ;; FIXME: 7.0.1 lsp
         ; Detect project root
-        lsp-auto-guess-root t))
+        lsp-auto-guess-root t
+        ;; performance: https://github.com/emacs-lsp/lsp-mode/blob/master/docs/page/performance.md
+        lsp-completion-provider :capf
+        gc-cons-threshold 100000000
+        read-process-output-max (* 1024 1024 3)))
 
 
 (use-package lsp-java
@@ -83,23 +88,12 @@
 (use-package company
   :defer t
   :diminish company-mode
+  ;; FIXME: work but not the right way to hook?
+  :hook (prog-mode . company-mode)
   :init
   (setq company-minimum-prefix-length 2
         company-selection-wrap-around t
-        company-tooltip-align-annotations t)
-  :config
-  (add-hook 'after-init-hook 'global-company-mode))
-
-
-(use-package company-lsp
-  :commands company-lsp
-  :after company lsp-mode
-  :bind (("<tab>"   . 'company-complete-selection))
-  :init
-  (push 'company-lsp company-backends)
-  :custom
-  (company-lsp-async t)
-  (company-lsp-enable-snippet t))
+        company-tooltip-align-annotations t))
 
 (provide 'lsp-settings)
 ;; lsp-settings ends here.

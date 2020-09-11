@@ -79,9 +79,6 @@
 [submodule "plugins/lsp-java"]
 	path = plugins/lsp-java
 	url = https://github.com/emacs-lsp/lsp-java
-[submodule "plugins/company-lsp"]
-	path = plugins/company-lsp
-	url = https://github.com/tigersoldier/company-lsp
 [submodule "plugins/emacs-request"]
 	path = plugins/emacs-request
 	url = https://github.com/tkf/emacs-request
