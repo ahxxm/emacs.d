@@ -43,6 +43,7 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 - `C-c m`: shows overview of current buffer
 - `C-c g`: goto definition
 - `F3`: find references
+- `F5`: Java organize import(also auto import missing class)
 - `C-c s`: sideline mode(reference stack?), many information..
 
 ### Other
@@ -58,7 +59,7 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 [Add](https://github.com/clojure-emacs/cider-nrepl) following to `~/.lein/profiles.clj`:
 
 ```
-{:user {:middleware [cider-nrepl.plugin/middleware] :plugins [[cider/cider-nrepl "0.21.1" :exclusions [org.clojure/tools.namespace]]]}}
+{:user {:middleware [cider-nrepl.plugin/middleware] :plugins [[cider/cider-nrepl "0.25.3" :exclusions [org.clojure/tools.namespace]]]}}
 ```
 
 ### Go-mode
