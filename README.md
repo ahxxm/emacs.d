@@ -88,6 +88,8 @@ rm -rf eclipse.jdt.ls/ workspace/
 
 and reopen project.
 
+Lombok support requires `~/.m2/repository/org/projectlombok/lombok/1.18.8/lombok-1.18.8.jar`.
+
 ### Python-mode
 
 Install language server in virtualenv: `pip install 'python-language-server[all]'`

@@ -58,9 +58,8 @@
               "-Xmx2G"
               "-XX:+UseG1GC"
               "-XX:+UseStringDeduplication"
-              ;;(concat "-javaagent:" lombok-jar-path)
-              ;;(concat "-Xbootclasspath/a:" lombok-jar-path)
-              )
+              (concat "-javaagent:" lombok-jar-path)
+              (concat "-Xbootclasspath/a:" lombok-jar-path))
         lsp-file-watch-ignored
         '(".idea" ".ensime_cache" ".eunit" "node_modules"
           ".git" ".hg" ".fslckout" "_FOSSIL_"
