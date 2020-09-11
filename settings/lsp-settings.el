@@ -26,6 +26,7 @@
           ;; sideline peeks many information...
           ("C-c g" . lsp-find-definition)
           ("<f3>"  . lsp-find-references)
+          ("<f5>"  . lsp-java-organize-imports)  ;; automatically import class
           ("C-c i" . lsp-ui-peek-find-implementation)
           ("C-c s" . lsp-ui-sideline-mode))
     :init
