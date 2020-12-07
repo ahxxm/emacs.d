@@ -39,17 +39,25 @@
      ; Use lsp-ui and flycheck
      lsp-prefer-flymake :none
      lsp-ui-flycheck-enable t)
+
+    ; FIXME: "is not configured to run for major mode `go-mode'"
+    (lsp-register-client
+     (make-lsp-client :new-connection (lsp-stdio-connection "gopls")
+                      :major-modes '(go-mode)
+                      :server-id 'gopls))
     (add-to-list 'flycheck-checkers 'lsp-ui))
 
   :init
-  (setq lsp-modeline-code-actions-enable nil ;; FIXME: 7.0.1 lsp
-        lsp-modeline-diagnostics-enable nil  ;; FIXME: 7.0.1 lsp
-        ; Detect project root
-        lsp-auto-guess-root t
-        ;; performance: https://github.com/emacs-lsp/lsp-mode/blob/master/docs/page/performance.md
-        lsp-completion-provider :capf
-        gc-cons-threshold 100000000
-        read-process-output-max (* 1024 1024 3)))
+  (setq lsp-modeline-code-actions-enable nil
+        lsp-modeline-diagnostics-enable nil
+        lsp-modeline-workspace-status-enable nil
+        ;; FIXME: suppose to be helpful diagnostics but says "void function"
+   ; Detect project root
+   lsp-auto-guess-root t
+   ;; performance: https://github.com/emacs-lsp/lsp-mode/blob/master/docs/page/performance.md
+   lsp-completion-provider :capf
+   gc-cons-threshold 100000000
+   read-process-output-max (* 1024 1024 3)))
 
 
 (use-package lsp-java
