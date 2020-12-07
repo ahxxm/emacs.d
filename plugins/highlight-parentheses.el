@@ -1,12 +1,16 @@
-;;; highlight-parentheses.el --- highlight surrounding parentheses
+;;; highlight-parentheses.el --- Highlight surrounding parentheses
 ;;
-;; Copyright (C) 2007, 2009 Nikolaj Schumacher
+;; Copyright (C) 2007, 2009, 2013 Nikolaj Schumacher
+;; Copyright (C) 2018 Tim Perkins
 ;;
 ;; Author: Nikolaj Schumacher <bugs * nschum de>
-;; Version: 1.0.1
+;; Maintainer: Tassilo Horn <tsdh@gnu.org>
+;; Version: 2.0.0
 ;; Keywords: faces, matching
-;; URL: http://nschum.de/src/emacs/highlight-parentheses/
-;; Compatibility: GNU Emacs 22.x, GNU Emacs 23.x
+;; URL: https://github.com/tsdh/highlight-parentheses.el
+;;      http://nschum.de/src/emacs/highlight-parentheses/ (old website)
+;; Package-Requires: ((emacs "24.3") (cl-lib "0.6.1"))
+;; Compatibility: GNU Emacs 24.3, GNU Emacs 25.x, GNU Emacs 26.x, Emacs 27.x
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -28,129 +32,231 @@
 ;; Add the following to your .emacs file:
 ;; (require 'highlight-parentheses)
 ;;
-;; Enable `highlight-parentheses-mode'.
-;;
-;;; Change Log:
-;;
-;; 2009-03-19 (1.0.1)
-;;    Added setter for color variables.
-;;
-;; 2007-07-30 (1.0)
-;;    Added background highlighting and faces.
-;;
-;; 2007-05-15 (0.9.1)
-;;    Support for defcustom.
-;;
-;; 2007-04-26 (0.9)
-;;    Initial Release.
+;; Enable the mode using M-x highlight-parentheses-mode or by adding it to a
+;; hook.
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'cl))
+(require 'cl-lib)
 
 (defgroup highlight-parentheses nil
   "Highlight surrounding parentheses"
   :group 'faces
   :group 'matching)
 
-(defun hl-paren-set (variable value)
+
+;;; Custom Variables
+
+(define-obsolete-function-alias
+  'hl-paren-set 'highlight-parentheses--set "2.0.0")
+(defun highlight-parentheses--set (variable value)
+  "Set VARIABLE to a new VALUE and update highlighted parens in all buffers.
+
+This function is used so that appropriate custom variables apply
+immediately once set (through the custom interface)."
   (set variable value)
-  (when (fboundp 'hl-paren-color-update)
-    (hl-paren-color-update)))
+  ;; REVIEW: I assume this check is here for cases that are too early into the
+  ;; load process?
+  (when (fboundp 'highlight-parentheses--color-update)
+    (highlight-parentheses--color-update)))
 
-(defcustom hl-paren-colors
+;; TODO: There should probably be more documentation on how this variable works
+;; as a function.  Same for the others.
+(define-obsolete-variable-alias 'hl-paren-colors
+  'highlight-parentheses-colors "2.0.0")
+(defcustom highlight-parentheses-colors
   '("firebrick1" "IndianRed1" "IndianRed3" "IndianRed4")
-  "*List of colors for the highlighted parentheses.
-The list starts with the the inside parentheses and moves outwards."
-  :type '(repeat color)
-  :set 'hl-paren-set
+  "List of colors for the highlighted parentheses.
+The list starts with the inside parentheses and moves outwards."
+  :type '(choice (repeat color) function)
+  :set #'highlight-parentheses--set
   :group 'highlight-parentheses)
 
-(defcustom hl-paren-background-colors nil
-  "*List of colors for the background highlighted parentheses.
-The list starts with the the inside parentheses and moves outwards."
-  :type '(repeat color)
-  :set 'hl-paren-set
+(define-obsolete-variable-alias 'hl-paren-background-colors
+  'highlight-parentheses-background-colors "2.0.0")
+(defcustom highlight-parentheses-background-colors nil
+  "List of colors for the background highlighted parentheses.
+The list starts with the inside parentheses and moves outwards."
+  :type '(choice (repeat color) function)
+  :set #'highlight-parentheses--set
   :group 'highlight-parentheses)
 
-(defface hl-paren-face nil
-  "*Face used for highlighting parentheses.
-Color attributes might be overriden by `hl-paren-colors' and
-`hl-paren-background-colors'."
+(define-obsolete-variable-alias 'hl-paren-attributes
+  'highlight-parentheses-attributes "2.0.0")
+(defcustom highlight-parentheses-attributes nil
+  "List of face attributes for the highlighted parentheses.
+The list starts with the inside parentheses and moves outwards."
+  :type '(choice plist function)
+  :set #'highlight-parentheses--set
   :group 'highlight-parentheses)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define-obsolete-variable-alias 'hl-paren-highlight-adjacent
+  'highlight-parentheses-highlight-adjacent "2.0.0")
+(defcustom highlight-parentheses-highlight-adjacent nil
+  "Highlight adjacent parentheses, just like Show Paren mode."
+  :type '(boolean)
+  :set #'highlight-parentheses--set
+  :group 'highlight-parentheses)
 
-(defvar hl-paren-overlays nil
+(define-obsolete-variable-alias 'hl-paren-delay
+  'highlight-parentheses-delay)
+(defcustom highlight-parentheses-delay 0.137
+  "Fraction of seconds after which the overlays are adjusted.
+In general, this should at least be larger than your keyboard
+repeat rate in order to prevent excessive movements of the
+overlays when scrolling or moving point by pressing and holding
+\\[next-line], \\[scroll-up-command] and friends."
+  :type 'number
+  :group 'highlight-parentheses)
+
+
+;; Custom Faces
+
+(define-obsolete-face-alias 'hl-paren-face
+  'highlight-parentheses-highlight "2.0.0")
+(defface highlight-parentheses-highlight nil
+  "Face used for highlighting parentheses.
+Color attributes might be overriden by `highlight-parentheses-colors' and
+`highlight-parentheses-background-colors'."
+  :group 'highlight-parentheses)
+
+
+;;; Internal Variables
+
+(defvar-local highlight-parentheses--overlays nil
   "This buffers currently active overlays.")
-(make-variable-buffer-local 'hl-paren-overlays)
 
-(defvar hl-paren-last-point 0
+(defvar-local highlight-parentheses--last-point 0
   "The last point for which parentheses were highlighted.
 This is used to prevent analyzing the same context over and over.")
-(make-variable-buffer-local 'hl-paren-last-point)
 
-(defun hl-paren-highlight ()
+(defvar-local highlight-parentheses--timer nil
+  "A timer initiating the movement of the `highlight-parentheses--overlays'.")
+
+
+;;; Internal Functions
+(define-obsolete-function-alias 'hl-paren-delete-overlays
+  'highlight-parentheses--delete-overlays "2.0.0")
+
+(cl-defun highlight-parentheses--delete-overlays
+    (&optional (overlays highlight-parentheses--overlays))
+  "Delete all overlays set by Highlight Parentheses in the current buffer.
+
+If the optional argument OVERLAYS (a list) is non-nil, delete all
+overlays in it instead."
+  (mapc #'delete-overlay overlays))
+
+(define-obsolete-function-alias 'hl-paren-highlight
+  'highlight-parentheses--highlight)
+(defun highlight-parentheses--highlight ()
   "Highlight the parentheses around point."
-  (unless (= (point) hl-paren-last-point)
-    (setq hl-paren-last-point (point))
-    (let ((overlays hl-paren-overlays)
-          pos1 pos2
-          (pos (point)))
+  (unless (= (point) highlight-parentheses--last-point)
+    (setq highlight-parentheses--last-point (point))
+    (let ((overlays highlight-parentheses--overlays)
+          pos1 pos2)
       (save-excursion
-        (condition-case err
-            (while (and (setq pos1 (cadr (syntax-ppss pos1)))
-                        (cddr overlays))
-              (move-overlay (pop overlays) pos1 (1+ pos1))
-              (when (setq pos2 (scan-sexps pos1 1))
-                (move-overlay (pop overlays) (1- pos2) pos2)
-                ))
-          (error nil))
-        (goto-char pos))
-      (dolist (ov overlays)
-        (move-overlay ov 1 1)))))
+        (ignore-errors
+          (when highlight-parentheses-highlight-adjacent
+            (cond ((memq (preceding-char) '(?\) ?\} ?\] ?\>))
+                   (backward-char 1))
+                  ((memq (following-char) '(?\( ?\{ ?\[ ?\<))
+                   (forward-char 1))))
+          (while (and (setq pos1 (cadr (syntax-ppss pos1)))
+                      (cdr overlays))
+            (move-overlay (pop overlays) pos1 (1+ pos1))
+            (when (setq pos2 (scan-sexps pos1 1))
+              (move-overlay (pop overlays) (1- pos2) pos2)))))
+      (highlight-parentheses--delete-overlays overlays))))
 
+(define-obsolete-function-alias 'hl-paren-initiate-highlight
+  'highlight-parentheses--initiate-highlight "2.0.0")
+(defun highlight-parentheses--initiate-highlight ()
+  "Move the `highlight-parentheses--overlays' after a `highlight-parentheses-delay' secs."
+  (when highlight-parentheses--timer
+    (cancel-timer highlight-parentheses--timer))
+  (setq highlight-parentheses--timer
+        (run-at-time highlight-parentheses-delay nil
+                     #'highlight-parentheses--highlight)))
+
+
+;;; Mode Functions
 ;;;###autoload
 (define-minor-mode highlight-parentheses-mode
   "Minor mode to highlight the surrounding parentheses."
+  ;; REVIEW: Given the minor mode has no menu, we could also remove the lighter.
   nil " hl-p" nil
-  (if highlight-parentheses-mode
-      (progn
-        (hl-paren-create-overlays)
-        (add-hook 'post-command-hook 'hl-paren-highlight nil t))
-    (mapc 'delete-overlay hl-paren-overlays)
-    (kill-local-variable 'hl-paren-overlays)
-    (kill-local-variable 'hl-paren-point)
-    (remove-hook 'post-command-hook 'hl-paren-highlight t)))
+  (highlight-parentheses--delete-overlays)
+  (kill-local-variable 'highlight-parentheses--overlays)
+  (kill-local-variable 'highlight-parentheses--last-point)
+  (remove-hook 'post-command-hook
+               #'highlight-parentheses--initiate-highlight t)
+  (remove-hook 'before-revert-hook
+               #'highlight-parentheses--delete-overlays)
+  (remove-hook 'change-major-mode-hook
+               #'highlight-parentheses--delete-overlays)
+  (when (and highlight-parentheses-mode
+             ;; Don't enable in *Messages* buffer.
+             ;; https://github.com/tsdh/highlight-parentheses.el/issues/14
+             (not (eq major-mode 'messages-buffer-mode))
+             (not (string= (buffer-name) "*Messages*")))
+    (highlight-parentheses--create-overlays)
+    (add-hook 'post-command-hook
+              #'highlight-parentheses--initiate-highlight nil t)
+    (add-hook 'before-revert-hook
+              #'highlight-parentheses--delete-overlays)
+    (add-hook 'change-major-mode-hook
+              #'highlight-parentheses--delete-overlays)))
 
-;;; overlays ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;###autoload
+(define-globalized-minor-mode global-highlight-parentheses-mode
+  highlight-parentheses-mode
+  (lambda () (highlight-parentheses-mode 1)))
 
-(defun hl-paren-create-overlays ()
-  (let ((fg hl-paren-colors)
-        (bg hl-paren-background-colors)
+
+;;; Overlays
+
+(defun highlight-parentheses--create-overlays ()
+  "Initialize `highlight-parentheses--overlays' buffer-locally."
+  (let ((fg (if (functionp highlight-parentheses-colors)
+                (funcall highlight-parentheses-colors)
+              highlight-parentheses-colors))
+        (bg (if (functionp highlight-parentheses-background-colors)
+                (funcall highlight-parentheses-background-colors)
+              highlight-parentheses-background-colors))
+        (attr (if (functionp highlight-parentheses-attributes)
+                  (funcall highlight-parentheses-attributes)
+                highlight-parentheses-attributes))
         attributes)
-    (while (or fg bg)
-      (setq attributes (face-attr-construct 'hl-paren-face))
-      (when (car fg)
-        (setq attributes (plist-put attributes :foreground (car fg))))
+    (while (or fg bg attr)
+      (setq attributes (face-attr-construct 'highlight-parentheses-highlight))
+      (let ((car-fg (car fg))
+            (car-bg (car bg))
+            (car-attr (car attr)))
+        (cl-loop for (key . (val . _rest)) on car-attr by #'cddr
+              do (setq attributes
+                       (plist-put attributes key val)))
+        (when car-fg
+          (setq attributes (plist-put attributes :foreground car-fg)))
+        (when car-bg
+          (setq attributes (plist-put attributes :background car-bg))))
       (pop fg)
-      (when (car bg)
-        (setq attributes (plist-put attributes :background (car bg))))
       (pop bg)
+      (pop attr)
       (dotimes (i 2) ;; front and back
-        (push (make-overlay 0 0) hl-paren-overlays)
-        (overlay-put (car hl-paren-overlays) 'face attributes)))
-    (setq hl-paren-overlays (nreverse hl-paren-overlays))))
+        (push (make-overlay 0 0 nil t) highlight-parentheses--overlays)
+        (overlay-put (car highlight-parentheses--overlays) 'font-lock-face attributes)))
+    (setq highlight-parentheses--overlays (nreverse highlight-parentheses--overlays))))
 
-(defun hl-paren-color-update ()
+(defun highlight-parentheses--color-update ()
+  "Force-update highlighted parentheses in all buffers."
   (dolist (buffer (buffer-list))
     (with-current-buffer buffer
-      (when hl-paren-overlays
-        (mapc 'delete-overlay hl-paren-overlays)
-        (setq hl-paren-overlays nil)
-        (hl-paren-create-overlays)
-        (let ((hl-paren-last-point -1)) ;; force update
-          (hl-paren-highlight))))))
+      (when highlight-parentheses--overlays
+        (highlight-parentheses--delete-overlays)
+        (setq highlight-parentheses--overlays nil)
+        (highlight-parentheses--create-overlays)
+        (let ((highlight-parentheses--last-point -1)) ;; force update
+          (highlight-parentheses--highlight))))))
 
 (provide 'highlight-parentheses)
 
