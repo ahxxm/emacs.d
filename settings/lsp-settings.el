@@ -33,7 +33,7 @@
     :init
     (setq lsp-enable-snippet nil ;; yasnippet not used here
           lsp-ui-doc-enable nil
-          lsp-ui-sideline-enable t
+          lsp-ui-sideline-enable nil
           lsp-ui-sideline-ignore-duplicate t
 
      ; Use lsp-ui and flycheck
@@ -48,12 +48,16 @@
     (add-to-list 'flycheck-checkers 'lsp-ui))
 
   :init
-  (setq lsp-modeline-code-actions-enable nil
-        lsp-modeline-diagnostics-enable nil
-        lsp-modeline-workspace-status-enable nil
-        ;; FIXME: suppose to be helpful diagnostics but says "void function"
-   ; Detect project root
-   lsp-auto-guess-root t
+  (setq
+   ;; FIXME: suppose to be helpful diagnostics but says "void function"
+   lsp-modeline-code-actions-enable nil
+   lsp-modeline-diagnostics-enable nil
+   lsp-modeline-workspace-status-enable nil
+   lsp-headerline-breadcrumb-enable nil
+
+   lsp-auto-configure t
+
+   ; Detect project root not recommended ; lsp-auto-guess-root t
    ;; performance: https://github.com/emacs-lsp/lsp-mode/blob/master/docs/page/performance.md
    lsp-completion-provider :capf
    gc-cons-threshold 100000000
