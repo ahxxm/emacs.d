@@ -673,35 +673,6 @@ otherwise, change current buffer to that window.
 
 (defalias 'open-startup-folder 'dired-open-startup)
 
-(autoload 'iedit-mode "iedit" "" t)
-(autoload 'iedit-done "iedit")
-(autoload 'iedit-start "iedit")
-
-;;;###autoload
-(defun iedit-dwim (arg)
-  "Starts iedit but uses \\[narrow-to-defun] to limit its scope."
-  (interactive "P")
-  (iedit-mode arg)
-  (when nil
-    (when (require 'iedit nil t)
-      (if arg
-          (iedit-mode arg)
-        (save-excursion
-          (save-restriction
-            (widen)
-            ;; this function determines the scope of `iedit-start'.
-            (narrow-to-defun)
-            (if iedit-mode
-                (iedit-done)
-              ;; `current-word' can of course be replaced by other
-              ;; functions.
-              (let* ((bounds (bounds-of-defun-atpt))
-                     (beg (car bounds))
-                     (end (cadr bounds)))
-                (if (and beg end)
-                    (iedit-start (current-word) beg end)
-                  (iedit-mode arg))))))))))
-
 (provide 'edit-functions)
 ;; edit-functions ends here.
 ;;;

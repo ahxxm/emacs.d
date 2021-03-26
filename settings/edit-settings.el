@@ -34,7 +34,6 @@
   :bind (("C-x q" . switch-major-mode)
          ("C-x m" . get-mode-name)
          ("C-o" . open-line-if-active-delete-then-open-line)
-         ("C-;" . iedit-dwim)
          ("C-]" . goto-paren)
          ("C-M-]" . ywb-indent-accoding-to-paren)
          ("C-c M-c" . copy-file-name)
