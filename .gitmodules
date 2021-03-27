@@ -91,3 +91,6 @@
 [submodule "plugins/hydra"]
 	path = plugins/hydra
 	url = https://github.com/abo-abo/hydra
+[submodule "plugins/parseclj"]
+	path = plugins/parseclj
+	url = https://github.com/clojure-emacs/parseclj/

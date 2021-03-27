@@ -2,6 +2,7 @@
 ;; Settings for clojure
 ;; -----------------------------------[Settings for clojure]
 (add-to-list 'load-path (concat plugins-path-r "sesman")) ;; required by cider
+(add-to-list 'load-path (concat plugins-path-r "parseclj"))  ;; along with a.el, required by cider
 (add-to-list 'load-path (concat plugins-path-r "clojure-mode"))
 (add-to-list 'load-path (concat plugins-path-r "cider"))
 (add-to-list 'load-path (concat plugins-path-r "ac-cider"))
