@@ -94,3 +94,9 @@
 [submodule "plugins/parseclj"]
 	path = plugins/parseclj
 	url = https://github.com/clojure-emacs/parseclj/
+[submodule "plugins/lsp-treemacs"]
+	path = plugins/lsp-treemacs
+	url = https://github.com/emacs-lsp/lsp-treemacs
+[submodule "plugins/treemacs"]
+	path = plugins/treemacs
+	url = https://github.com/Alexander-Miller/treemacs

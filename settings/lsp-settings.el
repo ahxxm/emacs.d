@@ -1,6 +1,8 @@
 ;; -*- Emacs-Lisp -*-
 
 (add-to-list 'load-path (concat plugins-path-r "flycheck"))
+(add-to-list 'load-path (concat plugins-path-r "treemacs/src/elisp"))
+(add-to-list 'load-path (concat plugins-path-r "lsp-treemacs"))
 (add-to-list 'load-path (concat plugins-path-r "lsp-ui"))
 (add-to-list 'load-path (concat plugins-path-r "lsp-mode"))
 (add-to-list 'load-path (concat plugins-path-r "lsp-java"))
