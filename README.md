@@ -106,7 +106,12 @@ alias rmss='rm -rf ../.env/"${PWD##*/}"'
 
 ### C++-mode
 
-Install ccls, generate `compile_commands.json` in [project root](https://github.com/MaskRay/ccls/wiki/Project-Setup).
+Install ccls, generate `compile_commands.json` in [project root](https://github.com/MaskRay/ccls/wiki/Project-Setup):
+
+```bash
+# for example, https://github.com/nickdiego/compiledb works for sqlite and postgres
+make | compiledb
+```
 
 ### Magit
 
