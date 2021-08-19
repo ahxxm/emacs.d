@@ -27,6 +27,7 @@
           ("C-c m" . lsp-ui-imenu)
           ;; sideline peeks many information...
           ("C-c g" . lsp-find-definition)
+          ("C-x g" . lsp-find-implementation) ;; for example Golang interfaces
           ("<f3>"  . lsp-find-references)
           ("<f5>"  . lsp-java-organize-imports)  ;; automatically import class
           ("<tab>" . completion-at-point)
