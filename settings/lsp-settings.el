@@ -2,20 +2,20 @@
 
 (add-to-list 'load-path (concat plugins-path-r "flycheck"))
 (add-to-list 'load-path (concat plugins-path-r "treemacs/src/elisp"))
+(add-to-list 'load-path (concat plugins-path-r "emacs-ccls"))
+(add-to-list 'load-path (concat plugins-path-r "lsp-java"))
 (add-to-list 'load-path (concat plugins-path-r "lsp-treemacs"))
 (add-to-list 'load-path (concat plugins-path-r "lsp-ui"))
 (add-to-list 'load-path (concat plugins-path-r "lsp-mode"))
-(add-to-list 'load-path (concat plugins-path-r "lsp-java"))
+(add-to-list 'load-path (concat plugins-path-r "lsp-mode/clients"))
 (add-to-list 'load-path (concat plugins-path-r "hydra"))
-(add-to-list 'load-path (concat plugins-path-r "emacs-ccls"))
 (add-to-list 'load-path (concat plugins-path-r "company-mode"))
 (add-to-list 'load-path (concat plugins-path-r "emacs-request"))
-
 
 (use-package lsp-mode
   :defer t
   :diminish lsp-mode
-  :hook ((java-mode go-mode python-mode typescript-mode c++-mode) . lsp)
+  :hook ((java-mode go-mode python-mode typescript-mode c++-mode csharp-mode) . lsp)
   :config
   (require 'pkg-info)
   (require 'lsp-ui-flycheck)
@@ -42,12 +42,6 @@
      ; Use lsp-ui and flycheck
      lsp-prefer-flymake :none
      lsp-ui-flycheck-enable t)
-
-    ; FIXME: "is not configured to run for major mode `go-mode'"
-    (lsp-register-client
-     (make-lsp-client :new-connection (lsp-stdio-connection "gopls")
-                      :major-modes '(go-mode)
-                      :server-id 'gopls))
     (add-to-list 'flycheck-checkers 'lsp-ui))
 
   :init
@@ -59,6 +53,9 @@
    lsp-headerline-breadcrumb-enable nil
 
    lsp-auto-configure t
+
+   ;; for csharp server
+   lsp-csharp-server-path "~/dev/sharp/run"
 
    ; Detect project root not recommended ; lsp-auto-guess-root t
    ;; performance: https://github.com/emacs-lsp/lsp-mode/blob/master/docs/page/performance.md
