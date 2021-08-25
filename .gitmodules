@@ -100,3 +100,6 @@
 [submodule "plugins/treemacs"]
 	path = plugins/treemacs
 	url = https://github.com/Alexander-Miller/treemacs
+[submodule "plugins/csharp-mode"]
+	path = plugins/csharp-mode
+	url = https://github.com/emacs-csharp/csharp-mode

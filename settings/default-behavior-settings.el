@@ -153,6 +153,9 @@
 (add-to-list 'load-path (concat plugins-path-r "typescript-mode"))
 (autoload 'typescript-mode "typescript-mode" "" t)
 
+(add-to-list 'load-path (concat plugins-path-r "csharp-mode"))
+(autoload 'csharp-mode "csharp-mode" "" t)
+
 ;; modes definition.
 (setq auto-mode-alist
       (append
@@ -163,6 +166,7 @@
          ("\\.[Tt][Cc][Cc]$"  . c++-mode)
          ("\\.h$"             . c++-mode)
          ("\\.i$"             . c++-mode)    ; SWIG
+         ("\\.cs$"            . csharp-mode)
          ("\\.el\\.gz$"       . emacs-lisp-mode)
          ("\\.go\\'"          . go-mode)
          ("_emacs"            . lisp-mode)
