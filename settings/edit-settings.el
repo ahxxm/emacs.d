@@ -153,32 +153,6 @@ in another Emacs session.
   :bind (("C-x a" . align-current)
          ("C-x M-a" . align-regexp)))
 
-
-
-;; moccur settings
-;; ----------------------------------------[moccur settings]
-(use-package color-moccur
-  :defer t
-  :init
-  (setq moccur-split-word t
-        dmoccur-use-list t
-        dmoccur-use-project t
-        *moccur-buffer-name-exclusion-list*
-        '(".+TAGS.+" "*Completions*" "*magit-process*" "*Messages*")
-        dmoccur-list
-        '(("dir" default-directory (".*") dir)
-          ("config" emacs-root-path  ("\\.py$" "\\.el$") nil)))
-  :bind (("C-x O" . moccur)
-         ("C-c C-o" . search-buffers)))
-
-(use-package color-moccur
-  :after
-  (isearch)
-  :defer t  ; :commands, :bind*?, :bind-keymap*?, :mode, :interpreter implies
-  :bind (:map isearch-mode-map
-              ("M-o" . isearch-moccur)
-              ("M-O" . isearch-moccur-all)))
-
 (provide 'edit-settings)
 ;; edit-settings ends here.
 ;;;
