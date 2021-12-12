@@ -33,6 +33,8 @@
   (setq nrepl-hide-special-buffers t
         nrepl-buffer-name-show-port t
         cider-prefer-local-resources t
+        cider-repl-buffer-size-limit 1024 ;; '321 enter' triggers auto-erase when size exceeds
+        cider-print-limit 1024 ;; try limit to 1kb but
         cider-repl-display-in-current-window t
         cider-repl-history-size 10000
         cider-repl-result-prefix ";; => "
