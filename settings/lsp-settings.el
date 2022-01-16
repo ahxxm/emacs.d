@@ -15,7 +15,7 @@
 (use-package lsp-mode
   :defer t
   :diminish lsp-mode
-  :hook ((java-mode go-mode python-mode typescript-mode c++-mode csharp-mode) . lsp)
+  :hook ((java-mode go-mode python-mode typescript-mode c-mode c++-mode csharp-mode) . lsp)
   :config
   (require 'pkg-info)
   (require 'lsp-ui-flycheck)

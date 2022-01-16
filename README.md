@@ -105,13 +105,17 @@ alias pss2='virtualenv ../.env/"${PWD##*/}"'
 alias rmss='rm -rf ../.env/"${PWD##*/}"'
 ```
 
-### C++-mode
+### C-mode and C++-mode
 
 Install ccls, generate `compile_commands.json` in [project root](https://github.com/MaskRay/ccls/wiki/Project-Setup):
 
 ```bash
-# for example, https://github.com/nickdiego/compiledb works for sqlite and postgres
+# compiledb works for sqlite and postgres https://github.com/nickdiego/compiledb
 make | compiledb
+# cmake, like mozjpeg
+mkdir build && cd build
+cmake .. -DZLIB_ROOT=/home/hi/dev/mozjpeg/zlib-1.2.11/build -BDebug -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
+    cp Debug/compile_commands.json ../
 ```
 
 ### Magit
