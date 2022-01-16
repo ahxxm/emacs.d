@@ -16,3 +16,5 @@ wget -O plugins/ring+.el https://www.emacswiki.org/emacs/download/ring%2b.el
 wget -O plugins/s.el https://raw.githubusercontent.com/magnars/s.el/master/s.el
 wget -O plugins/spinner.el https://raw.githubusercontent.com/Malabarba/spinner.el/master/spinner.el
 wget -O plugins/yaml-mode.el https://raw.githubusercontent.com/yoshiki/yaml-mode/master/yaml-mode.el
+wget -O plugins/auto-highlight-symbol.el https://raw.githubusercontent.com/elp-revive/auto-highlight-symbol/master/auto-highlight-symbol.el
+wget -O plugins/adoc-mode.el https://raw.githubusercontent.com/jmakovicka/adoc-mode/master/adoc-mode.el
