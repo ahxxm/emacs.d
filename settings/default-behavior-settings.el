@@ -1,14 +1,8 @@
 ;; -*- Emacs-Lisp -*-
 ;; Emacs default behavoir settings
 
-;; Personal Info
-
-(setq user-full-name            "Richard Wong"
-      user-nick-name            "@richard"
-      major-mode                'text-mode
-      enable-local-variables    :safe
-      ;; My Gmail address, Welcome letter
-      user-mail-address         "chao787@gmail.com")
+;; use newer el file other than byte-compiled old ones
+(setq load-prefer-newer t)
 
 (setq-default default-directory "~"
               indicate-buffer-boundaries 'left)
