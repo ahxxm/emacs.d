@@ -4,6 +4,9 @@
 ;; use newer el file other than byte-compiled old ones
 (setq load-prefer-newer t)
 
+;; enable jit
+(setq package-native-compile t)
+
 (setq-default default-directory "~"
               indicate-buffer-boundaries 'left)
 
