@@ -4,6 +4,8 @@ set -ex
 
 wget -O plugins/a.el https://raw.githubusercontent.com/plexus/a.el/master/a.el
 wget -O plugins/f.el https://raw.githubusercontent.com/rejeep/f.el/master/f.el
+# required by f.el when emacs <= 28.1
+wget -O plugins/f-shortdoc.el https://raw.githubusercontent.com/rejeep/f.el/master/f-shortdoc.el
 wget -O plugins/dockerfile-mode.el https://raw.githubusercontent.com/spotify/dockerfile-mode/master/dockerfile-mode.el
 wget -O plugins/highlight-indentation.el https://raw.githubusercontent.com/antonj/Highlight-Indentation-for-Emacs/master/highlight-indentation.el
 wget -O plugins/highlight-parentheses.el https://git.sr.ht/~tsdh/highlight-parentheses.el/blob/main/highlight-parentheses.el
