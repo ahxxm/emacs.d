@@ -55,7 +55,8 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 
 ### Clojure-mode
 
-`C-c M-j` for cider-repl.
+- `C-c M-j`: start cider-repl
+- `C-c C-k`: load/eval the current buffer
 
 [Add](https://github.com/clojure-emacs/cider-nrepl) following to `~/.lein/profiles.clj`:
 
