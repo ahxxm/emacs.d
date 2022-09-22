@@ -103,3 +103,6 @@
 [submodule "plugins/csharp-mode"]
 	path = plugins/csharp-mode
 	url = https://github.com/emacs-csharp/csharp-mode
+[submodule "plugins/compat"]
+	path = plugins/compat
+	url = https://github.com/phikal/compat.el

@@ -75,7 +75,8 @@ With a prefix argument, highlight for that many seconds.
 (add-to-list 'load-path (concat plugins-path-r "transient/lisp")) ;; required by magit
 (add-to-list 'load-path (concat plugins-path-r "magit/lisp"))
 (add-to-list 'load-path (concat plugins-path-r "magit/lisp/magit-autoloads"))
-(add-to-list 'load-path (concat plugins-path-r "with-editor"))
+(add-to-list 'load-path (concat plugins-path-r "compat/"))  ;; required by with-editor
+(add-to-list 'load-path (concat plugins-path-r "with-editor/lisp"))
 (add-to-list 'load-path (concat plugins-path-r "git-modes"))
 
 (use-package magit
