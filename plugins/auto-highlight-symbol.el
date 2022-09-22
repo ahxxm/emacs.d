@@ -200,10 +200,11 @@
 
 ;;; Code:
 
-(require 'easy-mmode)
 (require 'cl-lib)
-(require 'ht)
+(require 'easy-mmode)
 (require 'subr-x)
+
+(require 'ht)
 
 (eval-and-compile
   (defconst ahs-web "http://github.com/jcs-elpa/auto-highlight-symbol-mode/")
@@ -334,7 +335,7 @@ Affects only overlay(hidden text) has a property `isearch-open-invisible'."
   :group 'auto-highlight-symbol
   :type 'hook)
 
-(defvar-local ahs-idle-timer nil
+(defvar ahs-idle-timer nil
   "Timer used to highlighting symbol whenever Emacs is idle.")
 
 (defcustom ahs-idle-interval 1.0
@@ -551,10 +552,10 @@ You can do these operations at One Key!
   `(define-key (if (keymapp ,keymap)
                    ,keymap
                  auto-highlight-symbol-mode-map)
-     (read-kbd-macro ,keys)
-     (lambda()
-       (interactive)
-       (ahs-onekey-edit-function ',plugin-name ,keep))))
+               (read-kbd-macro ,keys)
+               (lambda()
+                 (interactive)
+                 (ahs-onekey-edit-function ',plugin-name ,keep))))
 
 (defmacro ahs-onekey-change (keys plugin-name &optional keymap)
   "Macro of change plugin.
@@ -568,8 +569,8 @@ You can do these operations at One Key!
   `(define-key (if (keymapp ,keymap)
                    ,keymap
                  auto-highlight-symbol-mode-map)
-     (read-kbd-macro ,keys)
-     ',(intern (format "ahs-chrange-%s" plugin-name))))
+               (read-kbd-macro ,keys)
+               ',(intern (format "ahs-chrange-%s" plugin-name))))
 
 ;;
 ;; (@* "Internal variable" )
@@ -950,16 +951,17 @@ You can do these operations at One Key!
 (defun ahs-start-timer (&rest _)
   "Start idle timer."
   (when auto-highlight-symbol-mode
-    (ahs-unhighlight)  ; unhighlight it once here so we can see the result immediately
-    (when (timerp ahs-idle-timer) (cancel-timer ahs-idle-timer))
-    (setq ahs-idle-timer
-          (run-with-idle-timer
-           ;; if switch window, immediately change focus/unfocus unless the user
-           ;; doesn't want us to
-           (if (or (eq ahs-selected-window (selected-window))
-                   (not ahs-highlight-upon-window-switch))
-               ahs-idle-interval 0)
-           nil #'ahs-idle-function))))
+    (save-match-data
+      (ahs-unhighlight)  ; unhighlight it once here so we can see the result immediately
+      (when (timerp ahs-idle-timer) (cancel-timer ahs-idle-timer))
+      (setq ahs-idle-timer
+            (run-with-idle-timer
+             ;; if switch window, immediately change focus/unfocus unless the user
+             ;; doesn't want us to
+             (if (or (eq ahs-selected-window (selected-window))
+                     (not ahs-highlight-upon-window-switch))
+                 ahs-idle-interval 0)
+             nil #'ahs-idle-function)))))
 
 ;;
 ;; (@* "Idle" )
@@ -979,10 +981,9 @@ You can do these operations at One Key!
              (not (cl-some (lambda (m) (ignore-errors (symbol-value m))) ahs-disabled-minor-modes))
              (not (memq this-command ahs-disabled-commands))
              (not (cl-some (lambda (flag) (symbol-value flag)) ahs-disabled-flags)))
-    (let ((hl (ahs-highlight-p)))
-      (when hl
-        (ht-set ahs-window-map (selected-window) hl)
-        (ahs-highlight (nth 0 hl) (nth 1 hl) (nth 2 hl))))))
+    (when-let ((hl (ahs-highlight-p)))
+      (ht-set ahs-window-map (selected-window) hl)
+      (ahs-highlight (nth 0 hl) (nth 1 hl) (nth 2 hl)))))
 
 (defmacro ahs-add-overlay-face (pos face)
   "Not documented, POS, FACE."
@@ -1199,7 +1200,7 @@ You can do these operations at One Key!
     (overlay-put overlay 'ahs-symbol 'current)
     (overlay-put overlay 'priority ahs-overlay-priority)
     (overlay-put overlay 'face face)
-    (overlay-put overlay 'help-echo '(ahs-stat-string))
+    (overlay-put overlay 'help-echo '(or (ignore-errors (ahs-stat-string)) ""))
     (overlay-put overlay 'window (selected-window))
 
     (overlay-put overlay 'modification-hooks    '(ahs-modification-hook))
@@ -1430,11 +1431,10 @@ If FORCE is non-nil, delete all in the current buffer."
     (dolist (overlay overlays)
       (if (ahs-inside-overlay-p overlay)
           (push overlay newlist)
-        (let ((func-temp (overlay-get overlay 'isearch-open-invisible-temporary)))
-          (if func-temp
-              (funcall func-temp overlay t)
-            (ahs-store-property  overlay 'isearch-invisible  'invisible)
-            (ahs-store-property  overlay 'isearch-intangible 'intangible)))))
+        (if-let ((func-temp (overlay-get overlay 'isearch-open-invisible-temporary)))
+            (funcall func-temp overlay t)
+          (ahs-store-property overlay 'isearch-invisible  'invisible)
+          (ahs-store-property overlay 'isearch-intangible 'intangible))))
     (setq ahs-opened-overlay-list newlist)))
 
 ;; Modified from isearch.el
@@ -1520,8 +1520,7 @@ If FORCE is non-nil, delete all in the current buffer."
 
 (defun ahs-stat-string (&optional status)
   "Return the formatted `STATUS'. `STATUS' defaults to the current status."
-  (let* ((st (or status
-                 (ahs-stat)))
+  (let* ((st (or status (ahs-stat)))
          (before (nth 2 st))
          (after  (nth 3 st))
          (hidden (nth 5 st)))
@@ -1568,9 +1567,9 @@ If FORCE is non-nil, delete all in the current buffer."
 
 (defun ahs-mode-maybe ()
   "Fire up `auto-highlight-symbol-mode' if major-mode in ahs-modes."
-  (if (and (not (minibufferp (current-buffer)))
-           (memq major-mode ahs-modes))
-      (auto-highlight-symbol-mode t)))
+  (when (and (not (minibufferp (current-buffer)))
+             (memq major-mode ahs-modes))
+    (auto-highlight-symbol-mode t)))
 
 (defun ahs-delete-overlays (lst &optional force)
   "Delete overlays from LST.
@@ -1625,8 +1624,7 @@ plugin."
           (setq range (ahs-runnable-plugins t)))
     (ahs-change-range-internal range)
     (let ((ahs-suppress-log nomsg))
-      (ahs-log 'plugin-changed
-               (ahs-decorated-current-plugin-name))))
+      (ahs-log 'plugin-changed (ahs-decorated-current-plugin-name))))
 
   (when (ahs-called-interactively-p 'interactive)
     (ahs-idle-function))
