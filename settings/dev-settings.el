@@ -199,7 +199,7 @@ With a prefix argument, highlight for that many seconds.
   (local-set-key "\C-k"          'program-smart-kill)
   (local-set-key (kbd "C-c C-c") 'comment)
   (add-to-list 'write-file-functions 'delete-trailing-whitespace)
-  (linum-mode t)
+  ;; (linum-mode t)
   ;; highlight settings by mode.
   (hl-line-mode t)
   (auto-highlight-symbol-mode)
