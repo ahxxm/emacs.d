@@ -2,14 +2,14 @@
 
 ;; Copyright (C) 2009-2010 Mitsuo Saito <arch320@NOSPAM.gmail.com>
 ;; Copyright (C) 2013-2020 Gennadiy Zlobin <gennad.zlobin@NOSPAM.gmail.com>
-;; Copyright (C) 2020-2023 Shen, Jen-Chieh <jcs090218@gmail.com>
+;; Copyright (C) 2020-2024 Shen, Jen-Chieh <jcs090218@gmail.com>
 ;; Created date 2009-03-03 21:44 +0900
 
 ;; Author: Mitsuo Saito <arch320@NOSPAM.gmail.com>
 ;; Maintainer: Shen, Jen-Chieh <jcs090218@gmail.com>
 ;; Version: 1.61
 ;; Keywords: highlight face match convenience
-;; URL: http://github.com/jcs-elpa/auto-highlight-symbol
+;; URL: http://github.com/elp-revive/auto-highlight-symbol
 ;; Package-Requires: ((emacs "26.1") (ht "2.3"))
 ;;
 ;; This file is NOT part of GNU Emacs.
@@ -207,7 +207,7 @@
 (require 'ht)
 
 (eval-and-compile
-  (defconst ahs-web "http://github.com/jcs-elpa/auto-highlight-symbol-mode/")
+  (defconst ahs-web "http://github.com/elp-revive/auto-highlight-symbol-mode/")
   ;; Compatibility
   (if (or (>= emacs-major-version 24)
           (and (= emacs-major-version 23)
@@ -234,42 +234,42 @@
   :link `(url-link :tag "Information" ,(eval-when-compile ahs-web)))
 
 (defcustom ahs-modes
-  '(actionscript-mode
-    apache-mode
-    bat-generic-mode
-    c++-mode
-    c-mode
-    csharp-mode
-    css-mode
-    dos-mode
-    emacs-lisp-mode
-    html-mode
-    ini-generic-mode
-    java-mode
-    javascript-mode
-    js-mode
-    lisp-interaction-mode
-    lua-mode
-    latex-mode
-    makefile-mode
-    makefile-gmake-mode
-    markdown-mode
-    moccur-edit-mode
-    nxml-mode
-    nxhtml-mode
-    outline-mode
-    perl-mode cperl-mode
-    php-mode
-    python-mode
-    rc-generic-mode
-    reg-generic-mode
-    ruby-mode
-    sgml-mode
-    sh-mode
-    squirrel-mode
-    text-mode
-    tcl-mode
-    visual-basic-mode)
+  '( actionscript-mode
+     apache-mode
+     bat-generic-mode
+     c++-mode
+     c-mode
+     csharp-mode
+     css-mode
+     dos-mode
+     emacs-lisp-mode
+     html-mode
+     ini-generic-mode
+     java-mode
+     javascript-mode
+     js-mode
+     lisp-interaction-mode
+     lua-mode
+     latex-mode
+     makefile-mode
+     makefile-gmake-mode
+     markdown-mode
+     moccur-edit-mode
+     nxml-mode
+     nxhtml-mode
+     outline-mode
+     perl-mode cperl-mode
+     php-mode
+     python-mode
+     rc-generic-mode
+     reg-generic-mode
+     ruby-mode
+     sgml-mode
+     sh-mode
+     squirrel-mode
+     text-mode
+     tcl-mode
+     visual-basic-mode)
   "Major modes function `auto-highlight-symbol-mode' can run on."
   :group 'auto-highlight-symbol
   :type '(repeat symbol))
@@ -456,7 +456,7 @@ This variable can be set in three different types.
     Function is called with one argument, the symbol.
 
   3. `alist'
-  '(
+  `(
     ( `emacs-lisp-mode' . \"REGEXP\")  ; Regular expression in emacs-lisp-mode
     ( php-mode . my-include-function) ; Function predicate in php-mode
     )
@@ -480,7 +480,7 @@ This variable can be set in three different types.
     Function is called with one argument, the symbol.
 
   3. `alist'
-      '(;; Regular expression in ruby-mode
+      `(;; Regular expression in ruby-mode
         ( `ruby-mode' . \"\\_<\\(end\\|def\\|class\\)\\_>\")
         ( dos-mode  . i-hate-wxxxxxs)  ; Function predicate in dos-mode
         )
@@ -523,13 +523,13 @@ If major mode not in list all symbols can be highlighted."
 
 (defvar auto-highlight-symbol-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "M-<left>") 'ahs-backward)
-    (define-key map (kbd "M-<right>") 'ahs-forward)
-    (define-key map (kbd "M-S-<left>") 'ahs-backward-definition)
-    (define-key map (kbd "M-S-<right>") 'ahs-forward-definition)
-    (define-key map (kbd "M--") 'ahs-back-to-start)
-    (define-key map (kbd "C-x C-'") 'ahs-change-range)
-    (define-key map (kbd "C-x C-a") 'ahs-edit-mode)
+    (define-key map (kbd "M-<left>") #'ahs-backward)
+    (define-key map (kbd "M-<right>") #'ahs-forward)
+    (define-key map (kbd "M-S-<left>") #'ahs-backward-definition)
+    (define-key map (kbd "M-S-<right>") #'ahs-forward-definition)
+    (define-key map (kbd "M--") #'ahs-back-to-start)
+    (define-key map (kbd "C-x C-'") #'ahs-change-range)
+    (define-key map (kbd "C-x C-a") #'ahs-edit-mode)
     map)
   "Keymap used in function `auto-highlight-symbol-mode'.")
 
@@ -584,16 +584,16 @@ You can do these operations at One Key!
   "Comamnds that are inhibit for modification.")
 
 (defcustom ahs-unhighlight-allowed-commands
-  '(universal-argument
-    universal-argument-other-key
-    ahs-back-to-start
-    ahs-backward
-    ahs-backward-definition
-    ahs-display-stat
-    ahs-edit-mode
-    ahs-forward
-    ahs-forward-definition
-    ignore)
+  '( universal-argument
+     universal-argument-other-key
+     ahs-back-to-start
+     ahs-backward
+     ahs-backward-definition
+     ahs-display-stat
+     ahs-edit-mode
+     ahs-forward
+     ahs-forward-definition
+     ignore)
   "Commands allow to be highlight."
   :group 'auto-highlight-symbol
   :type 'list)
@@ -605,7 +605,7 @@ You can do these operations at One Key!
   :type 'list)
 
 (defcustom ahs-disabled-minor-modes
-  '(iedit-mode)
+  '( iedit-mode)
   "List of disabled minor modes."
   :group 'auto-highlight-symbol
   :type 'list)
@@ -777,7 +777,8 @@ You can do these operations at One Key!
         (if arg ahs-plugin-default-face ahs-plugin-default-face-unfocused)))
 
      ((and (functionp value)
-           (equal prop 'major-mode)) value)  ; major-mode
+           (equal prop 'major-mode))         ; major-mode
+      value)
      ((functionp value)                      ; function
       (condition-case err
           (if arg
@@ -948,12 +949,17 @@ You can do these operations at One Key!
 ;; (@* "Timer" )
 ;;
 
+(defun ahs-stop-timer (&rest _)
+  "Stop the idle timer."
+  (when (timerp ahs-idle-timer) (cancel-timer ahs-idle-timer)))
+
 (defun ahs-start-timer (&rest _)
   "Start idle timer."
   (when auto-highlight-symbol-mode
+    (ahs-edit-post-command-hook-function)
     (save-match-data
       (ahs-unhighlight)  ; unhighlight it once here so we can see the result immediately
-      (when (timerp ahs-idle-timer) (cancel-timer ahs-idle-timer))
+      (ahs-stop-timer)
       (setq ahs-idle-timer
             (run-with-idle-timer
              ;; if switch window, immediately change focus/unfocus unless the user
@@ -1151,6 +1157,7 @@ You can do these operations at One Key!
            do (let ((overlay (make-overlay beg end nil nil t)))
                 (overlay-put overlay 'ahs-symbol 'others)
                 (overlay-put overlay 'window (selected-window))
+                (overlay-put overlay 'evaporate t)
                 (overlay-put overlay 'face
                              (if (ahs-face-p face 'ahs-definition-face-list)
                                  (if current ahs-definition-face
@@ -1198,6 +1205,7 @@ You can do these operations at One Key!
   (let* ((overlay (make-overlay beg end nil nil t))
          (face (ahs-current-plugin-prop 'face current)))
     (overlay-put overlay 'ahs-symbol 'current)
+    (overlay-put overlay 'evaporate t)
     (overlay-put overlay 'priority ahs-overlay-priority)
     (overlay-put overlay 'face face)
     (overlay-put overlay 'help-echo '(or (ignore-errors (ahs-stat-string)) ""))
@@ -1236,26 +1244,26 @@ If FORCE is non-nil, delete all in the current buffer."
 
 (defun ahs-edit-post-command-hook-function ()
   "`post-command-hook' used in edit mode."
-  (cond
-   ;; Exit edit mode
-   ((not (ahs-inside-overlay-p (ahs-current-overlay-window)))
-    (ahs-edit-mode-off nil nil))
+  (when (and ahs-edit-mode-enable ahs-current-overlay)
+    (cond
+     ;; Exit edit mode
+     ((not (ahs-inside-overlay-p (car ahs-current-overlay)))
+      (ahs-edit-mode-off nil nil))
 
-   ;; Modify!!
-   ((and ahs-start-modification
-         (not ahs-inhibit-modification))
-    (ahs-symbol-modification)))
+     ;; Modify!!
+     ((not ahs-inhibit-modification)
+      (ahs-symbol-modification)))
 
-  (setq ahs-start-modification   nil
-        ahs-inhibit-modification nil))
+    (setq ahs-start-modification   nil
+          ahs-inhibit-modification nil)))
 
 (defun ahs-symbol-modification ()
   "Modify all highlighted symbols."
-  (let* ((current-overlay (ahs-current-overlay-window))
+  (let* ((current-overlay (car ahs-current-overlay))
          (source (buffer-substring-no-properties
                   (overlay-start current-overlay)
                   (overlay-end current-overlay))))
-    (dolist (change (ahs-overlay-list-window))
+    (dolist (change ahs-overlay-list)
       (when (overlayp change)
         (let* ((beg (overlay-start change))
                (end (overlay-end change))
@@ -1269,33 +1277,34 @@ If FORCE is non-nil, delete all in the current buffer."
 
 (defun ahs-edit-mode-on ()
   "Turn `ON' edit mode."
-  (setq ahs-edit-mode-enable     t
-        ahs-start-modification   nil
-        ahs-inhibit-modification nil)
-  (overlay-put (ahs-current-overlay-window) 'face ahs-edit-mode-face)
-  (remove-hook 'post-command-hook #'ahs-unhighlight t)
-  (add-hook 'post-command-hook #'ahs-edit-post-command-hook-function nil t)
-  (run-hooks 'ahs-edit-mode-on-hook)
+  (if (not (ahs-current-overlay-window))
+      (ahs-edit-mode-off nil nil)
+    (setq ahs-edit-mode-enable     t
+          ahs-start-modification   nil
+          ahs-inhibit-modification nil)
+    (overlay-put (ahs-current-overlay-window) 'face ahs-edit-mode-face)
+    (remove-hook 'post-command-hook #'ahs-unhighlight t)
+    (run-hooks 'ahs-edit-mode-on-hook)
 
-  ;; Exit edit mode when undo over edit mode.
-  (push '(apply ahs-clear t) buffer-undo-list)
+    ;; Exit edit mode when undo over edit mode.
+    (push '(apply ahs-clear t) buffer-undo-list)
 
-  ;; Display log
-  (unless ahs-suppress-log
-    (let* ((st (ahs-stat))
-           (alert
-            (if (ahs-stat-alert-p st)
-                (format (ahs-log-format 'exist-elsewhere)
-                        (ahs-decorate-if
-                         (number-to-string
-                          (+ (nth 2 st)
-                             (nth 3 st))) ahs-warning-face)) "")))
-      (if ahs-onekey-range-store
-          (ahs-log 'onekey-turn-on-edit-mode
-                   (ahs-decorated-current-plugin-name) alert)
-        (ahs-log 'turn-on-edit-mode alert))))
+    ;; Display log
+    (unless ahs-suppress-log
+      (let* ((st (ahs-stat))
+             (alert
+              (if (ahs-stat-alert-p st)
+                  (format (ahs-log-format 'exist-elsewhere)
+                          (ahs-decorate-if
+                           (number-to-string
+                            (+ (nth 2 st)
+                               (nth 3 st))) ahs-warning-face)) "")))
+        (if ahs-onekey-range-store
+            (ahs-log 'onekey-turn-on-edit-mode
+                     (ahs-decorated-current-plugin-name) alert)
+          (ahs-log 'turn-on-edit-mode alert))))
 
-  (ahs-set-lighter))
+    (ahs-set-lighter)))
 
 (defun ahs-edit-mode-off (nomsg interactive)
   "Turn `OFF' edit mode."
@@ -1307,7 +1316,6 @@ If FORCE is non-nil, delete all in the current buffer."
         (overlay-put (ahs-current-overlay-window) 'face (ahs-current-plugin-prop 'face))
         (add-hook 'post-command-hook #'ahs-unhighlight nil t))
     (ahs-remove-all-overlay))
-  (remove-hook 'post-command-hook #'ahs-edit-post-command-hook-function t)
   (run-hooks 'ahs-edit-mode-off-hook)
 
   ;; Display log
@@ -1549,7 +1557,7 @@ If FORCE is non-nil, delete all in the current buffer."
     (force-mode-line-update)))
 
 (defun ahs-init ()
-  "Initialize"
+  "Initialize."
   (unless ahs-current-range
     (ahs-change-range-internal ahs-default-range))
   (ahs-set-lighter)

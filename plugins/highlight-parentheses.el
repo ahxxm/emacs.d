@@ -2,15 +2,15 @@
 ;;
 ;; Copyright (C) 2007, 2009, 2013 Nikolaj Schumacher
 ;; Copyright (C) 2018 Tim Perkins
-;; Copyright (C) 2018-2022 Tassilo Horn
+;; Copyright (C) 2018-2022, 2024 Tassilo Horn
 ;;
 ;; Author: Nikolaj Schumacher <bugs * nschum de>
 ;; Maintainer: Tassilo Horn <tsdh@gnu.org>
-;; Version: 2.1.1
+;; Version: 2.2.2
 ;; Keywords: faces, matching
 ;; URL: https://sr.ht/~tsdh/highlight-parentheses.el/
 ;; Package-Requires: ((emacs "24.3"))
-;; Compatibility: GNU Emacs 24.3, 25.x, 26.x, 27.x
+;; Compatibility: GNU Emacs 24.3, 25.x, 26.x, 27.x, 28.x, 29.x
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -154,6 +154,12 @@ Color attributes might be overriden by `highlight-parentheses-colors' and
   "The last point for which parentheses were highlighted.
 This is used to prevent analyzing the same context over and over.")
 
+(defvar-local highlight-parentheses--last-pair nil
+  "A cons (OPEN-PAREN-POS . CLOSING-PAREN-POS).
+It describes the position of the last immediately surrounding pair of
+parens and is used to shortcut highlighting if point didn't move so far
+that the immediately surrounding pair changed.")
+
 (defvar-local highlight-parentheses--timer nil
   "A timer initiating the movement of the `highlight-parentheses--overlays'.")
 
@@ -170,27 +176,70 @@ If the optional argument OVERLAYS (a list) is non-nil, delete all
 overlays in it instead."
   (mapc #'delete-overlay overlays))
 
+(defun highlight-parentheses--highlight-needed-p ()
+  "Return non-nil if re-highlighting is needed."
+  (let ((point (point))
+        (last-point highlight-parentheses--last-point))
+    (or
+     ;; A forced refresh.
+     (< last-point 0)
+     ;; Check if point has moved and during the move, it crossed some paren.
+     (and (/= (point) last-point)
+          (catch 'highlight-needed
+            (let ((start (min point last-point))
+                  (end   (max point last-point)))
+              ;; If the move was large, checking if we crossed some paren
+              ;; becomes too expensive, so give up.
+              (when (> (- end start) 5000)
+                (throw 'highlight-needed t))
+              ;; Otherwise check if we crossed some paren.
+              (while (< start end)
+                (when (memq (char-after start) '(?\( ?\{ ?\[ ?\< ?\) ?\} ?\] ?\>))
+                  (throw 'highlight-needed t))
+                (cl-incf start))
+              ;; Lets assume we keep moving in the same direction, so update
+              ;; last-point to the current value of point.
+              (setq highlight-parentheses--last-point point)
+              nil))))))
+
 (define-obsolete-function-alias 'hl-paren-highlight
   'highlight-parentheses--highlight "2.0.0")
-(defun highlight-parentheses--highlight ()
-  "Highlight the parentheses around point."
-  (unless (= (point) highlight-parentheses--last-point)
-    (setq highlight-parentheses--last-point (point))
-    (let ((overlays highlight-parentheses--overlays)
-          pos1 pos2)
-      (save-excursion
-        (ignore-errors
-          (when highlight-parentheses-highlight-adjacent
-            (cond ((memq (preceding-char) '(?\) ?\} ?\] ?\>))
-                   (backward-char 1))
-                  ((memq (following-char) '(?\( ?\{ ?\[ ?\<))
-                   (forward-char 1))))
-          (while (and (setq pos1 (cadr (syntax-ppss pos1)))
-                      (cdr overlays))
-            (move-overlay (pop overlays) pos1 (1+ pos1))
-            (when (setq pos2 (scan-sexps pos1 1))
-              (move-overlay (pop overlays) (1- pos2) pos2)))))
-      (highlight-parentheses--delete-overlays overlays))))
+(defun highlight-parentheses--highlight (buffer)
+  "Highlight the parentheses around point in BUFFER."
+  (when (buffer-live-p buffer)
+    (with-current-buffer buffer
+      (when (highlight-parentheses--highlight-needed-p)
+        (setq highlight-parentheses--last-point (point))
+        (let ((overlays highlight-parentheses--overlays)
+              (first-iteration t)
+              pos1 pos2)
+          (catch 'no-change
+            (save-excursion
+              (ignore-errors
+                (when highlight-parentheses-highlight-adjacent
+                  (cond ((memq (preceding-char) '(?\) ?\} ?\] ?\>))
+                         (backward-char 1))
+                        ((memq (following-char) '(?\( ?\{ ?\[ ?\<))
+                         (forward-char 1))))
+                (while (and (setq pos1 (cadr (syntax-ppss pos1)))
+                            (cdr overlays))
+                  (move-overlay (pop overlays) pos1 (1+ pos1))
+                  (when (setq pos2 (scan-sexps pos1 1))
+                    (move-overlay (pop overlays) (1- pos2) pos2)
+                    ;; Check if the immediately surrounding pair of parens is at
+                    ;; the same location as before.  If so, we can skip moving
+                    ;; the other overlays since they haven't changed, too.
+                    (when (and first-iteration
+                               (equal highlight-parentheses--last-pair
+                                      (cons pos1 (1- pos2))))
+                      (throw 'no-change t))
+                    (setq first-iteration nil)))))
+            (highlight-parentheses--delete-overlays overlays))
+          (let ((o1 (car highlight-parentheses--overlays))
+                (o2 (cadr highlight-parentheses--overlays)))
+            (setq highlight-parentheses--last-pair
+                  (cons (and o1 (overlay-start o1))
+                        (and o2 (overlay-start o2))))))))))
 
 (define-obsolete-function-alias 'hl-paren-initiate-highlight
   'highlight-parentheses--initiate-highlight "2.0.0")
@@ -202,7 +251,8 @@ the delay by `highlight-parentheses-delay' seconds."
     (cancel-timer highlight-parentheses--timer))
   (setq highlight-parentheses--timer
         (run-at-time highlight-parentheses-delay nil
-                     #'highlight-parentheses--highlight)))
+                     #'highlight-parentheses--highlight
+                     (current-buffer))))
 
 
 ;;; Overlays
@@ -265,7 +315,7 @@ minibuffer.")
         (setq highlight-parentheses--overlays nil)
         (highlight-parentheses--create-overlays)
         (let ((highlight-parentheses--last-point -1)) ;; force update
-          (highlight-parentheses--highlight))))))
+          (highlight-parentheses--highlight buffer))))))
 
 
 ;;; Mode Functions

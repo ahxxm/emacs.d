@@ -61,7 +61,7 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 [Add](https://github.com/clojure-emacs/cider-nrepl) following to `~/.lein/profiles.clj`:
 
 ```
-{:user {:middleware [cider-nrepl.plugin/middleware] :plugins [[cider/cider-nrepl "0.28.3" :exclusions [org.clojure/tools.namespace]]]}}
+{:user {:middleware [cider-nrepl.plugin/middleware] :plugins [[cider/cider-nrepl "0.50.2" :exclusions [org.clojure/tools.namespace]]]}}
 ```
 
 ### Go-mode
