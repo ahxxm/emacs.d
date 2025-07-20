@@ -17,6 +17,8 @@
   :diminish lsp-mode
   :hook ((java-mode go-mode python-mode typescript-mode c-mode c++-mode csharp-mode) . lsp)
   :config
+  ;; https://github.com/emacs-lsp/lsp-mode/issues/3577#issuecomment-1709232622
+  (setq lsp-client-packages (delete 'lsp-terraform lsp-client-packages))
   (require 'pkg-info)
   (require 'lsp-ui-flycheck)
   (use-package lsp-completion) ;; IMPORTANT, to "lsp-configure-hook"
@@ -51,6 +53,7 @@
    lsp-modeline-diagnostics-enable nil
    lsp-modeline-workspace-status-enable nil
    lsp-headerline-breadcrumb-enable nil
+   lsp-lens-enable nil
 
    lsp-auto-configure t
 
