@@ -49,7 +49,7 @@
 ;; Immediately close the current buffer.
 (use-package menu-bar
   :defer t
-  :bind (("C-x k" . kill-this-buffer)))
+  :bind (("C-x k" . (lambda () (interactive) (kill-buffer (current-buffer))))))
 
 (use-package window
   :config
