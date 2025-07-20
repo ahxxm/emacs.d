@@ -92,8 +92,8 @@ With a prefix argument, highlight for that many seconds.
 ;; Projectile settings. more smarter than ftf
 ;; ------------------------------------------------------------------
 (use-package projectile
-  :defer t  ; :commands, :bind*?, :bind-keymap*?, :mode, :interpreter implies
-  :commands ; for autoload
+  :defer t
+  :commands   ; for autoload
   (projectile-project-p
    projectile-find-file
    projectile-project-vcs

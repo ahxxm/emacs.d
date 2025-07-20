@@ -4,11 +4,13 @@
 (setq ido-enable-flex-matching t) ;; enable fuzzy matching
 (ido-everywhere t)
 
-(defun ido-my-keys()
-  "key settings for ido"
+;; Global keybindings - set immediately  
+(global-set-key (kbd "C-x C-f") 'ido-find-file)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
-  (global-set-key (kbd "C-x C-f") 'ido-find-file)
-  (global-set-key (kbd "C-x C-b") 'ibuffer)
+(defun ido-my-keys()
+  "ido completion map key settings"
+
   (define-key ido-completion-map (kbd "M-.")   'ido-next-match-dir)
   (define-key ido-completion-map (kbd "M-,")   'ido-prev-match-dir)
   (define-key ido-completion-map (kbd "C-h")   'ido-delete-backward-updir)
