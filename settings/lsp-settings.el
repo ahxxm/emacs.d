@@ -110,6 +110,9 @@
         company-selection-wrap-around t
         company-tooltip-align-annotations t))
 
+(custom-set-faces
+ '(xref-match ((t (:foreground "#A6E22E" :background nil :bold t)))))
+
 (provide 'lsp-settings)
 ;; lsp-settings ends here.
 ;;;

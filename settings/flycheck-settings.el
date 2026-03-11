@@ -23,7 +23,7 @@
   ;; language standard for c/c++ files
   (add-hook 'c++-mode-hook
             (lambda ()
-              (setq flycheck-clang-language-standard "c++14")))
+              (setq flycheck-clang-language-standard "c++2b")))
 
   ;; Generic flycheck-mode settings
   (dolist (hook '(python-mode-hook

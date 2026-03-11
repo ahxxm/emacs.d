@@ -35,7 +35,7 @@
 
 ;; BENCHMARK
 ;;(add-to-list 'load-path (concat plugins-path-r "benchmark-init-el/"))
-;;(require 'benchmark-init-loaddefs)
+;;(require 'benchmark-init)
 ;;(benchmark-init/activate)
 
 

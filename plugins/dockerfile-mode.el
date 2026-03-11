@@ -4,7 +4,7 @@
 ;; Package-Requires: ((emacs "24"))
 ;; Homepage: https://github.com/spotify/dockerfile-mode
 ;; URL: https://github.com/spotify/dockerfile-mode
-;; Version: 1.7
+;; Version: 1.9
 ;; Keywords: docker languages processes tools
 ;;
 ;; Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -110,7 +110,14 @@ It is supported from docker 18.09"
   "Face to highlight the base image alias inf FROM ... AS <alias> construct.")
 
 (defconst dockerfile--from-regex
-  (rx "from " (group (+? nonl)) (or " " eol) (? "as " (group (1+ nonl)))))
+  (rx line-start (* blank) "from" (+ blank)
+      (? "--platform=" (+ (not (any blank "\n"))) (+ blank))
+      (group (+ (not (any blank "\n"))))
+      (* blank)
+      (? "as" (+ blank) (group (+ (not (any blank "\n")))))
+      (* blank)
+      (? "#" (* nonl))
+      line-end))
 
 (defvar dockerfile-font-lock-keywords
   `(,(cons (rx (or line-start "onbuild ")
@@ -118,7 +125,7 @@ It is supported from docker 18.09"
                           "add" "copy" "entrypoint" "volume" "user" "workdir" "onbuild"
                           "label" "stopsignal" "shell" "healthcheck"))
                word-boundary)
-           font-lock-keyword-face)
+           'font-lock-keyword-face)
     (,dockerfile--from-regex
      (1 'dockerfile-image-name)
      (2 'dockerfile-image-alias nil t))
@@ -137,10 +144,10 @@ It is supported from docker 18.09"
     (define-key menu-map [dfc]
       '(menu-item "Comment Region" comment-region
                   :help "Comment Region"))
-    (define-key menu-map [dfb]
+    (define-key-after menu-map [dfb]
       '(menu-item "Build" dockerfile-build-buffer
                   :help "Send the Dockerfile to docker build"))
-    (define-key menu-map [dfb]
+    (define-key-after menu-map [dfbnc]
       '(menu-item "Build without cache" dockerfile-build-no-cache-buffer
                   :help "Send the Dockerfile to docker build without cache"))
     map))
