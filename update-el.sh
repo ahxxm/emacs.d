@@ -14,9 +14,9 @@ wget -O plugins/markdown-mode.el https://raw.githubusercontent.com/jrblevin/mark
 wget -O plugins/json-mode.el https://raw.githubusercontent.com/joshwnj/json-mode/master/json-mode.el
 wget -O plugins/parseedn.el https://raw.githubusercontent.com/clojure-emacs/parseedn/master/parseedn.el # parseclj module as well
 wget -O plugins/projectile.el https://raw.githubusercontent.com/bbatsov/projectile/master/projectile.el
-wget -O plugins/ring+.el https://www.emacswiki.org/emacs/download/ring%2b.el
 wget -O plugins/s.el https://raw.githubusercontent.com/magnars/s.el/master/s.el
 wget -O plugins/spinner.el https://raw.githubusercontent.com/Malabarba/spinner.el/master/spinner.el
 wget -O plugins/yaml-mode.el https://raw.githubusercontent.com/yoshiki/yaml-mode/master/yaml-mode.el
 wget -O plugins/auto-highlight-symbol.el https://raw.githubusercontent.com/elp-revive/auto-highlight-symbol/master/auto-highlight-symbol.el
 wget -O plugins/adoc-mode.el https://raw.githubusercontent.com/jmakovicka/adoc-mode/master/adoc-mode.el
+wget -O themes/monokai-theme.el https://raw.githubusercontent.com/oneKelvinSmith/monokai-emacs/master/monokai-theme.el

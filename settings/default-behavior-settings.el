@@ -204,10 +204,6 @@
   ("\\.md\\'"        . markdown-mode)
   ("\\.text\\'"      . markdown-mode))
 
-;; learning from dadams
-(eval-after-load "ring"
-  '(progn (require 'ring+)))
-
 (when (string= system-type "darwin")
 ;;; ENV path correction for (Mac os x)
   (dolist (ensure-path '("/usr/bin"

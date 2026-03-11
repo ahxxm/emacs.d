@@ -1,12 +1,12 @@
 ;;; markdown-mode.el --- Major mode for Markdown-formatted text -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2007-2023 Jason R. Blevins and markdown-mode
+;; Copyright (C) 2007-2026 Jason R. Blevins and markdown-mode
 ;; contributors (see the commit log for details).
 
 ;; Author: Jason R. Blevins <jblevins@xbeta.org>
 ;; Maintainer: Jason R. Blevins <jblevins@xbeta.org>
 ;; Created: May 24, 2007
-;; Version: 2.8-alpha
+;; Version: 2.9-alpha
 ;; Package-Requires: ((emacs "28.1"))
 ;; Keywords: Markdown, GitHub Flavored Markdown, itex
 ;; URL: https://jblevins.org/projects/markdown-mode/
@@ -38,6 +38,7 @@
 (require 'thingatpt)
 (require 'cl-lib)
 (require 'url-parse)
+(require 'url-util)
 (require 'button)
 (require 'color)
 (require 'rx)
@@ -846,9 +847,9 @@ Groups 1 and 3 match the opening and closing tags.
 Group 2 matches the key sequence.")
 
 (defconst markdown-regex-gfm-code-block-open
-  "^[[:blank:]]*\\(?1:```\\)\\(?2:[[:blank:]]*{?[[:blank:]]*\\)\\(?3:[^`[:space:]]+?\\)?\\(?:[[:blank:]]+\\(?4:.+?\\)\\)?\\(?5:[[:blank:]]*}?[[:blank:]]*\\)$"
+  "^[[:blank:]]*\\(?1:`\\{3,\\}\\)\\(?2:[[:blank:]]*{?[[:blank:]]*\\)\\(?3:[^`[:space:]]+?\\)?\\(?:[[:blank:]]+\\(?4:.+?\\)\\)?\\(?5:[[:blank:]]*}?[[:blank:]]*\\)$"
   "Regular expression matching opening of GFM code blocks.
-Group 1 matches the opening three backquotes and any following whitespace.
+Group 1 matches the opening three or more backquotes.
 Group 2 matches the opening brace (optional) and surrounding whitespace.
 Group 3 matches the language identifier (optional).
 Group 4 matches the info string (optional).
@@ -856,9 +857,9 @@ Group 5 matches the closing brace (optional), whitespace, and newline.
 Groups need to agree with `markdown-regex-tilde-fence-begin'.")
 
 (defconst markdown-regex-gfm-code-block-close
-  "^[[:blank:]]*\\(?1:```\\)\\(?2:\\s *?\\)$"
+  "^[[:blank:]]*\\(?1:`\\{3,\\}\\)\\(?2:\\s *?\\)$"
   "Regular expression matching closing of GFM code blocks.
-Group 1 matches the closing three backquotes.
+Group 1 matches the closing three or more backquotes.
 Group 2 matches any whitespace and the final newline.")
 
 (defconst markdown-regex-pre
@@ -1006,6 +1007,13 @@ Groups 1 and 4 match the opening and closing markup.
 Group 3 matches the mathematical expression contained within.
 Group 2 matches the opening slashes, and is used internally to
 match the closing slashes.")
+
+(defsubst markdown-make-gfm-fence-regex (num-backticks &optional end-of-line)
+  "Return regexp matching a GFM code fence at least NUM-BACKTICKS long.
+END-OF-LINE is the regexp construct to indicate end of line; $ if
+missing."
+  (format "%s%d%s%s" "^[[:blank:]]*\\([`]\\{" num-backticks ",\\}\\)"
+          (or end-of-line "$")))
 
 (defsubst markdown-make-tilde-fence-regex (num-tildes &optional end-of-line)
   "Return regexp matching a tilde code fence at least NUM-TILDES long.
@@ -1420,7 +1428,7 @@ giving the bounds of the current and parent list items."
      (markdown-get-yaml-metadata-end-border markdown-yaml-metadata-end)
      markdown-yaml-metadata-section)
     ((,markdown-regex-gfm-code-block-open markdown-gfm-block-begin)
-     (,markdown-regex-gfm-code-block-close markdown-gfm-block-end)
+     (markdown-make-gfm-fence-regex markdown-gfm-block-end)
      markdown-gfm-code))
   "Mapping of regular expressions to \"fenced-block\" constructs.
 These constructs are distinguished by having a distinctive start
@@ -1686,12 +1694,12 @@ MIDDLE-BEGIN is the start of the \"middle\" section of the block."
       (put-text-property close-begin close-end
                          (cl-cadadr fence-spec) close-data))))
 
-(defun markdown--triple-quote-single-line-p (begin)
+(defun markdown--code-fence-single-line-p (begin)
   (save-excursion
     (goto-char begin)
     (save-match-data
-      (and (search-forward "```" nil t)
-           (search-forward "```" (line-end-position) t)))))
+      (and (re-search-forward "`\\{3,\\}" nil t)
+           (re-search-forward "`\\{3,\\}" (line-end-position) t)))))
 
 (defun markdown-syntax-propertize-fenced-block-constructs (start end)
   "Propertize according to `markdown-fenced-block-pairs' from START to END.
@@ -1748,7 +1756,7 @@ start which was previously propertized."
                    0)))
                (prop (cl-cadar correct-entry)))
           (when (or (not (eq prop 'markdown-gfm-block-begin))
-                    (not (markdown--triple-quote-single-line-p block-start)))
+                    (not (markdown--code-fence-single-line-p block-start)))
             ;; get correct match data
             (save-excursion
               (beginning-of-line)
@@ -2253,6 +2261,9 @@ Depending on your font, some reasonable choices are:
                                        (2 'markdown-markup-face)
                                        (3 'markdown-metadata-value-face)))
     (markdown-fontify-hrs)
+    (,markdown-regex-strike-through . ((3 markdown-markup-properties)
+                                       (4 'markdown-strike-through-face)
+                                       (5 markdown-markup-properties)))
     (markdown-match-code . ((1 markdown-markup-properties prepend)
                             (2 'markdown-inline-code-face prepend)
                             (3 markdown-markup-properties prepend)))
@@ -2318,9 +2329,6 @@ Depending on your font, some reasonable choices are:
     (markdown-match-italic . ((1 markdown-markup-properties prepend)
                               (2 'markdown-italic-face append)
                               (3 markdown-markup-properties prepend)))
-    (,markdown-regex-strike-through . ((3 markdown-markup-properties)
-                                       (4 'markdown-strike-through-face)
-                                       (5 markdown-markup-properties)))
     (markdown--match-highlighting . ((3 markdown-markup-properties)
                                      (4 'markdown-highlighting-face)
                                      (5 markdown-markup-properties)))
@@ -3282,11 +3290,18 @@ processed elements."
                              (markdown-end-of-text-block)
                              (point))))
            ;; Move over balanced expressions to closing right bracket.
-           ;; Catch unbalanced expression errors and return nil.
+           ;; Catch unbalanced expression errors, then try to search right bracket manually.
            (first-end (condition-case nil
                           (and (goto-char first-begin)
                                (scan-sexps (point) 1))
-                        (error nil)))
+                        (error
+                         (save-match-data
+                           (let ((last (match-end 4))
+                                 ok end-pos)
+                             (while (and (not ok) (search-forward "]" last t))
+                               (unless (= (char-before (1- (point))) ?\\)
+                                 (setq ok t end-pos (point))))
+                             end-pos)))))
            ;; Continue with point at CONT-POINT upon failure.
            (cont-point (min (1+ first-begin) last))
            second-begin second-end url-begin url-end
@@ -8160,6 +8175,27 @@ See `markdown-wiki-link-p' for more information."
             (thing-at-point-looking-at markdown-regex-uri)
             (thing-at-point-looking-at markdown-regex-angle-uri))))))
 
+(defun markdown--unhex-url-string (url)
+  "Unhex control characters and spaces in URL.
+This is similar to `url-unhex-string' but this doesn't unhex all percent-encoded
+characters."
+  (let ((str (or url ""))
+        (tmp "")
+        (case-fold-search t))
+    (while (string-match "%\\([01][0-9a-f]\\|20\\)" str)
+      (let* ((start (match-beginning 0))
+             (ch1 (url-unhex (elt str (+ start 1))))
+             (code (+ (* 16 ch1)
+                      (url-unhex (elt str (+ start 2))))))
+        (setq tmp (concat
+                   tmp (substring str 0 start)
+                   (cond
+                    ((or (= code ?\n) (= code ?\r))
+                     " ")
+                    (t (byte-to-string code))))
+              str (substring str (match-end 0)))))
+    (concat tmp str)))
+
 (defun markdown-link-at-pos (pos)
   "Return properties of link or image at position POS.
 Value is a list of elements describing the link:
@@ -8183,7 +8219,9 @@ Value is a list of elements describing the link:
               url (match-string-no-properties 6))
         ;; consider nested parentheses
         ;; if link target contains parentheses, (match-end 0) isn't correct end position of the link
-        (let* ((close-pos (scan-sexps (match-beginning 5) 1))
+        (let* ((close-pos (condition-case nil
+                              (scan-sexps (match-beginning 5) 1)
+                            (error (match-end 0))))
                (destination-part (string-trim (buffer-substring-no-properties (1+ (match-beginning 5)) (1- close-pos)))))
           (setq end close-pos)
           ;; A link can contain spaces if it is wrapped with angle brackets
@@ -8193,7 +8231,7 @@ Value is a list of elements describing the link:
                  (setq url (match-string-no-properties 1 destination-part)
                        title (substring (match-string-no-properties 2 destination-part) 1 -1)))
                 (t (setq url destination-part)))
-          (setq url (url-unhex-string url))))
+          (setq url (markdown--unhex-url-string url))))
        ;; Reference link at point.
        ((thing-at-point-looking-at markdown-regex-link-reference)
         (setq bang (match-string-no-properties 1)
@@ -9331,7 +9369,7 @@ position."
 (defvar-local markdown--edit-indirect-committed-position nil)
 
 (defun markdown--edit-indirect-save-committed-position ()
-  "Set where editing is committed to a local variable in the parent buffer."
+  "Save where editing is committed in a local variable in the parent buffer."
   (if-let* ((parent-buffer (overlay-buffer edit-indirect--overlay))
             ((with-current-buffer parent-buffer
                (derived-mode-p 'markdown-mode)))
@@ -9343,7 +9381,7 @@ position."
   (advice-add #'edit-indirect--commit :after #'markdown--edit-indirect-save-committed-position))
 
 (defun markdown--edit-indirect-move-to-committed-position ()
-  "Move the point in the code block corresponding to the saved committed position'."
+  "Move the point in the code block corresponding to the saved committed position."
   (when-let* ((pos markdown--edit-indirect-committed-position)
               (bounds (markdown-get-enclosing-fenced-block-construct))
               (fence-begin (nth 0 bounds)))
@@ -9378,13 +9416,14 @@ at the END of code blocks."
     (if (fboundp 'edit-indirect-region)
         (if-let* ((bounds (markdown-get-enclosing-fenced-block-construct))
                   (fence-begin (nth 0 bounds))
-                  (fence-end (nth 1 bounds))
-                  (original-point (point))
-                  (original-column (current-column))
-                  (begin (progn (goto-char fence-begin) (line-beginning-position 2)))
-                  (end (progn (goto-char fence-end) (line-beginning-position 1)))
-                  (original-line (- (line-number-at-pos original-point) (line-number-at-pos begin))))
-            (let* ((indentation (progn (goto-char fence-begin) (current-indentation)))
+                  (fence-end (nth 1 bounds)))
+            (let* ((original-line (line-number-at-pos))
+                   (original-column (current-column))
+                   (begin (progn (goto-char fence-begin) (line-beginning-position 2)))
+                   (line (max 0 (- original-line (line-number-at-pos) 1)))
+                   (indentation (current-indentation))
+                   (column (max 0 (- original-column indentation)))
+                   (end (progn (goto-char fence-end) (line-beginning-position 1)))
                    (lang (markdown-code-block-lang))
                    (mode (or (and lang (markdown-get-lang-mode lang))
                              markdown-edit-code-block-default-mode))
@@ -9404,8 +9443,8 @@ at the END of code blocks."
                 (when (> indentation 0) ;; un-indent in edit-indirect buffer
                   (indent-rigidly (point-min) (point-max) (- indentation)))
                 (goto-char (point-min))
-                (forward-line (max 0 original-line))
-                (move-to-column (max 0 (- original-column indentation)))))
+                (forward-line line)
+                (move-to-column column)))
           (user-error "Not inside a GFM or tilde fenced code block"))
       (when (y-or-n-p "Package edit-indirect needed to edit code blocks. Install it now? ")
         (package-refresh-contents)
@@ -9727,6 +9766,18 @@ This function assumes point is on a table."
        (cl-loop for c across line
                 always (member c '(?| ?- ?: ?\t ? )))))
 
+(defun markdown-table-align-raw (cells fmtspec widths)
+  (let (fmt width)
+    (mapconcat
+     (lambda (cell)
+       (setq fmt (car fmtspec) fmtspec (cdr fmtspec))
+       (setq width (car widths) widths (cdr widths))
+       (if (equal fmt 'c)
+           (setq cell (concat (make-string (/ (- width (length cell)) 2) ?\s) cell)))
+       (unless (equal fmt 'r) (setq width (- width)))
+       (format (format " %%%ds " width) cell))
+     cells "|")))
+
 (defun markdown-table-align ()
   "Align table at point.
 This function assumes point is on a table."
@@ -9751,8 +9802,6 @@ This function assumes point is on a table."
             (maxcells (if cells
                           (apply #'max (mapcar #'length cells))
                         (user-error "Empty table")))
-            ;; Empty cells to fill short lines
-            (emptycells (make-list maxcells ""))
             maxwidths)
        ;; Calculate maximum width for each column
        (dotimes (i maxcells)
@@ -9764,20 +9813,20 @@ This function assumes point is on a table."
        (setq fmtspec (markdown-table-colfmt fmtspec))
        ;; Compute formats needed for output of table lines
        (let ((hfmt (concat indent "|"))
-             (rfmt (concat indent "|"))
-             hfmt1 rfmt1 fmt)
-         (dolist (width maxwidths (setq hfmt (concat (substring hfmt 0 -1) "|")))
-           (setq fmt (pop fmtspec))
-           (cond ((equal fmt 'l) (setq hfmt1 ":%s-|" rfmt1 " %%-%ds |"))
-                 ((equal fmt 'r) (setq hfmt1 "-%s:|" rfmt1  " %%%ds |"))
-                 ((equal fmt 'c) (setq hfmt1 ":%s:|" rfmt1 " %%-%ds |"))
-                 (t              (setq hfmt1 "-%s-|" rfmt1 " %%-%ds |")))
-           (setq rfmt (concat rfmt (format rfmt1 width)))
+             hfmt1 fmt (fmts fmtspec))
+         (dolist (width maxwidths)
+           (setq fmt (car fmts) fmts (cdr fmts))
+           (cond ((equal fmt 'l) (setq hfmt1 ":%s-|"))
+                 ((equal fmt 'r) (setq hfmt1 "-%s:|"))
+                 ((equal fmt 'c) (setq hfmt1 ":%s:|"))
+                 (t              (setq hfmt1 "-%s-|")))
            (setq hfmt (concat hfmt (format hfmt1 (make-string width ?-)))))
          ;; Replace modified lines only
          (dolist (line lines)
            (let ((line (if line
-                           (apply #'format rfmt (append (pop cells) emptycells))
+                           (concat indent "|"
+                                   (markdown-table-align-raw (pop cells) fmtspec maxwidths)
+                                   "|")
                          hfmt))
                  (previous (buffer-substring (point) (line-end-position))))
              (if (equal previous line)
@@ -10509,7 +10558,7 @@ rows and columns and the column alignment."
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist
-             '("\\.\\(?:md\\|markdown\\|mkd\\|mdown\\|mkdn\\|mdwn\\)\\'" . markdown-mode))
+             '("\\.\\(?:md\\|markdown\\|mkd\\|mdown\\|mkdn\\|mdwn\\|mdx\\)\\'" . markdown-mode))
 
 
 ;;; GitHub Flavored Markdown Mode  ============================================
