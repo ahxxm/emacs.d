@@ -72,14 +72,11 @@ With a prefix argument, highlight for that many seconds.
 
 ;; git (magit) settings here
 ;; ------------------------------------------------------------------
-(add-to-list 'load-path (concat plugins-path-r "transient/lisp")) ;; required by magit
-(add-to-list 'load-path (concat plugins-path-r "llama"))          ;; required by magit
-(add-to-list 'load-path (concat plugins-path-r "cond-let"))       ;; required by magit
-(add-to-list 'load-path (concat plugins-path-r "magit/lisp"))
-(add-to-list 'load-path (concat plugins-path-r "magit/lisp/magit-autoloads"))
-(add-to-list 'load-path (concat plugins-path-r "compat/"))  ;; required by with-editor
-(add-to-list 'load-path (concat plugins-path-r "with-editor/lisp"))
-(add-to-list 'load-path (concat plugins-path-r "git-modes"))
+(dolist (p '("transient/lisp" "llama" "cond-let"
+             "magit/lisp" "magit/lisp/magit-autoloads"
+             "compat"           ;; required by with-editor
+             "with-editor/lisp" "git-modes"))
+  (add-to-list 'load-path (concat plugins-path-r p)))
 
 (use-package magit
   :bind (("C-x v z" . magit-status)))
