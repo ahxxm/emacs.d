@@ -106,3 +106,9 @@
 [submodule "plugins/compat"]
 	path = plugins/compat
 	url = https://github.com/phikal/compat.el
+[submodule "plugins/llama"]
+	path = plugins/llama
+	url = https://github.com/tarsius/llama.git
+[submodule "plugins/cond-let"]
+	path = plugins/cond-let
+	url = https://github.com/tarsius/cond-let.git
