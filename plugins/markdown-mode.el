@@ -1255,6 +1255,21 @@ Function is called repeatedly until it returns nil. For details, see
         (unless (and (eq new-start start) (eq new-end end))
           (cons new-start (min new-end (point-max))))))))
 
+(defvar font-lock-beg)
+(defvar font-lock-end)
+
+(defun markdown-font-lock-extend-region ()
+  "Extend the font-lock region to cover whole blocks.
+Used in `font-lock-extend-region-functions'.  Inline constructs
+such as bold and italic may span several lines within a block, so
+fontifying a region that begins or ends in the middle of one
+would miss the match entirely."
+  (let ((res (markdown-syntax-propertize-extend-region font-lock-beg font-lock-end)))
+    (when res
+      (setq font-lock-beg (car res)
+            font-lock-end (cdr res))
+      t)))
+
 (defun markdown-font-lock-extend-region-function (start end _)
   "Used in `jit-lock-after-change-extend-region-functions'.
 Delegates to `markdown-syntax-propertize-extend-region'. START
@@ -2930,22 +2945,21 @@ This may be useful for tables and Pandoc's line_blocks extension."
   "Return t if PROP from BEGIN to END is equal to one of the given PROP-VALUES.
 Also returns t if PROP is a list containing one of the PROP-VALUES.
 Return nil otherwise."
-  (let (props)
-    (catch 'found
-      (dolist (loc (number-sequence begin end))
-        (when (setq props (get-text-property loc prop))
-          (cond ((listp props)
-                 ;; props is a list, check for membership
-                 (dolist (val prop-values)
-                   (when (memq val props) (throw 'found loc))))
-                (t
-                 ;; props is a scalar, check for equality
-                 (dolist (val prop-values)
-                   (when (eq val props) (throw 'found loc))))))))))
+  (catch 'found
+    (let ((loc begin))
+      (while (<= loc end)
+        (when-let* ((props (get-text-property loc prop)))
+          (if (listp props)
+              ;; props is a list, check for membership
+              (dolist (val prop-values)
+                (when (memq val props) (throw 'found loc)))
+            (dolist (val prop-values)
+              (when (eq val props) (throw 'found loc)))))
+        (setq loc (next-single-property-change loc prop nil (1+ end)))))))
 
 (defun markdown-range-properties-exist (begin end props)
   (cl-loop
-   for loc in (number-sequence begin end)
+   for loc from begin to end
    with result = nil
    while (not
           (setq result
@@ -3637,12 +3651,31 @@ SEQ may be an atom or a sequence."
             (add-text-properties fontified-start fontified-end heading-props)))))
     t))
 
+(defun markdown--fontify-table-alignment ()
+  "Visually align cell separators of the table line at point.
+Hiding markup makes the displayed content of a table cell
+narrower than the buffer text, which breaks the column alignment
+of tables that are aligned in the source.  Give the whitespace
+before each cell separator a space display specification
+stretching it to the separator's buffer column, so that
+separators are displayed at the same column as in the source
+regardless of what is hidden before them."
+  (beginning-of-line)
+  (while (re-search-forward "[ \t]+|" (line-end-position) t)
+    (let ((separator (1- (match-end 0))))
+      (unless (markdown-inline-code-at-pos-p separator)
+        (put-text-property
+         (match-beginning 0) separator
+         'display `(space :align-to ,(1- (current-column))))))))
+
 (defun markdown-fontify-tables (last)
   (when (re-search-forward "|" last t)
     (when (markdown-table-at-point-p)
       (font-lock-append-text-property
        (line-beginning-position) (min (1+ (line-end-position)) (point-max))
-       'face 'markdown-table-face))
+       'face 'markdown-table-face)
+      (when (or markdown-hide-markup markdown-hide-urls)
+        (markdown--fontify-table-alignment)))
     (forward-line 1)
     t))
 
@@ -4785,7 +4818,8 @@ at the beginning of the block."
        while pos-prop
        for lang = (markdown-code-block-lang pos-prop)
        do (progn (when lang (markdown-gfm-add-used-language lang))
-                 (goto-char (next-single-property-change (point) prop)))))))
+                 (goto-char (or (next-single-property-change (point) prop)
+                                (point-max))))))))
 
 (defun markdown-insert-foldable-block ()
   "Insert details disclosure element to make content foldable.
@@ -7799,9 +7833,11 @@ Return the name of the output buffer used."
                       markdown-command exit-code))))
     output-buffer-name))
 
-(defun markdown-standalone (&optional output-buffer-name)
+(defun markdown-standalone (&optional output-buffer-name title)
   "Special function to provide standalone HTML output.
-Insert the output in the buffer named OUTPUT-BUFFER-NAME."
+Insert the output in the buffer named OUTPUT-BUFFER-NAME.
+Set the HTML title to TITLE if provided, otherwise the name of the
+output buffer."
   (interactive)
   (setq output-buffer-name (markdown output-buffer-name))
   (let ((css-path markdown-css-paths))
@@ -7809,7 +7845,7 @@ Insert the output in the buffer named OUTPUT-BUFFER-NAME."
       (set-buffer output-buffer-name)
       (setq-local markdown-css-paths css-path)
       (unless (markdown-output-standalone-p)
-        (markdown-add-xhtml-header-and-footer output-buffer-name))
+        (markdown-add-xhtml-header-and-footer (or title output-buffer-name)))
       (goto-char (point-min))
       (html-mode)))
   output-buffer-name)
@@ -7890,7 +7926,8 @@ When OUTPUT-BUFFER-NAME is given, insert the output in the buffer with
 that name."
   (interactive)
   (browse-url-of-buffer
-   (markdown-standalone (or output-buffer-name markdown-output-buffer-name))))
+   (markdown-standalone (or output-buffer-name markdown-output-buffer-name)
+                        (buffer-name))))
 
 (defun markdown-export-file-name (&optional extension)
   "Attempt to generate a filename for Markdown output.
@@ -9773,7 +9810,7 @@ This function assumes point is on a table."
        (setq fmt (car fmtspec) fmtspec (cdr fmtspec))
        (setq width (car widths) widths (cdr widths))
        (if (equal fmt 'c)
-           (setq cell (concat (make-string (/ (- width (length cell)) 2) ?\s) cell)))
+           (setq cell (concat (make-string (/ (- width (markdown--string-width cell)) 2) ?\s) cell)))
        (unless (equal fmt 'r) (setq width (- width)))
        (format (format " %%%ds " width) cell))
      cells "|")))
@@ -10418,6 +10455,8 @@ rows and columns and the column alignment."
             #'markdown-syntax-propertize-extend-region nil t)
   (add-hook 'jit-lock-after-change-extend-region-functions
             #'markdown-font-lock-extend-region-function t t)
+  (add-hook 'font-lock-extend-region-functions
+            #'markdown-font-lock-extend-region t t)
   (setq-local syntax-propertize-function #'markdown-syntax-propertize)
   (syntax-propertize (point-max)) ;; Propertize before hooks run, etc.
   ;; Font lock.

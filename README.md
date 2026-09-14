@@ -24,7 +24,7 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 ### Edit
 
 - `C-]`: jump to matching paren
-- `F1`: find file by name
+- `F1`: find file by name, <tab> to see candidates
 - `F2`: full-text grep
 - `C-x v z`: magit-status
 - `C-c C-c`: comment current line
@@ -61,7 +61,7 @@ All packages will be put inside *plugins* folder, git submodule is used for vers
 [Add](https://github.com/clojure-emacs/cider-nrepl) following to `~/.lein/profiles.clj`:
 
 ```
-{:user {:middleware [cider-nrepl.plugin/middleware] :plugins [[cider/cider-nrepl "0.58.0" :exclusions [org.clojure/tools.namespace]]]}}
+{:user {:middleware [cider-nrepl.plugin/middleware] :plugins [[cider/cider-nrepl "0.62.2" :exclusions [org.clojure/tools.namespace]]]}}
 ```
 
 ### Go-mode
