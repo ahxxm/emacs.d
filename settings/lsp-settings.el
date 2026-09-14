@@ -108,7 +108,7 @@
         company-tooltip-align-annotations t))
 
 (custom-set-faces
- '(xref-match ((t (:foreground "#A6E22E" :background nil :bold t)))))
+ '(xref-match ((t (:foreground "#A6E22E" :background unspecified :bold t)))))
 
 (provide 'lsp-settings)
 ;; lsp-settings ends here.
