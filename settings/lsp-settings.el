@@ -15,7 +15,7 @@
 (use-package lsp-mode
   :defer t
   :diminish lsp-mode
-  :hook ((java-mode go-mode python-mode typescript-mode c-mode c++-mode csharp-mode) . lsp)
+  :hook ((java-mode go-mode python-mode typescript-mode c-mode c++-mode) . lsp)
   :config
   ;; https://github.com/emacs-lsp/lsp-mode/issues/3577#issuecomment-1709232622
   (setq lsp-client-packages (delete 'lsp-terraform lsp-client-packages))
@@ -56,9 +56,6 @@
    lsp-lens-enable nil
 
    lsp-auto-configure t
-
-   ;; for csharp server
-   lsp-csharp-server-path "~/dev/sharp/run"
 
    ; Detect project root not recommended ; lsp-auto-guess-root t
    ;; performance: https://github.com/emacs-lsp/lsp-mode/blob/master/docs/page/performance.md
