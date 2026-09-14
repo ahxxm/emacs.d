@@ -95,16 +95,9 @@ Lombok support requires `~/.m2/repository/org/projectlombok/lombok/1.18.8/lombok
 
 ### Python-mode
 
-Install language server in virtualenv: `pip install 'python-language-server[all]'`
+`uv`/`ty` pair is recommended, install uv, then `uv tool install ty`.
 
-Shell shortcuts:
-
-```bash
-alias ss='source ../.env/"${PWD##*/}"/bin/activate'
-alias pss='python3 -m venv ../.env/"${PWD##*/}"'
-alias pss2='virtualenv ../.env/"${PWD##*/}"'
-alias rmss='rm -rf ../.env/"${PWD##*/}"'
-```
+lsp-mode auto-wires and discovers venv, e.g. `./project/.venv`.
 
 ### C-mode and C++-mode
 
